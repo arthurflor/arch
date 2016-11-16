@@ -1,9 +1,7 @@
-# Arch linux Install
-
-Install and configure arch linux.
+# Arch Install
+Fork: https://github.com/helmuthdu/aui
 
 ## Prerequisites
-
 - A working internet connection
 - Logged in as 'root'
 
