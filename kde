@@ -97,7 +97,7 @@ sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware ttf-ms
 sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge virtualbox-ext-oracle clamtk hunspell-pt-br"
 sudo -H -u $user_name bash -c "pacaur -S libreoffice-extension-vero numix-circle-icon-theme-git"
 sudo -H -u $user_name bash -c "pacaur -S arc-dark-suite-git gtk-theme-arc-git plank-theme-arc libreoffice-breeze-icons"
-sudo -H -u $user_name bash -c "pacaur -S jdk smartgit brackets google-chrome rar isomaster"
+sudo -H -u $user_name bash -c "pacaur -S jdk smartgit brackets google-chrome rar"
 sudo -H -u $user_name bash -c "pacaur -S octopi octopi-cachecleaner octopi-pacmanhelper octopi-repoeditor octopi-notifier-frameworks"
 sudo -H -u $user_name bash -c "pacaur -S intel-xdk imagewriter system-config-samba"
 
