@@ -99,7 +99,7 @@ sudo -H -u $user_name bash -c "pacaur -S libreoffice-extension-vero numix-circle
 sudo -H -u $user_name bash -c "pacaur -S arc-dark-suite-git gtk-theme-arc-git plank-theme-arc libreoffice-breeze-icons"
 sudo -H -u $user_name bash -c "pacaur -S jdk smartgit brackets google-chrome rar"
 sudo -H -u $user_name bash -c "pacaur -S octopi octopi-cachecleaner octopi-pacmanhelper octopi-repoeditor octopi-notifier-frameworks"
-sudo -H -u $user_name bash -c "pacaur -S intel-xdk system-config-samba"
+sudo -H -u $user_name bash -c "pacaur -S intel-xdk multibootusb system-config-samba"
 
 pacman -Rns $(pacman -Qtdq) && pacman -Scc
 echo -e "\nalias clean='pacaur -Scc --noconfirm && sudo rm -Rf /home/'$user_name'/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
