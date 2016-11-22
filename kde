@@ -103,7 +103,7 @@ sudo -H -u $user_name bash -c "pacaur -S octopi octopi-cachecleaner octopi-pacma
 sudo -H -u $user_name bash -c "pacaur -S intel-xdk multibootusb system-config-samba"
 
 pacman -Rns $(pacman -Qtdq) && pacman -Scc
-echo -e "\nalias clean='pacaur -Scc --noconfirm && sudo rm -Rf /home/'$user_name'/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
+echo -e "\nalias clean='pacaur -Scc && sudo rm -Rf /home/'$user_name'/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
 freshclam
 ## END ~ Second packages
 
