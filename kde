@@ -70,6 +70,7 @@ pacman -S vlc phonon-qt5-vlc amarok converseen plank clamav gufw
 pacman -S gimp inkscape audacity handbrake handbrake-cli k3b qbittorrent
 pacman -S gnuchess knights kmines kpatience zsnes steam
 pacman -S filezilla nodejs npm virtualbox virtualbox-guest-iso virtualbox-host-dkms linux-headers
+pacman -S mysql-workbench blender kdenlive devede soundconverter
 ## END ~ Other packages
 
 ## BEGIN ~ Installing and configuring Mysql + Apache + PHP
