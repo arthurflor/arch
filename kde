@@ -111,6 +111,7 @@ freshclam
 ## BEGIN ~ Configuring services + Default folders
 gpasswd -a $user_name vboxusers 
 gpasswd -a $user_name bumblebee
+gpasswd -a $user_name lp
 modprobe fuse && modprobe vboxdrv
 dkms autoinstall 
 echo -e "vboxdrv\nvboxnetadp\nvboxnetflt\nvboxpci" > /etc/modules-load.d/virtualbox.conf
