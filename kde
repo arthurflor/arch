@@ -52,12 +52,13 @@ pacman -S partitionmanager ark kcalc kate kdeconnect kwalletmanager kde-meta-kde
 
 pacman -S bash-completion pkgstats arch-wiki-lite --needed --noconfirm
 pacman -S zip unzip p7zip lzop cpio nfs-utils samba smbnetfs --needed --noconfirm
-pacman -S ntfs-3g dosfstools exfat-utils f2fs-tools autofs net-tools pkgfile bluez-utils screenfetch --needed --noconfirm
+pacman -S ntfs-3g dosfstools exfat-utils f2fs-tools autofs net-tools pkgfile screenfetch --needed --noconfirm
 pacman -S cups cups-filters cups-pdf ghostscript gsfonts gutenprint pdfmod --needed --noconfirm
 pacman -S foomatic-db foomatic-db-engine foomatic-db-nonfree foomatic-filters foomatic-db-ppds foomatic-db-nonfree-ppds hplip splix --needed --noconfirm
 
 pacman -S aspell-pt gstreamer0.10-plugins lib32-nss sshfs ffmpegthumbs systemd-kcm cmake extra-cmake-modules dkms --needed --noconfirm
 pacman -S alsa-utils xine-lib libquicktime lsdvd libstdc++5 libdvdcss mencoder transcode ifuse usbmuxd automoc4 --needed --noconfirm
+pacman -S pulseaudio-alsa pulseaudio-bluetooth bluez bluez-libs bluez-utils bluez-libs bluez-firmware --needed --noconfirm
 
 pacman -S simple-scan system-config-printer filelight --needed --noconfirm
 pacman -S ttf-freefont ttf-bitstream-vera ttf-dejavu ttf-liberation wqy-microhei --needed --noconfirm
