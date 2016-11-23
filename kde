@@ -67,11 +67,10 @@ pacman -S dolphin firefox firefox-i18n-pt-br flashplugin libreoffice-fresh libre
 
 ## BEGIN ~ Other packages
 pacman -S lib32-freetype2 dvd+rw-tools cdrdao ffmpeg0.10 gst-plugins-good gst-libav libpng12
-pacman -S vlc phonon-qt5-vlc amarok converseen plank clamav gufw
-pacman -S gimp inkscape audacity handbrake handbrake-cli k3b qbittorrent
-pacman -S gnuchess knights kmines kpatience zsnes steam
+pacman -S vlc phonon-qt5-vlc amarok converseen plank clamav gufw k3b qbittorrent
+pacman -S gimp inkscape audacity handbrake handbrake-cli devede soundconverter
 pacman -S filezilla nodejs npm virtualbox virtualbox-guest-iso virtualbox-host-dkms linux-headers
-pacman -S mysql-workbench blender kdenlive devede soundconverter
+pacman -S kmines kpatience zsnes steam mysql-workbench
 ## END ~ Other packages
 
 ## BEGIN ~ Installing and configuring Mysql + Apache + PHP
