@@ -67,8 +67,8 @@ pacman -S dolphin firefox firefox-i18n-pt-br flashplugin libreoffice-fresh libre
 
 ## BEGIN ~ Other packages
 pacman -S lib32-freetype2 dvd+rw-tools cdrdao ffmpeg0.10 gst-plugins-good gst-libav libpng12
-pacman -S smplayer amarok converseen plank clamav gufw k3b qbittorrent
-pacman -S gimp inkscape audacity handbrake handbrake-cli soundconverter
+pacman -S vlc phonon-qt5-vlc libva-intel-driver plank clamav gufw k3b qbittorrent
+pacman -S gimp inkscape audacity handbrake handbrake-cli soundconverter amarok converseen
 pacman -S filezilla nodejs npm virtualbox virtualbox-guest-iso virtualbox-host-dkms linux-headers
 pacman -S kmines kpatience zsnes steam mysql-workbench
 ## END ~ Other packages
