@@ -148,7 +148,7 @@ mkdir -p /etc/systemd/coredump.conf.d/
 echo -e '[Coredump]\nStorage=none' > /etc/systemd/coredump.conf.d/custom.conf
 systemctl daemon-reload
 
-echo -e "LidSwitchIgnoreInhibited=off" >> /etc/systemd/logind.conf
+echo -e "HandleLidSwitch=ignore\nLidSwitchIgnoreInhibited=off" >> /etc/systemd/logind.conf
 echo "SystemMaxUse=50M" >> /etc/systemd/journald.conf
 echo -e 'Section "Device"\n\tIdentifier "Intel Graphics"\n\tDriver "intel"\n\tOption "DRI" "3"\nEndSection' > /etc/X11/xorg.conf.d/20-intel.conf
 #sed -i 's/Section "Device"/Section "Device"\n    Option\t"RegistryDwords" "PowerMizerEnable=0x1; PerfLevelSrc=0x2222; PowerMizerLevel=0x1; PowerMizerDefault=0x1; PowerMizerDefaultAC=0x1"/g' /etc/bumblebee/xorg.conf.nvidia
