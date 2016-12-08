@@ -70,7 +70,7 @@ pacman -S lib32-freetype2 dvd+rw-tools cdrdao ffmpeg0.10 gst-plugins-good gst-li
 pacman -S vlc phonon-qt5-vlc libva-intel-driver plank clamav gufw k3b qbittorrent
 pacman -S gimp inkscape audacity handbrake handbrake-cli soundconverter amarok converseen
 pacman -S filezilla nodejs npm virtualbox virtualbox-guest-iso virtualbox-host-dkms linux-headers
-pacman -S kmines kpatience zsnes steam mysql-workbench
+pacman -S kmines kpatience zsnes steam mysql-workbench blender kdenlive
 ## END ~ Other packages
 
 ## BEGIN ~ Installing and configuring Mysql + Apache + PHP
@@ -96,9 +96,8 @@ echo -e 'Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"\n<Directory "/usr/sha
 chmod 1777 -R /tmp/
 sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware ttf-ms-fonts ttf-vista-fonts"
 sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge virtualbox-ext-oracle clamtk hunspell-pt-br"
-sudo -H -u $user_name bash -c "pacaur -S libreoffice-extension-vero numix-circle-icon-theme-git"
-sudo -H -u $user_name bash -c "pacaur -S arc-dark-suite-git gtk-theme-arc-git plank-theme-arc libreoffice-breeze-icons"
-sudo -H -u $user_name bash -c "pacaur -S jdk smartgit brackets google-chrome rar dvdstyler"
+sudo -H -u $user_name bash -c "pacaur -S libreoffice-extension-vero libreoffice-breeze-icons numix-circle-icon-theme-git"
+sudo -H -u $user_name bash -c "pacaur -S jdk smartgit brackets rar dvdstyler google-chrome"
 sudo -H -u $user_name bash -c "pacaur -S octopi octopi-cachecleaner octopi-pacmanhelper octopi-repoeditor octopi-notifier-frameworks"
 sudo -H -u $user_name bash -c "pacaur -S intel-xdk brackets-bin multibootusb system-config-samba"
 
