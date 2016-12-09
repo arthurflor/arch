@@ -132,10 +132,8 @@ cp arch-arcmenu.svg /usr/share/icons/arch-arcmenu.svg
 ## END ~ Configuring services + Default folders
 
 ## BEGIN ~ Configuring and repairing other things
-rm /usr/share/plasma/desktoptheme/Arc-Dark/icons/qbittorrent.svgz
-sed -i 's/function show_message/export STEAM_FRAME_FORCE_CLOSE=1\n\nfunction show_message/g' /usr/bin/steam
+sed -i 's/function show_message/export STEAM_FRAME_FORCE_CLOSE=1\n\nfunction show_message/g' /usr/lib/steam/steam
 echo -e "export SAL_USE_VCLPLUGIN=gtk" >> /etc/profile.d/libreoffice-fresh.sh
-bash /usr/share/plasma/desktoptheme/Arc-Dark/fix-menubar.sh
 
 cp /etc/samba/smb.conf.default /etc/samba/smb.conf && pdbedit -a -u $user_name
 sed -i 's/\[homes\]/;\[homes\]/g' /etc/samba/smb.conf
