@@ -99,7 +99,7 @@ sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge vir
 sudo -H -u $user_name bash -c "pacaur -S libreoffice-extension-vero libreoffice-breeze-icons numix-circle-icon-theme-git"
 sudo -H -u $user_name bash -c "pacaur -S jdk smartgit brackets rar dvdstyler google-chrome"
 sudo -H -u $user_name bash -c "pacaur -S octopi octopi-cachecleaner octopi-pacmanhelper octopi-repoeditor octopi-notifier-frameworks"
-sudo -H -u $user_name bash -c "pacaur -S intel-xdk brackets-bin multibootusb system-config-samba"
+sudo -H -u $user_name bash -c "pacaur -S intel-xdk brackets-bin multibootusb system-config-samba plank-theme-arc"
 
 pacman -Rns $(pacman -Qtdq) && pacman -Scc
 echo -e "\nalias clean='pacaur -Scc && sudo rm -Rf /home/'$user_name'/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
@@ -109,7 +109,6 @@ freshclam
 ## BEGIN ~ Configuring services + Default folders
 gpasswd -a $user_name vboxusers 
 gpasswd -a $user_name bumblebee
-gpasswd -a $user_name lp
 modprobe fuse && modprobe vboxdrv
 dkms autoinstall 
 echo -e "vboxdrv\nvboxnetadp\nvboxnetflt\nvboxpci" > /etc/modules-load.d/virtualbox.conf
@@ -124,9 +123,10 @@ systemctl enable bluetooth
 systemctl disable dhcpcd@enp7s0
 systemctl enable NetworkManager
 systemctl enable ufw sddm && ufw enable
-ufw allow 1714:1764/udp && ufw allow 1714:1764/tcp && ufw allow CIFS
 
+ufw allow 1714:1764/udp && ufw allow 1714:1764/tcp && ufw allow CIFS
 sed -i 's/Type=oneshot/Type=idle/g' /lib/systemd/system/ufw.service
+
 mkdir -p /home/$user_name/{Desktop,Documentos,Downloads,Imagens,Modelos/www,Músicas,Público,Vídeos}
 cp arch-arcmenu.svg /usr/share/icons/arch-arcmenu.svg
 ## END ~ Configuring services + Default folders
@@ -141,12 +141,13 @@ sed -i 's/comment = Home Directories/;comment = Home Directories/g' /etc/samba/s
 sed -i 's/browseable = no/;browseable = no/g' /etc/samba/smb.conf
 sed -i 's/writable = yes/;writable = yes/g' /etc/samba/smb.conf
 
-mkdir -p /etc/systemd/coredump.conf.d/
-echo -e '[Coredump]\nStorage=none' > /etc/systemd/coredump.conf.d/custom.conf
+sed -i 's/IgnoreLid=false/IgnoreLid=true/g' /etc/UPower/UPower.conf
+echo -e "HandleLidSwitch=ignore\nLidSwitchIgnoreInhibited=off" >> /etc/systemd/logind.conf
+
+echo "SystemMaxUse=50M" >> /etc/systemd/journald.conf
+mkdir -p /etc/systemd/coredump.conf.d/ && echo -e '[Coredump]\nStorage=none' > /etc/systemd/coredump.conf.d/custom.conf
 systemctl daemon-reload
 
-echo -e "HandleLidSwitch=ignore\nLidSwitchIgnoreInhibited=off" >> /etc/systemd/logind.conf
-echo "SystemMaxUse=50M" >> /etc/systemd/journald.conf
 echo -e 'Section "Device"\n\tIdentifier "Intel Graphics"\n\tDriver "intel"\n\tOption "DRI" "3"\nEndSection' > /etc/X11/xorg.conf.d/20-intel.conf
 #sed -i 's/Section "Device"/Section "Device"\n    Option\t"RegistryDwords" "PowerMizerEnable=0x1; PerfLevelSrc=0x2222; PowerMizerLevel=0x1; PowerMizerDefault=0x1; PowerMizerDefaultAC=0x1"/g' /etc/bumblebee/xorg.conf.nvidia
 
