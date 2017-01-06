@@ -70,7 +70,7 @@ pacman -S lib32-freetype2 dvd+rw-tools cdrdao ffmpeg0.10 gst-plugins-good gst-li
 pacman -S vlc phonon-qt5-vlc libva-intel-driver clamav gufw k3b qbittorrent
 pacman -S gimp inkscape audacity handbrake handbrake-cli soundconverter amarok converseen
 pacman -S filezilla nodejs npm virtualbox virtualbox-guest-iso virtualbox-host-dkms linux-headers
-pacman -S kmines kpatience zsnes steam mysql-workbench blender kdenlive
+pacman -S kmines kpatience zsnes steam steam-native-runtime mysql-workbench blender kdenlive
 ## END ~ Other packages
 
 ## BEGIN ~ Installing and configuring Mysql + Apache + PHP
@@ -169,9 +169,9 @@ chmod 755 -R /home/$user_name/
 clear && echo "All done."
 
 	# Nvidia settings: optirun nvidia-settings -c :8
-	# Steam: LD_PRELOAD='/usr/$LIB/libstdc++.so.6 /usr/$LIB/libgcc_s.so.1 /usr/$LIB/libxcb.so.1 /usr/$LIB/libgpg-error.so' /usr/bin/steam
+	# Steam: LD_PRELOAD='/usr/$LIB/libstdc++.so.6 /usr/$LIB/libgcc_s.so.1 /usr/$LIB/libxcb.so.1 /usr/$LIB/libgpg-error.so' optirun steam-native
 	# or execute: find ~/.steam/root/ \( -name "libgcc_s.so*" -o -name "libstdc++.so*" -o -name "libxcb.so*" -o -name "libgpg-error.so*" \) -print -delete
 	#	Steam set game launch options (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun %command%
-	# Wakfu java config: Parameters runtime: -Xms4096m -Xmx4096m
+	# Wakfu java config: Parameters runtime: -Xms8192m -Xmx8192m
 	# Tip for gtk2 theme on breeze: go to system settings > color > options and make sure 'apply colors to non-Qt colors' is switched off
 ## END
