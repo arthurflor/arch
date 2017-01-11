@@ -45,7 +45,7 @@ rm -fr dotfiles
 
 pacman -S xorg-server xorg-server-utils xorg-server-xwayland xorg-xinit xorg-xkill xf86-video-intel --needed --noconfirm
 pacman -S xf86-input-synaptics xf86-input-mouse xf86-input-keyboard xf86-input-wacom xf86-input-joystick xf86-input-libinput --needed --noconfirm
-pacman -S nvidia nvidia-settings nvidia-utils lib32-nvidia-utils bumblebee --needed --noconfirm
+pacman -S nvidia nvidia-settings nvidia-utils lib32-nvidia-utils bumblebee primus --needed --noconfirm
 
 pacman -S plasma breeze-kde4 kdebase-runtime kde-l10n-pt_br kdebase-kdialog kdenetwork-filesharing --needed --noconfirm
 pacman -S partitionmanager ark kcalc kate kdeconnect kwalletmanager kde-meta-kdegraphics konsole --needed --noconfirm
@@ -70,7 +70,7 @@ pacman -S lib32-freetype2 dvd+rw-tools cdrdao ffmpeg0.10 gst-plugins-good gst-li
 pacman -S vlc phonon-qt5-vlc libva-intel-driver clamav gufw k3b qbittorrent
 pacman -S gimp inkscape audacity handbrake handbrake-cli soundconverter amarok converseen
 pacman -S filezilla nodejs npm virtualbox virtualbox-guest-iso virtualbox-host-dkms linux-headers
-pacman -S kmines kpatience zsnes steam steam-native-runtime primus mysql-workbench blender kdenlive
+pacman -S kmines kpatience zsnes steam steam-native-runtime mysql-workbench blender kdenlive
 ## END ~ Other packages
 
 ## BEGIN ~ Installing and configuring Mysql + Apache + PHP
@@ -98,8 +98,7 @@ sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware ttf-ms
 sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge virtualbox-ext-oracle clamtk hunspell-pt-br"
 sudo -H -u $user_name bash -c "pacaur -S libreoffice-extension-vero jdk smartgit brackets rar dvdstyler google-chrome"
 sudo -H -u $user_name bash -c "pacaur -S libreoffice-breeze-icons numix-circle-icon-theme-git numix-folders-git arc-kde-git"
-sudo -H -u $user_name bash -c "pacaur -S octopi octopi-cachecleaner octopi-pacmanhelper octopi-repoeditor octopi-notifier-frameworks"
-sudo -H -u $user_name bash -c "pacaur -S intel-xdk brackets-bin multibootusb system-config-samba plank-theme-arc"
+sudo -H -u $user_name bash -c "pacaur -S intel-xdk brackets-bin multibootusb system-config-samba octopi-git"
 
 pacman -Rns $(pacman -Qtdq) && pacman -Scc
 echo -e "\nalias clean='pacaur -Scc && sudo rm -Rf /home/'$user_name'/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
