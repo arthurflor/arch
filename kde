@@ -60,7 +60,7 @@ pacman -S aspell-pt gstreamer0.10-plugins lib32-nss sshfs ffmpegthumbs systemd-k
 pacman -S alsa-utils xine-lib libquicktime lsdvd libstdc++5 libdvdcss mencoder transcode ifuse usbmuxd automoc4 --needed --noconfirm
 pacman -S pulseaudio-alsa pulseaudio-bluetooth bluez bluez-libs bluez-utils bluez-libs bluez-firmware --needed --noconfirm
 
-pacman -S simple-scan system-config-printer filelight --needed --noconfirm
+pacman -S simple-scan system-config-printer print-manager filelight --needed --noconfirm
 pacman -S ttf-freefont ttf-bitstream-vera ttf-dejavu ttf-liberation wqy-microhei --needed --noconfirm
 pacman -S dolphin firefox firefox-i18n-pt-br flashplugin libreoffice-fresh libreoffice-fresh-pt-BR --needed --noconfirm
 ## END ~ Updating system and first packages
