@@ -96,11 +96,13 @@ sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge vir
 sudo -H -u $user_name bash -c "pacaur -S libreoffice-extension-vero jdk smartgit brackets rar dvdstyler google-chrome"
 sudo -H -u $user_name bash -c "pacaur -S libreoffice-breeze-icons numix-circle-icon-theme-git numix-folders-git arc-kde-git"
 sudo -H -u $user_name bash -c "pacaur -S intel-xdk brackets-bin multibootusb system-config-samba octopi-git downgrade"
-
-pacman -Rns $(pacman -Qtdq) && pacman -Scc
-echo -e "\nalias clean='pacaur -Scc && sudo rm -Rf /home/'$user_name'/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
-freshclam
 ## END ~ Second packages
+
+## BEGIN ~ Zswap
+pacman -S systemd-swap --noconfirm
+sed -i 's/zram_enabled=0/zram_enabled=1/g' /etc/systemd/swap.conf
+sed -i 's/$ram_size\/4/$ram_size/g' /etc/systemd/swap.conf
+## END ~ Zswap
 
 ## BEGIN ~ Configuring services + Default folders
 gpasswd -a $user_name vboxusers 
@@ -118,6 +120,8 @@ systemctl enable org.cups.cupsd
 systemctl enable bluetooth
 systemctl enable NetworkManager
 systemctl enable ufw sddm && ufw enable
+systemctl enable systemd-swap
+
 systemctl disable octopi
 systemctl disable dhcpcd@enp7s0
 
@@ -129,6 +133,10 @@ cp arch-menu.svg /usr/share/icons/arch-menu.svg
 ## END ~ Configuring services + Default folders
 
 ## BEGIN ~ Configuring and repairing other things
+pacman -Rns $(pacman -Qtdq) && pacman -Scc
+echo -e "\nalias clean='pacaur -Scc && sudo rm -Rf /home/'$user_name'/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
+freshclam
+
 sed -i 's/function show_message/export STEAM_FRAME_FORCE_CLOSE=1\n\nfunction show_message/g' /usr/lib/steam/steam
 echo -e "export SAL_USE_VCLPLUGIN=gtk" >> /etc/profile.d/libreoffice-fresh.sh
 
@@ -146,7 +154,6 @@ mkdir -p /etc/systemd/coredump.conf.d/ && echo -e '[Coredump]\nStorage=none' > /
 systemctl daemon-reload
 
 echo -e 'Section "Device"\n\tIdentifier "Intel Graphics"\n\tDriver "intel"\n\tOption "DRI" "3"\nEndSection' > /etc/X11/xorg.conf.d/20-intel.conf
-#sed -i 's/Section "Device"/Section "Device"\n    Option\t"RegistryDwords" "PowerMizerEnable=0x1; PerfLevelSrc=0x2222; PowerMizerLevel=0x1; PowerMizerDefault=0x1; PowerMizerDefaultAC=0x1"/g' /etc/bumblebee/xorg.conf.nvidia
 
 sed -i 's/HOOKS="base udev/HOOKS="base udev plymouth/g' /etc/mkinitcpio.conf
 sed -i 's/encrypt /plymouth-encrypt /g' /etc/mkinitcpio.conf
