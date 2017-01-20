@@ -29,12 +29,9 @@ echo -e "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen
 localectl set-x11-keymap br abnt2
 pacman -Syu yajl namcap git wget expac base-devel --needed --noconfirm
 
-mkdir -p /tmp/pacaur_install && chmod -R 777 /tmp/pacaur_install && cd /tmp/pacaur_install
-curl -o PKGBUILD https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=cower
-sudo -H -u $user_name bash -c "makepkg PKGBUILD --skippgpcheck && sudo pacman -U cower*.tar.xz --noconfirm"
-curl -o PKGBUILD https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=pacaur
-sudo -H -u $user_name bash -c "makepkg PKGBUILD && sudo pacman -U pacaur*.tar.xz --noconfirm"
-cd ~ && rm -r /tmp/pacaur_install
+git clone https://aur.archlinux.org/cower.git && cd cower && makepkg -i && cd - 
+git clone https://aur.archlinux.org/pacaur.git && cd pacaur && makepkg -i && cd -
+rm -R cower/ && rm -R pacaur/
 
 sed -i 's/#Color/Color/g' /etc/pacman.conf
 git clone https://github.com/helmuthdu/dotfiles
@@ -119,9 +116,10 @@ systemctl enable org.cups.cupsd
 #systemctl enable mysqld 
 #systemctl enable httpd
 systemctl enable bluetooth
-systemctl disable dhcpcd@enp7s0
 systemctl enable NetworkManager
 systemctl enable ufw sddm && ufw enable
+systemctl disable octopi
+systemctl disable dhcpcd@enp7s0
 
 ufw allow 1714:1764/udp && ufw allow 1714:1764/tcp && ufw allow CIFS
 sed -i 's/Type=oneshot/Type=idle/g' /lib/systemd/system/ufw.service
