@@ -64,7 +64,7 @@ pacman -S dolphin firefox firefox-i18n-pt-br flashplugin libreoffice-fresh libre
 
 ## BEGIN ~ Other packages
 pacman -S lib32-freetype2 dvd+rw-tools cdrdao ffmpeg0.10 gst-plugins-good gst-libav libpng12
-pacman -S vlc phonon-qt5-vlc libva-intel-driver clamav gufw k3b qbittorrent
+pacman -S libva-intel-driver clamav gufw k3b vlc phonon-qt5-vlc qbittorrent devede
 pacman -S gimp inkscape audacity handbrake handbrake-cli soundconverter amarok converseen
 pacman -S filezilla nodejs npm virtualbox virtualbox-guest-iso virtualbox-host-dkms linux-headers
 pacman -S kmines kpatience zsnes steam steam-native-runtime mysql-workbench blender kdenlive
@@ -93,7 +93,7 @@ echo -e 'Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"\n<Directory "/usr/sha
 chmod 1777 -R /tmp/
 sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware ttf-ms-fonts ttf-vista-fonts ttf-google-fonts-git"
 sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge virtualbox-ext-oracle clamtk hunspell-pt-br"
-sudo -H -u $user_name bash -c "pacaur -S libreoffice-extension-vero jdk smartgit brackets rar dvdstyler google-chrome"
+sudo -H -u $user_name bash -c "pacaur -S libreoffice-extension-vero jdk smartgit brackets rar google-chrome"
 sudo -H -u $user_name bash -c "pacaur -S libreoffice-breeze-icons numix-circle-icon-theme-git numix-folders-git arc-kde-git"
 sudo -H -u $user_name bash -c "pacaur -S intel-xdk brackets-bin multibootusb system-config-samba octopi-git downgrade"
 ## END ~ Second packages
