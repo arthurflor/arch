@@ -48,7 +48,7 @@ pacman -S plasma breeze-kde4 kdebase-runtime kde-l10n-pt_br kdebase-kdialog kden
 pacman -S partitionmanager ark kcalc kate kdeconnect kwalletmanager kde-meta-kdegraphics konsole --needed --noconfirm
 
 pacman -S bash-completion pkgstats arch-wiki-lite --needed --noconfirm
-pacman -S zip unzip p7zip lzop cpio nfs-utils samba smbnetfs --needed --noconfirm
+pacman -S zip unzip unrar p7zip lzop cpio nfs-utils samba smbnetfs --needed --noconfirm
 pacman -S ntfs-3g dosfstools exfat-utils f2fs-tools autofs net-tools pkgfile screenfetch --needed --noconfirm
 pacman -S cups cups-filters cups-pdf ghostscript gsfonts gutenprint pdfmod --needed --noconfirm
 pacman -S foomatic-db foomatic-db-engine foomatic-db-nonfree foomatic-filters foomatic-db-ppds foomatic-db-nonfree-ppds hplip splix --needed --noconfirm
