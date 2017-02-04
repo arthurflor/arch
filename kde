@@ -93,9 +93,9 @@ echo -e 'Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"\n<Directory "/usr/sha
 chmod 1777 -R /tmp/
 sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware ttf-ms-fonts ttf-vista-fonts ttf-google-fonts-git"
 sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge virtualbox-ext-oracle clamtk hunspell-pt-br"
-sudo -H -u $user_name bash -c "pacaur -S libreoffice-extension-vero jdk smartgit brackets rar google-chrome"
+sudo -H -u $user_name bash -c "pacaur -S libreoffice-extension-vero jdk smartgit brackets rar google-chrome octopi-git"
 sudo -H -u $user_name bash -c "pacaur -S libreoffice-breeze-icons numix-circle-icon-theme-git numix-folders-git arc-kde-git"
-sudo -H -u $user_name bash -c "pacaur -S intel-xdk brackets-bin multibootusb system-config-samba octopi-git downgrade"
+sudo -H -u $user_name bash -c "pacaur -S intel-xdk brackets-bin multibootusb system-config-samba downgrade xdgurl"
 ## END ~ Second packages
 
 ## BEGIN ~ Zswap
