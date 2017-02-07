@@ -42,7 +42,7 @@ rm -fr dotfiles
 
 pacman -S xorg-server xorg-server-utils xorg-server-xwayland xorg-xinit xorg-xkill xf86-video-intel --needed --noconfirm
 pacman -S xf86-input-synaptics xf86-input-mouse xf86-input-keyboard xf86-input-wacom xf86-input-libinput --needed --noconfirm
-pacman -S nvidia nvidia-settings nvidia-utils lib32-nvidia-utils bumblebee primus --needed --noconfirm
+pacman -S nvidia nvidia-settings nvidia-utils lib32-nvidia-utils bumblebee primus lib32-primus --needed --noconfirm
 
 pacman -S plasma breeze-kde4 kdebase-runtime kde-l10n-pt_br kdebase-kdialog kdenetwork-filesharing --needed --noconfirm
 pacman -S partitionmanager ark kcalc kate kdeconnect kwalletmanager kde-meta-kdegraphics konsole --needed --noconfirm
