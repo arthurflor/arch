@@ -29,9 +29,11 @@ echo -e "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen
 localectl set-x11-keymap br abnt2
 pacman -Syu yajl namcap git wget expac base-devel --needed --noconfirm
 
-git clone https://aur.archlinux.org/cower.git && cd cower && makepkg -i && cd - 
-git clone https://aur.archlinux.org/pacaur.git && cd pacaur && makepkg -i && cd -
-rm -R cower/ && rm -R pacaur/
+cd /tmp
+sudo -H -u $user_name bash -c "gpg --recv-keys --keyserver hkp://pgp.mit.edu 1EB2638FF56C0C53"
+sudo -H -u $user_name bash -c "git clone https://aur.archlinux.org/cower.git && cd cower && makepkg -i && cd -"
+sudo -H -u $user_name bash -c "git clone https://aur.archlinux.org/pacaur.git && cd pacaur && makepkg -i && cd -"
+cd ~
 
 sed -i 's/#Color/Color/g' /etc/pacman.conf
 git clone https://github.com/helmuthdu/dotfiles
