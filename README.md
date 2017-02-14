@@ -10,8 +10,9 @@ Fork: https://github.com/helmuthdu/aui
 
 ## How to use
 - FIFO [system base]: `cd <dir> && ./fifo`
-- KDE [kde custom system]: `./kde`
-
+ - KDE [kde custom system]: `./kde`
+ - Gnome [gnome custom system]: `./gnome`
+  
 ## FIFO SCRIPT
 - Configure keymap
 - Select editor
@@ -28,28 +29,3 @@ Fork: https://github.com/helmuthdu/aui
 - Install/Configure bootloader
 - Configure mirrorlist
 - Configure root password
-
-## KDE SCRIPT
-- Backup all modified files
-- Install additional repositories
-- Create and configure new user
-- Install and configure sudo
-- Automatic enable services in systemd
-- Install an AUR Helper [pacaur]
-- Install base system
-- Install systemd
-- Install Xorg
-- Install GPU Drivers
-- Install CUPS
-- Install Additional wireless/bluetooth firmwares
-- Install KDE
-- Install Developement tools [Brackets, Intel XDK]
-- Install Office apps [LibreOffice]
-- Install System tools [Virtualbox]
-- Install Graphics apps [Inkscape, Gimp]
-- Install Internet apps [Firefox, Google-Chrome]
-- Install Multimedia apps [Amarok, VLC, Codecs]
-- Install Games [Steam, ZSNES]
-- Install Fonts [Liberation, MS-Fonts]
-- Install and configure Web Servers
-- Many More...
