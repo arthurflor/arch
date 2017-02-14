@@ -14,7 +14,7 @@ if   [ "$right" == "n" ]; then
     exit
 fi
 
-read -p "\nUsername to continue installation: " user_name
+read -p "Username to continue installation: " user_name
 read -p "The Arch Linux is the only SO present? [y | n]  " grub_sec
 
 ## Updating system and first packages
@@ -29,7 +29,7 @@ localectl set-x11-keymap br abnt2
 pacman -Syu yajl namcap git wget expac base-devel bash-completion pkgstats arch-wiki-lite --needed --noconfirm
 
 cd /tmp/ 
-sudo -H -u $user_name bash -c "gpg --search-keys 1EB2638FF56C0C53"
+sudo -H -u $user_name bash -c "gpg --recv-keys --keyserver hkp://keyserver.ubuntu.com 1EB2638FF56C0C53"
 sudo -H -u $user_name bash -c "git clone https://aur.archlinux.org/cower.git && cd cower && makepkg -i && cd -"
 sudo -H -u $user_name bash -c "git clone https://aur.archlinux.org/pacaur.git && cd pacaur && makepkg -i && cd -"
 
@@ -45,7 +45,7 @@ pacman -S xorg-server xorg-server-utils xorg-xkill --noconfirm
 pacman -S xf86-video-intel xf86-input-synaptics --noconfirm
 pacman -S nvidia nvidia-utils lib32-nvidia-utils nvidia-settings bumblebee primus lib32-primus --noconfirm
  
-pacman -S aisleriot adwaita-icon-theme baobab brasero evince gdm gnome-{backgrounds,builder,calculator,control-center,disk-utility,keyring,mines,photosscreenshot,session,shell,shell-extension,software,system-monitor,terminal,themes-standard,tweak-tool,user-share} file-roller gedit gedit-code-assistance gitg gtk3-print-backends gvfs gvfs-{afc,gphoto2,mtp,nfs,smb} mousetweaks mutter nautilus nautilus-sendto nautilus-share samba xdg-user-dirs-gtk --noconfirm
+pacman -S aisleriot adwaita-icon-theme baobab brasero evince gdm gnome-{backgrounds,builder,calculator,control-center,disk-utility,keyring,mines,photos,screenshot,session,shell,shell-extensions,software,system-monitor,terminal,themes-standard,tweak-tool,user-share} file-roller gedit gedit-code-assistance gitg gtk3-print-backends gvfs gvfs-{afc,gphoto2,mtp,nfs,smb} mousetweaks mutter nautilus nautilus-sendto nautilus-share samba xdg-user-dirs-gtk --noconfirm
 
 pacman -S unrar p7zip lzop cpio nfs-utils libva-intel-driver --noconfirm
 pacman -S ntfs-3g dosfstools exfat-utils autofs net-tools pkgfile screenfetch --noconfirm
@@ -128,7 +128,8 @@ echo -e "\nalias clean='pacaur -Scc && sudo rm -Rf /home/'$user_name'/.cache/pac
 sed -i 's/function show_message/export STEAM_FRAME_FORCE_CLOSE=1\n\nfunction show_message/g' /usr/lib/steam/steam
 echo -e "export SAL_USE_VCLPLUGIN=gtk" >> /etc/profile.d/libreoffice-fresh.sh
 
-cp /etc/samba/smb.conf.default /etc/samba/smb.conf && pdbedit -a -u $user_name
+cp /etc/samba/smb.conf.default /etc/samba/smb.conf
+echo -e 'Samba password: ' && pdbedit -a -u $user_name
 sed -i 's/\[homes\]/;\[homes\]/g' /etc/samba/smb.conf
 sed -i 's/comment = Home Directories/;comment = Home Directories/g' /etc/samba/smb.conf
 sed -i 's/browseable = no/;browseable = no/g' /etc/samba/smb.conf
