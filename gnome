@@ -1,0 +1,165 @@
+#!/bin/bash
+#-----------------------------------------------------------------------------
+# Created by arthurflor mailto: arthurflor23[at]gmail[dot]com
+# Run this script after your first boot with archlinux (as root)
+#-----------------------------------------------------------------------------
+
+## Collecting settings
+clear
+echo -e "Custom installer Gnome\n"
+echo -e "Permissions root and check the connection with Internet!\n"
+echo -e "Language default: pt_br and hybrid graphics nvidia!\n\n"
+read -p "All right? [y | n] " right
+if   [ "$right" == "n" ]; then
+    exit
+fi
+
+read -p "\nUsername to continue installation: " user_name
+read -p "The Arch Linux is the only SO present? [y | n]  " grub_sec
+
+## Updating system and first packages
+useradd -m -G users -s /bin/bash $user_name
+passwd $user_name && usermod -a -G wheel $user_name
+
+echo -e "[multilib]\nInclude = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+sed -i "s/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g" /etc/sudoers
+
+echo -e "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen
+localectl set-x11-keymap br abnt2
+pacman -Syu yajl namcap git wget expac base-devel bash-completion pkgstats arch-wiki-lite --needed --noconfirm
+
+cd /tmp/ 
+sudo -H -u $user_name bash -c "gpg --search-keys 1EB2638FF56C0C53"
+sudo -H -u $user_name bash -c "git clone https://aur.archlinux.org/cower.git && cd cower && makepkg -i && cd -"
+sudo -H -u $user_name bash -c "git clone https://aur.archlinux.org/pacaur.git && cd pacaur && makepkg -i && cd -"
+
+git clone https://github.com/helmuthdu/dotfiles
+sed -i 's/Java source/java/g' dotfiles/.nanorc
+cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc ~/
+cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc /home/$user_name/
+sed -i 's/#Color/Color/g' /etc/pacman.conf
+cd ~
+
+## Setup system packages
+pacman -S xorg-server xorg-server-utils xorg-xkill --noconfirm
+pacman -S xf86-video-intel xf86-input-synaptics --noconfirm
+pacman -S nvidia nvidia-utils lib32-nvidia-utils nvidia-settings bumblebee primus lib32-primus --noconfirm
+ 
+pacman -S aisleriot adwaita-icon-theme baobab brasero evince gdm gnome-{backgrounds,builder,calculator,control-center,disk-utility,keyring,mines,photosscreenshot,session,shell,shell-extension,software,system-monitor,terminal,themes-standard,tweak-tool,user-share} file-roller gedit gedit-code-assistance gitg gtk3-print-backends gvfs gvfs-{afc,gphoto2,mtp,nfs,smb} mousetweaks mutter nautilus nautilus-sendto nautilus-share samba xdg-user-dirs-gtk --noconfirm
+
+pacman -S unrar p7zip lzop cpio nfs-utils libva-intel-driver --noconfirm
+pacman -S ntfs-3g dosfstools exfat-utils autofs net-tools pkgfile screenfetch --noconfirm
+pacman -S cups cups-filters cups-pdf gutenprint pdfmod hplip splix --noconfirm
+pacman -S foomatic-db foomatic-db-engine foomatic-db-nonfree foomatic-filters foomatic-db-ppds foomatic-db-nonfree-ppds --noconfirm
+
+pacman -S aspell-pt lib32-nss sshfs xine-lib libquicktime lsdvd libstdc++5 libdvdcss mencoder ifuse gst-libav --noconfirm
+
+pacman -S pulseaudio-bluetooth bluez-libs bluez-utils bluez-firmware --noconfirm
+pacman -S acpi acpid cpupower tlp dmraid ecryptfs-utils intel-ucode nbd gksu numlockx --noconfirm
+pacman -S networkmanager alacarte simple-scan system-config-printer --noconfirm
+
+pacman -S ttf-freefont ttf-bitstream-vera ttf-liberation noto-fonts --noconfirm
+pacman -S firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh-pt-BR --noconfirm
+
+## Second packages
+pacman -S blender avidemux-cli devede gimp inkscape audacity
+pacman -S handbrake handbrake-cli soundconverter converseen
+pacman -S transmission-gtk vlc rhythmbox steam steam-native-runtime zsnes 
+pacman -S clamav gufw filezilla nodejs npm virtualbox linux-headers
+
+## Other packages
+sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware open-fuse-iso xdg-su"
+sudo -H -u $user_name bash -c "pacaur -S ttf-ms-fonts ttf-vista-fonts hunspell-pt-br libreoffice-extension-vero rar"
+sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge virtualbox-ext-oracle"
+sudo -H -u $user_name bash -c "pacaur -S gtk-theme-arc-git numix-circle-icon-theme-git "
+sudo -H -u $user_name bash -c "pacaur -S clamtk jdk google-chrome intel-xdk brackets-bin multibootusb"
+sudo -H -u $user_name bash -c "pacaur -S breeze-amber-cursor-theme"
+
+## Installing and configuring Mysql + Apache + PHP
+pacman -S mariadb --needed --noconfirm && mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+systemctl start mysqld && mysql_secure_installation
+
+pacman -S php php-apache php-cgi php-gd php-mcrypt php-pgsql php-sqlite php-intl phpmyadmin mysql-workbench
+
+sed -i 's/DocumentRoot "\/srv\/http"/DocumentRoot "\/home\/'$user_name'\/Modelos\/www"/g' /etc/httpd/conf/httpd.conf
+sed -i 's/<Directory "\/srv\/http">/<Directory "\/home\/'$user_name'\/Modelos\/www">/g' /etc/httpd/conf/httpd.conf
+echo -e 'Include conf/extra/phpmyadmin.conf\nInclude conf/extra/php7_module.conf' >> /etc/httpd/conf/httpd.conf
+sed -i 's/LoadModule mpm_event_module/#LoadModule mpm_event_module/g' /etc/httpd/conf/httpd.conf
+sed -i 's/#LoadModule mpm_prefork_module/LoadModule mpm_prefork_module/g' /etc/httpd/conf/httpd.conf
+sed -i 's/mod_mpm_event.so/mod_mpm_event.so\nLoadModule php7_module modules\/libphp7.so/g' /etc/httpd/conf/httpd.conf
+sed -i 's/display_errors = Off/display_errors = On/g' /etc/php/php.ini
+sed -i 's/display_startup_errors = Off/display_startup_errors = On/g' /etc/php/php.ini
+sed -i 's/extension=zip.so/extension=mysqli.so\nextension=mcrypt.so\nextension=pdo_mysql.so\nextension=bz2.so\nextension=zip.so\nextension=iconv.so/g' /etc/php/php.ini
+
+echo -e 'Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"\n<Directory "/usr/share/webapps/phpMyAdmin">\n\tDirectoryIndex index.php\n\tAllowOverride All\n\tOptions FollowSymlinks\n\tRequire all granted\n</Directory>' > /etc/httpd/conf/extra/phpmyadmin.conf
+
+## Zswap
+pacman -S systemd-swap --noconfirm
+sed -i 's/zram_enabled=0/zram_enabled=1/g' /etc/systemd/swap.conf
+sed -i 's/$ram_size\/4/$ram_size/g' /etc/systemd/swap.conf
+
+## Systemctl services
+gpasswd -a $user_name vboxusers 
+gpasswd -a $user_name bumblebee
+modprobe fuse && modprobe vboxdrv
+echo -e "vboxdrv\nvboxnetadp\nvboxnetflt\nvboxpci" > /etc/modules-load.d/virtualbox.conf
+
+systemctl enable NetworkManager
+systemctl enable avahi-daemon
+systemctl enable bluetooth
+#systemctl enable smbd nmbd
+systemctl enable smbd.socket
+systemctl enable org.cups.cupsd
+#systemctl enable mysqld 
+#systemctl enable httpd
+systemctl enable bumblebeed
+systemctl enable ufw && ufw enable
+systemctl enable systemd-swap
+systemctl enable gdm
+
+ufw allow 1714:1764/udp && ufw allow 1714:1764/tcp && ufw allow CIFS
+sed -i 's/Type=oneshot/Type=idle/g' /lib/systemd/system/ufw.service
+
+## Settings
+freshclam
+sed -i 's/\[daemon\]/\[daemon\]\nAutomaticLogin='$user_name'\nAutomaticLoginEnable=True/g' /etc/gdm/custom.conf
+echo -e "\nalias clean='pacaur -Scc && sudo rm -Rf /home/'$user_name'/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
+
+sed -i 's/function show_message/export STEAM_FRAME_FORCE_CLOSE=1\n\nfunction show_message/g' /usr/lib/steam/steam
+echo -e "export SAL_USE_VCLPLUGIN=gtk" >> /etc/profile.d/libreoffice-fresh.sh
+
+cp /etc/samba/smb.conf.default /etc/samba/smb.conf && pdbedit -a -u $user_name
+sed -i 's/\[homes\]/;\[homes\]/g' /etc/samba/smb.conf
+sed -i 's/comment = Home Directories/;comment = Home Directories/g' /etc/samba/smb.conf
+sed -i 's/browseable = no/;browseable = no/g' /etc/samba/smb.conf
+sed -i 's/writable = yes/;writable = yes/g' /etc/samba/smb.conf
+
+sed -i 's/IgnoreLid=false/IgnoreLid=true/g' /etc/UPower/UPower.conf
+echo -e "HandleLidSwitch=ignore\nLidSwitchIgnoreInhibited=off" >> /etc/systemd/logind.conf
+
+echo "SystemMaxUse=50M" >> /etc/systemd/journald.conf
+mkdir -p /etc/systemd/coredump.conf.d/ && echo -e '[Coredump]\nStorage=none' > /etc/systemd/coredump.conf.d/custom.conf
+
+echo -e 'Section "Device"\n\tIdentifier "Intel Graphics"\n\tDriver "intel"\n\tOption "DRI" "3"\nEndSection' > /etc/X11/xorg.conf.d/20-intel.conf
+
+sed -i 's/HOOKS="base udev/HOOKS="base udev plymouth/g' /etc/mkinitcpio.conf
+sed -i 's/encrypt /plymouth-encrypt /g' /etc/mkinitcpio.conf
+sed -i 's/MODULES=""/MODULES="intel_agp i915"/g' /etc/mkinitcpio.conf
+sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 splash /g' /etc/default/grub
+
+grub-mkconfig -o /boot/grub/grub.cfg
+plymouth-set-default-theme -R arch-charge
+if   [ "$grub_sec" == "y" ]; then
+	sed -i 's/timeout=5/timeout=0/g' /boot/grub/grub.cfg
+fi
+
+## Finishing and Some tips
+pacman -Rns $(pacman -Qtdq) && pacman -Scc
+chown -R $user_name:users /home/$user_name
+chmod 755 -R /home/$user_name/
+clear && echo "All done."
+
+	# Nvidia settings: optirun nvidia-settings -c :8
+	# Steam set game launch options (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun %command%
+	# Wakfu java config: Parameters runtime: -Xms16384m -Xmx16384m
+	# Wakfu icon steam (circle): steam_icon_215080kca
