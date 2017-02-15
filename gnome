@@ -71,9 +71,8 @@ pacman -S clamav gufw filezilla nodejs npm virtualbox linux-headers
 sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware open-fuse-iso xdg-su"
 sudo -H -u $user_name bash -c "pacaur -S ttf-ms-fonts ttf-vista-fonts hunspell-pt-br libreoffice-extension-vero rar"
 sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge virtualbox-ext-oracle"
-sudo -H -u $user_name bash -c "pacaur -S gtk-theme-arc-git numix-circle-icon-theme-git "
-sudo -H -u $user_name bash -c "pacaur -S clamtk jdk google-chrome intel-xdk brackets-bin multibootusb"
-sudo -H -u $user_name bash -c "pacaur -S breeze-amber-cursor-theme"
+sudo -H -u $user_name bash -c "pacaur -S gtk-theme-arc-git numix-circle-icon-theme-git xcursor-breeze"
+sudo -H -u $user_name bash -c "pacaur -S clamtk jdk google-chrome intel-xdk brackets-bin multibootusb indicator-kdeconnect-git"
 
 ## Installing and configuring Mysql + Apache + PHP
 pacman -S mariadb --needed --noconfirm && mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
@@ -122,11 +121,13 @@ sed -i 's/Type=oneshot/Type=idle/g' /lib/systemd/system/ufw.service
 
 ## Settings
 freshclam
+cp arch-menu.svg /usr/share/icons/arch-menu.svg
+
 sed -i 's/\[daemon\]/\[daemon\]\nAutomaticLogin='$user_name'\nAutomaticLoginEnable=True/g' /etc/gdm/custom.conf
 echo -e "\nalias clean='pacaur -Scc && sudo rm -Rf /home/'$user_name'/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
 
 sed -i 's/function show_message/export STEAM_FRAME_FORCE_CLOSE=1\n\nfunction show_message/g' /usr/lib/steam/steam
-echo -e "export SAL_USE_VCLPLUGIN=gtk" >> /etc/profile.d/libreoffice-fresh.sh
+sed -i 's/Adwaita/\$THEME_NAME/g' /usr/share/icons/default/index.theme
 
 cp /etc/samba/smb.conf.default /etc/samba/smb.conf
 echo -e 'Samba password: ' && pdbedit -a -u $user_name
