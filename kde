@@ -131,7 +131,7 @@ ufw allow 1714:1764/udp && ufw allow 1714:1764/tcp && ufw allow CIFS
 sed -i 's/Type=oneshot/Type=idle/g' /lib/systemd/system/ufw.service
 
 mkdir -p /home/$user_name/{Desktop,Documentos,Downloads,Imagens,Modelos/www,Músicas,Público,Vídeos}
-cp arch-menu.svg /usr/share/icons/arch-menu.svg
+mv plus/arch-menu.svg /usr/share/icons/
 ## END ~ Configuring services + Default folders
 
 ## BEGIN ~ Configuring and repairing other things

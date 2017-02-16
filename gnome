@@ -123,8 +123,6 @@ ufw allow 1714:1764/udp && ufw allow 1714:1764/tcp && ufw allow CIFS
 sed -i 's/Type=oneshot/Type=idle/g' /lib/systemd/system/ufw.service
 
 ## Settings
-cp arch-menu.svg /usr/share/icons/
-
 sed -i 's/\[daemon\]/\[daemon\]\nAutomaticLogin='$user_name'\nAutomaticLoginEnable=True/g' /etc/gdm/custom.conf
 echo -e 'if [ -x /usr/bin/numlockx ]; then\n\t/usr/bin/numlockx on\nfi' >> /etc/gdm/Init/Default
 
@@ -159,16 +157,22 @@ if   [ "$grub_sec" == "y" ]; then
 	sed -i 's/timeout=5/timeout=0/g' /boot/grub/grub.cfg
 fi
 
-## Finishing and Some tips
+## Finishing
 pacman -Rns $(pacman -Qtdq) && pacman -Scc
-mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
+
+mv plus/arch-menu.svg /usr/share/icons/
+
+rm -Rf /usr/share/gnome-shell/extensions/* 
+mkdir plus/extensions && tar -xvf extensions.tar.xz -C plus/extensions
+mv plus/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
 
 chown -R $user_name:users /home/$user_name
 chmod 755 -R /home/$user_name/
-clear && cd ~
+clear && cd ~ && rm -R ~/*
 
 echo "All done."
 
+## Some tips
 	# Nvidia settings: optirun nvidia-settings -c :8
 	# Steam set game launch options (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun %command%
 	# Wakfu java config: Parameters runtime: -Xms16384m -Xmx16384m
