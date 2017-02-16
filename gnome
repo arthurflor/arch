@@ -63,7 +63,7 @@ pacman -S ttf-freefont ttf-bitstream-vera ttf-liberation noto-fonts --noconfirm
 pacman -S firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh-pt-BR --noconfirm
 
 ## Second packages
-pacman -S blender avidemux-cli devede gimp inkscape audacity
+pacman -S blender devede gimp inkscape audacity frei0r-plugins breeze-icons kdenlive
 pacman -S handbrake handbrake-cli soundconverter converseen
 pacman -S transmission-gtk vlc rhythmbox steam steam-native-runtime zsnes
 pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox linux-headers
