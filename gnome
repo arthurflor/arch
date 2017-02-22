@@ -26,7 +26,9 @@ sed -i "s/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g" /etc/sudoers
 
 echo -e "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen
 localectl set-x11-keymap br abnt2
-pacman -Syu yajl namcap git wget expac base-devel bash-completion pkgstats arch-wiki-lite --needed --noconfirm
+
+pacman -Syu
+pacman -S yajl namcap git wget expac base-devel bash-completion pkgstats arch-wiki-lite --needed --noconfirm
 
 cd /tmp/ 
 sudo -H -u $user_name bash -c "gpg --recv-keys --keyserver hkp://keyserver.ubuntu.com 1EB2638FF56C0C53"
@@ -45,7 +47,7 @@ pacman -S xorg-server xorg-server-utils xorg-xkill --noconfirm
 pacman -S xf86-video-intel xf86-input-synaptics --noconfirm
 pacman -S nvidia nvidia-utils lib32-nvidia-utils nvidia-settings bumblebee primus lib32-primus --noconfirm
  
-pacman -S aisleriot adwaita-icon-theme baobab brasero evince gdm gnome-{backgrounds,builder,calculator,control-center,disk-utility,mines,photos,screenshot,session,shell,shell-extensions,system-monitor,terminal,themes-standard,tweak-tool,user-share} file-roller gedit gedit-code-assistance gitg gtk3-print-backends gvfs gvfs-{afc,gphoto2,mtp,nfs,smb} mousetweaks mutter --noconfirm
+pacman -S aisleriot adwaita-icon-theme baobab brasero evince gdm gnome-{backgrounds,builder,calculator,control-center,disk-utility,mines,music,photos,screenshot,session,shell,shell-extensions,system-monitor,terminal,themes-standard,tweak-tool,user-share} file-roller gedit gedit-code-assistance gitg gtk3-print-backends gvfs gvfs-{afc,gphoto2,mtp,nfs,smb} mousetweaks mutter --noconfirm
 pacman -S nautilus nautilus-sendto nautilus-share samba xdg-user-dirs-gtk --noconfirm
 
 pacman -S unrar p7zip lzop cpio nfs-utils libva-intel-driver --noconfirm
@@ -65,7 +67,7 @@ pacman -S firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh-pt-BR -
 ## Second packages
 pacman -S blender devede gimp inkscape audacity frei0r-plugins breeze-icons kdenlive
 pacman -S handbrake handbrake-cli soundconverter converseen
-pacman -S transmission-gtk vlc rhythmbox steam steam-native-runtime zsnes
+pacman -S transmission-gtk vlc steam steam-native-runtime zsnes
 pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox linux-headers
 
 ## Other packages
@@ -163,12 +165,13 @@ pacman -Rns $(pacman -Qtdq) && pacman -Scc
 mv plus/arch-menu.svg /usr/share/icons/
 
 rm -Rf /usr/share/gnome-shell/extensions/* 
-mkdir plus/extensions && tar -xvf extensions.tar.xz -C plus/extensions
+mkdir plus/extensions && tar -xvf plus/extensions.tar.xz -C plus/extensions
+mkdir -p /home/$user_name/.local/share/gnome-shell/extensions/
 mv plus/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
 
 chown -R $user_name:users /home/$user_name
 chmod 755 -R /home/$user_name/
-clear && cd ~ && rm -R ~/*
+clear && cd ~
 
 echo "All done."
 
