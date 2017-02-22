@@ -46,7 +46,7 @@ cd ~
 pacman -S xorg-server xorg-server-utils xorg-xkill xf86-video-intel xf86-input-libinput --noconfirm
 pacman -S nvidia nvidia-utils lib32-nvidia-utils nvidia-settings bumblebee primus lib32-primus --noconfirm
  
-pacman -S aisleriot adwaita-icon-theme baobab brasero evince gdm gnome-{backgrounds,builder,calculator,control-center,disk-utility,mines,music,photos,screenshot,session,shell,shell-extensions,system-monitor,terminal,themes-standard,tweak-tool,user-share} file-roller gedit gedit-code-assistance gitg gtk3-print-backends gvfs gvfs-{afc,gphoto2,mtp,nfs,smb} mousetweaks mutter --noconfirm
+pacman -S aisleriot adwaita-icon-theme baobab brasero evince gdm gnome-{backgrounds,builder,calculator,control-center,disk-utility,mines,screenshot,session,shell,shell-extensions,system-monitor,terminal,themes-standard,tweak-tool,user-share} file-roller gedit gedit-code-assistance gitg gtk3-print-backends gvfs gvfs-{afc,gphoto2,mtp,nfs,smb} mousetweaks mutter --noconfirm
 pacman -S nautilus nautilus-sendto nautilus-share samba xdg-user-dirs-gtk --noconfirm
 
 pacman -S unrar p7zip lzop cpio nfs-utils libva-intel-driver --noconfirm
@@ -64,9 +64,10 @@ pacman -S ttf-freefont ttf-bitstream-vera ttf-liberation noto-fonts --noconfirm
 pacman -S firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh-pt-BR --noconfirm
 
 ## Second packages
-pacman -S blender devede gimp inkscape audacity frei0r-plugins breeze-icons kdenlive
+pacman -S transmission-gtk rhythmbox eog frei0r-plugins breeze-icons
+pacman -S blender devede gimp inkscape audacity kdenlive
 pacman -S handbrake handbrake-cli soundconverter converseen
-pacman -S transmission-gtk vlc steam steam-native-runtime zsnes
+pacman -S vlc steam steam-native-runtime zsnes
 pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox linux-headers
 
 ## Other packages
