@@ -44,7 +44,7 @@ cd ~
 
 ## Setup system packages
 pacman -S xorg-server xorg-server-utils xorg-xkill xf86-video-intel xf86-input-libinput --noconfirm
-pacman -S nvidia nvidia-utils lib32-nvidia-utils nvidia-settings bumblebee primus lib32-primus --noconfirm
+pacman -S nvidia nvidia-utils lib32-nvidia-utils nvidia-settings bumblebee bbswitch primus lib32-primus --noconfirm
  
 pacman -S aisleriot adwaita-icon-theme baobab brasero evince gdm gnome-{backgrounds,builder,calculator,control-center,disk-utility,mines,screenshot,session,shell,shell-extensions,system-monitor,terminal,themes-standard,tweak-tool,user-share} file-roller gedit gedit-code-assistance gitg gtk3-print-backends gvfs gvfs-{afc,gphoto2,mtp,nfs,smb} mousetweaks mutter --noconfirm
 pacman -S nautilus nautilus-sendto nautilus-share samba xdg-user-dirs-gtk --noconfirm
