@@ -64,7 +64,7 @@ pacman -S ttf-freefont ttf-bitstream-vera ttf-liberation noto-fonts --noconfirm
 pacman -S firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh-pt-BR --noconfirm
 
 ## Second packages
-pacman -S transmission-gtk lollypop eog frei0r-plugins breeze-icons
+pacman -S qbittorrent lollypop eog frei0r-plugins breeze-icons
 pacman -S blender devede gimp inkscape audacity kdenlive
 pacman -S handbrake handbrake-cli soundconverter converseen
 pacman -S vlc steam steam-native-runtime zsnes
