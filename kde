@@ -71,7 +71,7 @@ pacman -S dolphin firefox firefox-i18n-pt-br flashplugin libreoffice-fresh libre
 pacman -S k3b blender devede gimp inkscape audacity kdenlive
 pacman -S handbrake handbrake-cli soundconverter converseen amarok
 pacman -S qbittorrent vlc steam steam-native-runtime zsnes kmines kpatience
-pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox linux-headers
+pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox virtualbox-guest-iso linux-headers
 ## END ~ Other packages
 
 ## BEGIN ~ Second packages
