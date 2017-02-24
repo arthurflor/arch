@@ -68,7 +68,7 @@ pacman -S transmission-gtk lollypop eog frei0r-plugins breeze-icons
 pacman -S blender devede gimp inkscape audacity kdenlive
 pacman -S handbrake handbrake-cli soundconverter converseen
 pacman -S vlc steam steam-native-runtime zsnes
-pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox linux-headers
+pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox virtualbox-guest-iso linux-headers
 
 ## Other packages
 sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware open-fuse-iso"
