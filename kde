@@ -60,7 +60,7 @@ pacman -S aspell-pt lib32-nss sshfs ffmpegthumbs systemd-kcm cmake extra-cmake-m
 pacman -S alsa-utils xine-lib libquicktime lsdvd libstdc++5 libdvdcss mencoder transcode ifuse usbmuxd automoc4 --needed --noconfirm
 pacman -S pulseaudio-alsa pulseaudio-bluetooth bluez bluez-libs bluez-utils bluez-libs bluez-firmware --needed --noconfirm
 
-pacman -S lib32-freetype2 dvd+rw-tools cdrdao gst-plugins-good gst-libav
+pacman -S lib32-freetype2 dvd+rw-tools cdrdao gst-plugins-good gst-libav --needed --noconfirm
 pacman -S ttf-freefont ttf-bitstream-vera ttf-dejavu ttf-liberation wqy-microhei --needed --noconfirm
 
 pacman -S simple-scan system-config-printer print-manager filelight --needed --noconfirm
