@@ -14,7 +14,7 @@ if   [ "$right" == "n" ]; then
     exit
 fi
 
-read -p "\nUsername to continue installation: " user_name
+read -p "Username to continue installation: " user_name
 read -p "The Arch Linux is the only SO present? [y | n]  " grub_sec
 ## END ~ Collecting settings
 
@@ -117,7 +117,7 @@ dkms autoinstall
 echo -e "vboxdrv\nvboxnetadp\nvboxnetflt\nvboxpci" > /etc/modules-load.d/virtualbox.conf
 
 systemctl enable NetworkManager
-systemctl enable avahi-daemon
+#systemctl enable avahi-daemon
 systemctl enable bluetooth
 #systemctl enable smbd nmbd
 systemctl enable smbd.socket
