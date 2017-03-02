@@ -71,12 +71,12 @@ pacman -S vlc steam steam-native-runtime zsnes
 pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox virtualbox-guest-iso linux-headers
 
 ## Other packages
-sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware open-fuse-iso"
+sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware open-fuse-iso jdk"
 sudo -H -u $user_name bash -c "pacaur -S ttf-ms-fonts ttf-vista-fonts hunspell-pt-br libreoffice-extension-vero rar"
 sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge virtualbox-ext-oracle"
 sudo -H -u $user_name bash -c "pacaur -S gtk-theme-arc-git numix-square-icon-theme-git numix-circle-icon-theme-git xcursor-breeze"
 sudo -H -u $user_name bash -c "pacaur -S google-chrome visual-studio-code multibootusb pamac-pacaur"
-sudo -H -u $user_name bash -c "pacaur -S jdk intel-xdk indicator-kdeconnect-git wakfu-transition"
+sudo -H -u $user_name bash -c "pacaur -S intel-xdk indicator-kdeconnect-git wakfu-transition"
 freshclam
 
 ## Installing and configuring Mysql + Apache + PHP
