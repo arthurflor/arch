@@ -64,7 +64,7 @@ pacman -S lib32-freetype2 dvd+rw-tools cdrdao gst-plugins-good gst-plugins-ugly 
 pacman -S ttf-freefont ttf-bitstream-vera ttf-dejavu ttf-liberation wqy-microhei --needed --noconfirm
 
 pacman -S simple-scan system-config-printer print-manager filelight --needed --noconfirm
-pacman -S dolphin firefox firefox-i18n-pt-br flashplugin libreoffice-fresh libreoffice-fresh-pt-BR --needed --noconfirm
+pacman -S dolphin firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh-pt-BR --needed --noconfirm
 ## END ~ Updating system and first packages
 
 ## BEGIN ~ Other packages
