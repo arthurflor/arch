@@ -9,9 +9,10 @@ clear
 echo -e "Custom installer KDE Plasma\n"
 echo -e "Permissions root and check the connection with Internet!\n"
 echo -e "Language default: pt_br and hybrid graphics nvidia!\n\n"
+
 read -p "All right? [y | n] " right
 if   [ "$right" == "n" ]; then
-    exit
+  exit
 fi
 
 read -p "Username to continue installation: " user_name
@@ -32,15 +33,15 @@ pacman -Syu
 pacman -S yajl namcap git wget expac base-devel bash-completion pkgstats arch-wiki-lite --needed --noconfirm
 
 cd /tmp/ 
-sudo -H -u $user_name bash -c "gpg --recv-keys --keyserver hkp://keyserver.ubuntu.com 1EB2638FF56C0C53"
-sudo -H -u $user_name bash -c "git clone https://aur.archlinux.org/cower.git && cd cower && makepkg -i && cd -"
-sudo -H -u $user_name bash -c "git clone https://aur.archlinux.org/pacaur.git && cd pacaur && makepkg -i && cd -"
+  sudo -H -u $user_name bash -c "gpg --recv-keys --keyserver hkp://keyserver.ubuntu.com 1EB2638FF56C0C53"
+  sudo -H -u $user_name bash -c "git clone https://aur.archlinux.org/cower.git && cd cower && makepkg -i && cd -"
+  sudo -H -u $user_name bash -c "git clone https://aur.archlinux.org/pacaur.git && cd pacaur && makepkg -i && cd -"
 
-git clone https://github.com/helmuthdu/dotfiles
-sed -i 's/Java source/java/g' dotfiles/.nanorc
-cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc ~/
-cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc /home/$user_name/
-sed -i 's/#Color/Color/g' /etc/pacman.conf
+  git clone https://github.com/helmuthdu/dotfiles
+  sed -i 's/Java source/java/g' dotfiles/.nanorc
+  cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc ~/
+  cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc /home/$user_name/
+  sed -i 's/#Color/Color/g' /etc/pacman.conf
 cd ~
 
 pacman -S xorg-server xorg-server-utils xorg-xinit xorg-xkill xf86-video-intel --needed --noconfirm
@@ -85,6 +86,16 @@ sudo -H -u $user_name bash -c "pacaur -S intel-xdk smartgit wakfu-transition sys
 freshclam
 ## END ~ Second packages
 
+## BEGIN ~ Configuring look-and-feel arc-dark
+cd /usr/share/plasma/look-and-feel/com.github.varlesh.arc-dark/contents/splash
+  convert -size 32x32 xc:black images/black.png
+  cp ../../../org.kde.breeze.desktop/contents/splash/images/kde.svgz images/kde.svgz
+  cp ../../../org.kde.breeze.desktop/contents/previews/splash.png ../previews/
+    sed -i 's/background/black/g' Splash.qml
+    sed -i 's/kde.png"/kde.svgz"\n\t\tsourceSize.width: 128\n\t\tsourceSize.height: 128/g' Splash.qml
+cd ~
+## END ~ Configuring look-and-feel arc-dark
+
 ## BEGIN ~ Installing and configuring Mysql + Apache + PHP
 pacman -S mariadb --needed --noconfirm && mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
 systemctl start mysqld && mysql_secure_installation
@@ -106,8 +117,8 @@ echo -e 'Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"\n<Directory "/usr/sha
 
 ## BEGIN ~ Zswap
 pacman -S systemd-swap --noconfirm
-sed -i 's/zram_enabled=0/zram_enabled=1/g' /etc/systemd/swap.conf
-sed -i 's/$ram_size\/4/$ram_size/g' /etc/systemd/swap.conf
+  sed -i 's/zram_enabled=0/zram_enabled=1/g' /etc/systemd/swap.conf
+  sed -i 's/$ram_size\/4/$ram_size/g' /etc/systemd/swap.conf
 ## END ~ Zswap
 
 ## BEGIN ~ Configuring services + Default folders
@@ -129,9 +140,6 @@ systemctl enable bumblebeed
 systemctl enable ufw && ufw enable
 systemctl enable systemd-swap
 systemctl enable sddm
-
-systemctl disable octopi
-systemctl disable dhcpcd@enp7s0
 
 ufw allow 1714:1764/udp && ufw allow 1714:1764/tcp && ufw allow CIFS
 sed -i 's/Type=oneshot/Type=idle/g' /lib/systemd/system/ufw.service
@@ -164,7 +172,7 @@ sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 sp
 grub-mkconfig -o /boot/grub/grub.cfg
 plymouth-set-default-theme -R arch-charge
 if   [ "$grub_sec" == "y" ]; then
-	sed -i 's/timeout=5/timeout=0/g' /boot/grub/grub.cfg
+  sed -i 's/timeout=5/timeout=0/g' /boot/grub/grub.cfg
 fi
 ## END ~ Configuring and repairing other things
 
@@ -178,9 +186,9 @@ clear && cd ~
 
 echo "All done."
 
-	# Nvidia settings: optirun nvidia-settings -c :8
-	# Steam set game launch options (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun %command%
-	# Wakfu java config: Parameters runtime: -Xms16384m -Xmx16384m
-	# Wakfu icon steam (circle): steam_icon_215080kca
-	# Tip for gtk2 theme on breeze: go to system settings > color > options and make sure 'apply colors to non-Qt colors' is switched off
+  # Nvidia settings: optirun nvidia-settings -c :8
+  # Steam set game launch options (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun %command%
+  # Wakfu java config: Parameters runtime: -Xms16384m -Xmx16384m
+  # Wakfu icon steam (circle): steam_icon_215080kca
+  # Tip for gtk2 theme on breeze: go to system settings > color > options and make sure 'apply colors to non-Qt colors' is switched off
 ## END
