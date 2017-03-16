@@ -77,7 +77,7 @@ pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox virtualbox-guest-is
 
 ## BEGIN ~ Second packages
 sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware"
-sudo -H -u $user_name bash -c "pacaur -S jdk open-fuse-iso plasma5-applets-eventcalendar kf5-servicemenus-encfs"
+sudo -H -u $user_name bash -c "pacaur -S jdk open-fuse-iso kf5-servicemenus-encfs plasma5-applet-awesome-widgets"
 sudo -H -u $user_name bash -c "pacaur -S ttf-ms-fonts ttf-vista-fonts hunspell-pt-br libreoffice-extension-vero rar"
 sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge virtualbox-ext-oracle"
 sudo -H -u $user_name bash -c "pacaur -S arc-kde-git numix-square-icon-theme-git numix-circle-icon-theme-git"
