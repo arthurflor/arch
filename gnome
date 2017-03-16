@@ -121,7 +121,8 @@ systemctl enable ufw && ufw enable
 systemctl enable systemd-swap
 systemctl enable gdm
 
-ufw allow 1714:1764/udp && ufw allow 1714:1764/tcp && ufw allow CIFS
+ufw allow 1714:1764/udp && ufw allow 1714:1764/tcp
+ufw allow 6881/udp && ufw allow 6881/tcp
 sed -i 's/Type=oneshot/Type=idle/g' /lib/systemd/system/ufw.service
 
 ## Settings
