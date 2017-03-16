@@ -93,6 +93,10 @@ cd /usr/share/plasma/look-and-feel/com.github.varlesh.arc-dark/contents/splash
   cp ../../../org.kde.breeze.desktop/contents/previews/splash.png ../previews/
     sed -i 's/background/black/g' Splash.qml
     sed -i 's/kde.png"/kde.svgz"\n\t\tsourceSize.width: 128\n\t\tsourceSize.height: 128/g' Splash.qml
+
+cd /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/contents/ui/
+  sed -i 's/main.height <= 2/main.height <= 3/g' DigitalClock.qml
+  sed -i ': 1 ; N ; $!b1 ; s/height: timeLabel.height/height: timeLabel.height \/ 1.2/2' DigitalClock.qml
 cd ~
 ## END ~ Configuring look-and-feel arc-dark
 
