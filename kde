@@ -30,7 +30,7 @@ echo -e "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen
 localectl set-x11-keymap br abnt2
 
 pacman -Syu
-pacman -S yajl namcap git wget expac base-devel bash-completion pkgstats arch-wiki-lite --needed --noconfirm
+pacman -S yajl namcap git wget expac base-devel bash-completion pkgstats arch-wiki-lite reflector --needed --noconfirm
 
 cd /tmp/ 
   sudo -H -u $user_name bash -c "gpg --recv-keys --keyserver hkp://keyserver.ubuntu.com 1EB2638FF56C0C53"
@@ -151,8 +151,10 @@ sed -i 's/Type=oneshot/Type=idle/g' /lib/systemd/system/ufw.service
 ## END ~ Configuring services + Default folders
 
 ## BEGIN ~ Configuring and repairing other things
-mkdir -p /home/$user_name/{Desktop,Documentos,Downloads,Imagens,Modelos/www,Músicas,Público,Vídeos}
-echo -e "\nalias clean='pacaur -Scc && sudo rm -Rf /home/'$user_name'/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
+mkdir -p /home/$user_name/{Desktop,Documentos,Downloads/Torrents,Imagens,Modelos/www,Músicas,Público,Vídeos}
+echo -e "\nalias autoclean='pacaur -Scc && sudo rm -Rf /home/$user_name/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
+echo -e "\nalias autoref='sudo sed -i 's\/\^\#Server\/Server\/' \/etc\/pacman.d\/mirrorlist.pacnew && sudo reflector -l 10 --sort rate --save /etc/pacman.d/mirrorlist.pacnew && sudo mv /etc/pacman.d/mirrorlist.pacnew /etc/pacman.d/mirrorlist'" >> /home/$user_name/.bashrc
+
 sed -i 's/function show_message/export STEAM_FRAME_FORCE_CLOSE=1\n\nfunction show_message/g' /usr/lib/steam/steam
 
 cp /etc/samba/smb.conf.default /etc/samba/smb.conf && pdbedit -a -u $user_name
