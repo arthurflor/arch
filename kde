@@ -195,7 +195,7 @@ echo "All done."
 
   # Nvidia settings: optirun nvidia-settings -c :8
   # Steam set game launch options (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun %command%
-  # Wakfu java config: Parameters runtime: -Xms16384m -Xmx16384m
+  # Wakfu java config: Parameters runtime: -Xms4096m -Xmx8192m
   # Wakfu icon steam (circle): steam_icon_215080kca
   # Tip for gtk2 theme on breeze: go to system settings > color > options and make sure 'apply colors to non-Qt colors' is switched off
 ## END
