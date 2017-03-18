@@ -28,7 +28,7 @@ echo -e "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen
 localectl set-x11-keymap br abnt2
 
 pacman -Syu
-pacman -S yajl namcap git wget expac base-devel bash-completion pkgstats arch-wiki-lite --needed --noconfirm
+pacman -S yajl namcap git wget expac base-devel bash-completion pkgstats arch-wiki-lite reflector --needed --noconfirm
 
 cd /tmp/ 
 sudo -H -u $user_name bash -c "gpg --recv-keys --keyserver hkp://keyserver.ubuntu.com 1EB2638FF56C0C53"
@@ -47,7 +47,7 @@ pacman -S xorg-server xorg-server-utils xorg-xkill xf86-video-intel xf86-input-l
 pacman -S nvidia nvidia-utils lib32-nvidia-utils nvidia-settings bumblebee bbswitch primus lib32-primus --noconfirm
  
 pacman -S aisleriot adwaita-icon-theme baobab brasero evince gdm gnome-{backgrounds,builder,calculator,control-center,disk-utility,mines,screenshot,session,shell,shell-extensions,system-monitor,terminal,themes-standard,tweak-tool,user-share} file-roller gedit gedit-code-assistance gitg gtk3-print-backends gvfs gvfs-{afc,gphoto2,mtp,nfs,smb} mousetweaks mutter --noconfirm
-pacman -S nautilus nautilus-sendto nautilus-share samba xdg-user-dirs-gtk --noconfirm
+pacman -S nautilus nautilus-sendto nautilus-share samba --noconfirm
 
 pacman -S unrar p7zip lzop cpio nfs-utils libva-intel-driver --noconfirm
 pacman -S ntfs-3g dosfstools exfat-utils autofs net-tools pkgfile screenfetch --noconfirm
@@ -129,7 +129,9 @@ sed -i 's/Type=oneshot/Type=idle/g' /lib/systemd/system/ufw.service
 sed -i 's/\[daemon\]/\[daemon\]\nAutomaticLogin='$user_name'\nAutomaticLoginEnable=True/g' /etc/gdm/custom.conf
 echo -e 'if [ -x /usr/bin/numlockx ]; then\n\t/usr/bin/numlockx on\nfi' >> /etc/gdm/Init/Default
 
-echo -e "\nalias clean='pacaur -Scc && sudo rm -Rf /home/'$user_name'/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
+mkdir -p /home/$user_name/{Desktop,Documentos,Downloads/Torrents,Imagens,Modelos/www,Músicas,Público,Vídeos}
+echo -e "\nalias autoclean='pacaur -Scc && sudo rm -Rf /home/$user_name/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
+echo -e "\nalias autoref='sudo sed -i 's\/\^\#Server\/Server\/' \/etc\/pacman.d\/mirrorlist.pacnew && sudo reflector -l 10 --sort rate --save /etc/pacman.d/mirrorlist.pacnew && sudo mv /etc/pacman.d/mirrorlist.pacnew /etc/pacman.d/mirrorlist'" >> /home/$user_name/.bashrc
 
 sed -i 's/function show_message/export STEAM_FRAME_FORCE_CLOSE=1\n\nfunction show_message/g' /usr/lib/steam/steam
 sed -i 's/Adwaita/\$THEME_NAME/g' /usr/share/icons/default/index.theme
