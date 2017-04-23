@@ -121,7 +121,7 @@ echo -e 'Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"\n<Directory "/usr/sha
 ## BEGIN ~ Zswap
 pacman -S systemd-swap --noconfirm
   sed -i 's/zram_enabled=0/zram_enabled=1/g' /etc/systemd/swap.conf
-  sed -i 's/$ram_size\/4/$ram_size/g' /etc/systemd/swap.conf
+##  sed -i 's/$ram_size\/4/$ram_size/g' /etc/systemd/swap.conf
 ## END ~ Zswap
 
 ## BEGIN ~ Configuring services + Default folders
