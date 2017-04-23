@@ -71,7 +71,7 @@ pacman -S dolphin firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh
 ## BEGIN ~ Other packages
 pacman -S k3b devede gimp inkscape audacity kdenlive frei0r-plugins
 pacman -S handbrake handbrake-cli soundconverter converseen amarok
-pacman -S qbittorrent vlc phonon-qt5-vlc steam steam-native-runtime zsnes kmines kpatience
+pacman -S qbittorrent vlc steam steam-native-runtime zsnes kmines kpatience
 pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox virtualbox-guest-iso linux-headers
 ## END ~ Other packages
 
