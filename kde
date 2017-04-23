@@ -64,7 +64,7 @@ pacman -S pulseaudio-alsa pulseaudio-bluetooth bluez bluez-libs bluez-utils blue
 pacman -S lib32-freetype2 dvd+rw-tools cdrdao gst-plugins-good gst-plugins-ugly gst-libav phonon-qt5-gstreamer --needed --noconfirm
 pacman -S ttf-freefont ttf-bitstream-vera ttf-dejavu ttf-liberation wqy-microhei --needed --noconfirm
 
-pacman -S latte-dock simple-scan system-config-printer print-manager filelight --needed --noconfirm
+pacman -S simple-scan print-manager filelight --needed --noconfirm
 pacman -S dolphin firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh-pt-BR --needed --noconfirm
 ## END ~ Updating system and first packages
 
@@ -77,11 +77,11 @@ pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox virtualbox-guest-is
 
 ## BEGIN ~ Second packages
 sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware open-fuse-iso downgrade ocs-url"
-sudo -H -u $user_name bash -c "pacaur -S jdk kf5-servicemenus-encfs plasma5-applet-awesome-widgets"
+sudo -H -u $user_name bash -c "pacaur -S jdk kf5-servicemenus-encfs"
 sudo -H -u $user_name bash -c "pacaur -S ttf-ms-fonts ttf-vista-fonts hunspell-pt-br libreoffice-extension-vero rar"
 sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge virtualbox-ext-oracle"
 sudo -H -u $user_name bash -c "pacaur -S arc-kde-git numix-square-icon-theme-git numix-circle-icon-theme-git"
-sudo -H -u $user_name bash -c "pacaur -S multibootusb octopi-git smartgit system-config-samba wakfu-transition"
+sudo -H -u $user_name bash -c "pacaur -S multibootusb octopi-git smartgit wakfu-transition"
 sudo -H -u $user_name bash -c "pacaur -S google-chrome brackets-bin"
 sudo -H -u $user_name bash -c "pacaur -S intel-xdk"
 freshclam
