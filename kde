@@ -187,7 +187,7 @@ fi
 
 ## BEGIN ~ Finishing and Some tips
 pacman -Rns $(pacman -Qtdq) && pacman -Scc
-mv arch-menu.svg /usr/share/icons/
+cp icons/* /usr/share/icons/
 
 chown -R $user_name:users /home/$user_name
 chmod 755 -R /home/$user_name/
