@@ -11,7 +11,6 @@ Fork: https://github.com/helmuthdu/aui
 ## How to use
 - FIFO [system base]: `cd <dir> && ./fifo`
  - KDE [kde custom system]: `./kde`
- - Gnome [gnome custom system]: `./gnome`
   
 ## FIFO SCRIPT
 - Configure keymap
