@@ -76,12 +76,11 @@ pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox virtualbox-guest-is
 ## END ~ Other packages
 
 ## BEGIN ~ Second packages
-sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware open-fuse-iso downgrade ocs-url kf5-servicemenus-encfs jdk"
+sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware open-fuse-iso ocs-url kf5-servicemenus-encfs jdk"
 sudo -H -u $user_name bash -c "pacaur -S ttf-ms-fonts ttf-vista-fonts hunspell-pt-br libreoffice-extension-vero rar"
 sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge virtualbox-ext-oracle"
 sudo -H -u $user_name bash -c "pacaur -S arc-kde-git numix-square-icon-theme-git numix-circle-icon-theme-git"
-sudo -H -u $user_name bash -c "pacaur -S multibootusb octopi-git smartgit wakfu-transition"
-sudo -H -u $user_name bash -c "pacaur -S google-chrome brackets-bin"
+sudo -H -u $user_name bash -c "pacaur -S multibootusb octopi-git smartgit google-chrome brackets-bin wakfu-transition"
 sudo -H -u $user_name bash -c "pacaur -S intel-xdk"
 freshclam
 ## END ~ Second packages
@@ -153,7 +152,7 @@ sed -i 's/Type=oneshot/Type=idle/g' /lib/systemd/system/ufw.service
 ## END ~ Configuring services + Default folders
 
 ## BEGIN ~ Configuring and repairing other things
-mkdir -p /home/$user_name/{Desktop,Documentos,Downloads/Torrents,Imagens,Modelos/www,Músicas,Público,Vídeos}
+mkdir -p /home/$user_name/{Desktop,Documentos,Downloads/Torrents,Imagens,Modelos/{intelXDK,nodejs,VirtualBox\ VMs,www},Músicas,Público,Vídeos}
 echo -e "\nalias autoclean='pacaur -Scc && sudo rm -Rf /home/$user_name/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
 echo -e "\nalias autoref='sudo sed -i 's\/\^\#Server\/Server\/' \/etc\/pacman.d\/mirrorlist.pacnew && sudo reflector -l 10 --sort rate --save /etc/pacman.d/mirrorlist.pacnew && sudo mv /etc/pacman.d/mirrorlist.pacnew /etc/pacman.d/mirrorlist'" >> /home/$user_name/.bashrc
 
