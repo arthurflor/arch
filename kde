@@ -122,7 +122,7 @@ echo -e 'Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"\n<Directory "/usr/sha
 ## BEGIN ~ Zswap
 pacman -S systemd-swap --noconfirm
   sed -i 's/zram_enabled=0/zram_enabled=1/g' /etc/systemd/swap.conf
-##  sed -i 's/$ram_size\/4/$ram_size/g' /etc/systemd/swap.conf
+#  sed -i 's/$ram_size\/4/$ram_size/g' /etc/systemd/swap.conf
 ## END ~ Zswap
 
 ## BEGIN ~ Configuring services + Default folders
@@ -189,6 +189,8 @@ fi
 pacman -Rns $(pacman -Qtdq) && pacman -Scc
 cp icons/* /usr/share/icons/
 
+echo 
+
 chown -R $user_name:users /home/$user_name
 chmod 755 -R /home/$user_name/
 clear && cd ~
@@ -198,6 +200,4 @@ echo "All done."
   # Nvidia settings: optirun nvidia-settings -c :8
   # Steam set game launch options (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun %command%
   # Wakfu java config: Parameters runtime: -Xms4096m -Xmx8192m
-  # Wakfu icon steam (circle): steam_icon_215080
-  # Tip for gtk2 theme on breeze: go to system settings > color > options and make sure 'apply colors to non-Qt colors' is switched off
 ## END
