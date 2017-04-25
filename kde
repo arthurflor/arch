@@ -76,11 +76,12 @@ pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox virtualbox-guest-is
 ## END ~ Other packages
 
 ## BEGIN ~ Second packages
-sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware open-fuse-iso ocs-url kf5-servicemenus-encfs jdk"
+sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware open-fuse-iso ocs-url"
+sudo -H -u $user_name bash -c "pacaur -S jdk kf5-servicemenus-encfs plasma5-applet-awesome-widgets"
 sudo -H -u $user_name bash -c "pacaur -S ttf-ms-fonts ttf-vista-fonts hunspell-pt-br libreoffice-extension-vero rar"
 sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge virtualbox-ext-oracle"
 sudo -H -u $user_name bash -c "pacaur -S arc-kde-git numix-square-icon-theme-git numix-circle-icon-theme-git"
-sudo -H -u $user_name bash -c "pacaur -S multibootusb octopi-git smartgit google-chrome brackets-bin wakfu-transition"
+sudo -H -u $user_name bash -c "pacaur -S multibootusb octopi-git smartgit google-chrome brackets-bin"
 sudo -H -u $user_name bash -c "pacaur -S intel-xdk"
 freshclam
 ## END ~ Second packages
