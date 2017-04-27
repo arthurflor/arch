@@ -64,7 +64,7 @@ pacman -S pulseaudio-alsa pulseaudio-bluetooth bluez bluez-libs bluez-utils blue
 pacman -S lib32-freetype2 dvd+rw-tools cdrdao gst-plugins-good gst-plugins-ugly gst-libav phonon-qt5-gstreamer --needed --noconfirm
 pacman -S ttf-bitstream-vera ttf-dejavu ttf-liberation --needed --noconfirm
 
-pacman -S simple-scan print-manager filelight --needed --noconfirm
+pacman -S simple-scan print-manager system-config-printer filelight --needed --noconfirm
 pacman -S dolphin firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh-pt-BR --needed --noconfirm
 ## END ~ Updating system and first packages
 
@@ -76,29 +76,14 @@ pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox virtualbox-guest-is
 ## END ~ Other packages
 
 ## BEGIN ~ Second packages
-sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware open-fuse-iso ocs-url"
-sudo -H -u $user_name bash -c "pacaur -S jdk kf5-servicemenus-encfs plasma5-applet-awesome-widgets"
+sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware open-fuse-iso ocs-url hplip-plugin"
+sudo -H -u $user_name bash -c "pacaur -S jdk kf5-servicemenus-encfs plasma5-applet-awesome-widgets virtualbox-ext-oracle"
 sudo -H -u $user_name bash -c "pacaur -S ttf-ms-fonts ttf-vista-fonts hunspell-pt-br libreoffice-extension-vero rar"
-sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge virtualbox-ext-oracle"
-sudo -H -u $user_name bash -c "pacaur -S arc-kde-git numix-square-icon-theme-git numix-circle-icon-theme-git"
+sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge arc-kde-git menda-circle-icon-theme-git"
 sudo -H -u $user_name bash -c "pacaur -S multibootusb octopi-git smartgit google-chrome brackets-bin"
 sudo -H -u $user_name bash -c "pacaur -S intel-xdk"
 freshclam
 ## END ~ Second packages
-
-## BEGIN ~ Configuring look-and-feel arc-dark
-cd /usr/share/plasma/look-and-feel/com.github.varlesh.arc-dark/contents/splash
-  convert -size 32x32 xc:black images/black.png
-  cp ../../../org.kde.breeze.desktop/contents/splash/images/kde.svgz images/kde.svgz
-  cp ../../../org.kde.breeze.desktop/contents/previews/splash.png ../previews/
-    sed -i 's/background/black/g' Splash.qml
-    sed -i 's/kde.png"/kde.svgz"\n\t\tsourceSize.width: 128\n\t\tsourceSize.height: 128/g' Splash.qml
-
-cd /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/contents/ui/
-  sed -i 's/main.height <= 2/main.height <= 3/g' DigitalClock.qml
-  sed -i ': 1 ; N ; $!b1 ; s/height: timeLabel.height/height: timeLabel.height \/ 1.2/2' DigitalClock.qml
-cd ~
-## END ~ Configuring look-and-feel arc-dark
 
 ## BEGIN ~ Installing and configuring Mysql + Apache + PHP
 pacman -S mariadb --needed --noconfirm && mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
@@ -125,7 +110,7 @@ pacman -S systemd-swap --noconfirm
 #  sed -i 's/$ram_size\/4/$ram_size/g' /etc/systemd/swap.conf
 ## END ~ Zswap
 
-## BEGIN ~ Configuring services + Default folders
+## BEGIN ~ Configuring services
 gpasswd -a $user_name vboxusers 
 gpasswd -a $user_name bumblebee
 modprobe fuse && modprobe vboxdrv
@@ -150,10 +135,14 @@ systemctl disable octopi
 ufw allow 1714:1764/udp && ufw allow 1714:1764/tcp
 ufw allow 6881/udp && ufw allow 6881/tcp
 sed -i 's/Type=oneshot/Type=idle/g' /lib/systemd/system/ufw.service
-## END ~ Configuring services + Default folders
+## END ~ Configuring services
 
 ## BEGIN ~ Configuring and repairing other things
 mkdir -p /home/$user_name/{Desktop,Documentos,Downloads/Torrents,Imagens,Modelos/{intelXDK,nodejs,VirtualBox\ VMs,www},Músicas,Público,Vídeos}
+
+cp icons/* /usr/share/icons/
+cp config/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
+
 echo -e "\nalias autoclean='pacaur -Scc && sudo rm -Rf /home/$user_name/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
 echo -e "\nalias autoref='sudo sed -i 's\/\^\#Server\/Server\/' \/etc\/pacman.d\/mirrorlist.pacnew && sudo reflector -l 10 --sort rate --save /etc/pacman.d/mirrorlist.pacnew && sudo mv /etc/pacman.d/mirrorlist.pacnew /etc/pacman.d/mirrorlist'" >> /home/$user_name/.bashrc
 
@@ -187,9 +176,6 @@ fi
 
 ## BEGIN ~ Finishing and Some tips
 pacman -Rns $(pacman -Qtdq) && pacman -Scc
-cp icons/* /usr/share/icons/
-
-echo 
 
 chown -R $user_name:users /home/$user_name
 chmod 755 -R /home/$user_name/
