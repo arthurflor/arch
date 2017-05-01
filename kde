@@ -29,8 +29,8 @@ sed -i "s/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g" /etc/sudoers
 echo -e "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen
 localectl set-x11-keymap br abnt2
 
-pacman -Syu
-pacman -S yajl namcap git wget expac base-devel bash-completion pkgstats arch-wiki-lite --needed --noconfirm
+pacman -Syyu
+pacman -S yajl namcap git wget expac base-devel bash-completion pkgstats --needed --noconfirm
 
 cd /tmp/ 
   sudo -H -u $user_name bash -c "gpg --recv-keys --keyserver hkp://keyserver.ubuntu.com 1EB2638FF56C0C53"

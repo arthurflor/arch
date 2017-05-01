@@ -1,30 +1,18 @@
-# Arch Install
-Based: https://github.com/helmuthdu/aui
+## Arch Install
+Baseado: https://github.com/helmuthdu/aui
 
-## Prerequisites
-- A working internet connection
-- Logged in as 'root'
+### Pré-requisitos
+- Permissão de root
+- Conexão com Internet
 
-## How to get it
-- get the script: `wget https://github.com/arthurflor/arch/tarball/master -O - | tar xz`
+### Como baixar
+- Mudando layout de teclado: loadkeys br-abnt2
+- Conectando ao wi-fi (caso necessário): wifi-menu -o
+- Baixando scripts: `wget https://github.com/arthurflor/arch/tarball/master -O - | tar xz`
 
-## How to use
-- FIFO [system base]: `cd <dir> && ./fifo`
- - KDE [kde custom system]: `./kde`
-  
-## FIFO SCRIPT
-- Configure keymap
-- Select editor
-- Automatic configure mirrorlist
-- Create partition
-- Format device
-- Install system base
-- Configure fstab
-- Configure hostname
-- Configure timezone
-- Configure hardware clock
-- Configure locale
-- Configure mkinitcpio
-- Install/Configure bootloader
-- Configure mirrorlist
-- Configure root password
+### Como usar
+- FIFO [base do sistema]: `cd <dir> && ./fifo`
+    #### Pós-requisitos
+    - Copiar scripts baixados para a pasta /root: `cd.. && mv <dir> /mnt/root`
+
+- KDE [instalação e configuração do sistema KDE]: `./kde`
