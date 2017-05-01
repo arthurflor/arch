@@ -30,7 +30,7 @@ echo -e "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen
 localectl set-x11-keymap br abnt2
 
 pacman -Syu
-pacman -S yajl namcap git wget expac base-devel bash-completion pkgstats arch-wiki-lite reflector --needed --noconfirm
+pacman -S yajl namcap git wget expac base-devel bash-completion pkgstats arch-wiki-lite --needed --noconfirm
 
 cd /tmp/ 
   sudo -H -u $user_name bash -c "gpg --recv-keys --keyserver hkp://keyserver.ubuntu.com 1EB2638FF56C0C53"
@@ -49,7 +49,7 @@ pacman -S xf86-input-synaptics xf86-input-mouse xf86-input-keyboard --needed --n
 pacman -S nvidia nvidia-settings nvidia-utils lib32-nvidia-utils bumblebee bbswitch primus lib32-primus --needed --noconfirm
 
 pacman -S plasma breeze-kde4 kdebase-runtime kde-l10n-pt_br kdenetwork-filesharing --needed --noconfirm
-pacman -S sddm-kcm partitionmanager ark kcalc kate kdeconnect kwalletmanager kde-meta-kdegraphics konsole --needed --noconfirm
+pacman -S sddm-kcm partitionmanager ark kcalc kate kdeconnect kde-meta-kdegraphics konsole ksystemlog kwalletmanager --needed --noconfirm
 
 pacman -S libva-intel-driver intel-ucode samba smbnetfs --needed --noconfirm
 pacman -S zip unzip unrar p7zip lzop cpio nfs-utils --needed --noconfirm
@@ -79,8 +79,8 @@ pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox virtualbox-guest-is
 sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware open-fuse-iso ocs-url hplip-plugin"
 sudo -H -u $user_name bash -c "pacaur -S jdk kf5-servicemenus-encfs plasma5-applet-awesome-widgets virtualbox-ext-oracle"
 sudo -H -u $user_name bash -c "pacaur -S ttf-ms-fonts ttf-vista-fonts hunspell-pt-br libreoffice-extension-vero rar"
-sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge arc-kde-git menda-circle-icon-theme-git"
-sudo -H -u $user_name bash -c "pacaur -S multibootusb octopi-git smartgit google-chrome brackets-bin"
+sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge arc-kde-git numix-icon-theme-pack"
+sudo -H -u $user_name bash -c "pacaur -S multibootusb smartgit google-chrome brackets-bin pamac pamac-tray-appindicator"
 sudo -H -u $user_name bash -c "pacaur -S intel-xdk"
 freshclam
 ## END ~ Second packages
@@ -114,7 +114,7 @@ pacman -S systemd-swap --noconfirm
 gpasswd -a $user_name vboxusers 
 gpasswd -a $user_name bumblebee
 modprobe fuse && modprobe vboxdrv
-dkms autoinstall 
+dkms autoinstall
 echo -e "vboxdrv\nvboxnetadp\nvboxnetflt\nvboxpci" > /etc/modules-load.d/virtualbox.conf
 
 systemctl enable NetworkManager
@@ -134,7 +134,10 @@ systemctl disable octopi
 
 ufw allow 1714:1764/udp && ufw allow 1714:1764/tcp
 ufw allow 6881/udp && ufw allow 6881/tcp
+
 sed -i 's/Type=oneshot/Type=idle/g' /lib/systemd/system/ufw.service
+sed -i 's/Type=dbus/Type=idle/g' /lib/systemd/system/NetworkManager.service
+sed -i 's/Type=notify/Type=idle/g' /lib/systemd/system/org.cups.cupsd.service
 ## END ~ Configuring services
 
 ## BEGIN ~ Configuring and repairing other things
@@ -144,7 +147,6 @@ cp icons/* /usr/share/icons/
 cp config/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
 
 echo -e "\nalias autoclean='pacaur -Scc && sudo rm -Rf /home/$user_name/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
-echo -e "\nalias autoref='sudo sed -i 's\/\^\#Server\/Server\/' \/etc\/pacman.d\/mirrorlist.pacnew && sudo reflector -l 10 --sort rate --save /etc/pacman.d/mirrorlist.pacnew && sudo mv /etc/pacman.d/mirrorlist.pacnew /etc/pacman.d/mirrorlist'" >> /home/$user_name/.bashrc
 
 sed -i 's/function show_message/export STEAM_FRAME_FORCE_CLOSE=1\n\nfunction show_message/g' /usr/lib/steam/steam
 
@@ -173,6 +175,20 @@ if   [ "$grub_sec" == "y" ]; then
   sed -i 's/timeout=5/timeout=0/g' /boot/grub/grub.cfg
 fi
 ## END ~ Configuring and repairing other things
+
+## BEGIN ~ Configuring look-and-feel arc-dark
+cd /usr/share/plasma/look-and-feel/com.github.varlesh.arc-dark/contents/splash
+  convert -size 32x32 xc:black images/black.png
+  cp ../../../org.kde.breeze.desktop/contents/splash/images/kde.svgz images/kde.svgz
+  cp ../../../org.kde.breeze.desktop/contents/previews/splash.png ../previews/
+    sed -i 's/background/black/g' Splash.qml
+    sed -i 's/kde.png"/kde.svgz"\n\t\tsourceSize.width: 128\n\t\tsourceSize.height: 128/g' Splash.qml
+
+cd /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/contents/ui/
+  sed -i 's/main.height <= 2/main.height <= 3/g' DigitalClock.qml
+  sed -i ': 1 ; N ; $!b1 ; s/height: timeLabel.height/height: timeLabel.height \/ 1.2/2' DigitalClock.qml
+cd ~
+## END ~ Configuring look-and-feel arc-dark
 
 ## BEGIN ~ Finishing and Some tips
 pacman -Rns $(pacman -Qtdq) && pacman -Scc

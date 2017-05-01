@@ -1,5 +1,5 @@
 # Arch Install
-Fork: https://github.com/helmuthdu/aui
+Based: https://github.com/helmuthdu/aui
 
 ## Prerequisites
 - A working internet connection
