@@ -1,0 +1,125 @@
+#!/bin/bash
+#-----------------------------------------------------------------------------
+# Created by arthurflor mailto: arthurflor23[at]gmail[dot]com
+# Run this script after your first boot with Manjaro 17.0.1 KDE
+#-----------------------------------------------------------------------------
+
+## BEGIN ~ Collecting information
+clear
+echo -e "Manjaro 17.0.1 KDE ~ Install and set up some packages\n\n"
+
+user_name=$(whoami)
+echo "User name: $user_name"
+read -p "Seconds to grub [0]: " grub_sec
+read -p "Install Apache, MariaDB, PHP? [y]: " lampp
+read -p "Install systemd-swap? [y]: " swap
+
+if   [ "$grub_sec" == "" ]; then
+    grub_sec="0"
+fi
+## END
+
+## BEGIN ~ Update mirrors, system and remove some default packages
+sudo pacman-mirrors -g
+sudo pacman -Syy linux410
+
+sudo pacman -Rc digikam krita konversation qtav xine-ui kleopatra manjaro-documentation-en htop yakuake --noconfirm
+sudo pacman -Rc thunderbird-kde kwrite libreoffice-still jdk8-openjdk jre8-openjdk jre8-openjdk-headless --noconfirm
+sudo pacman -Rns $(pacman -Qtdq) --noconfirm
+
+sudo pacman -Syu sane libreoffice-fresh --noconfirm
+## END
+
+## BEGIN ~ Install packages (pacman)
+sudo pacman -S gimp converseen devede handbrake handbrake-cli soundconverter audacity zsnes kmines kpatience --noconfirm
+sudo pacman -S frei0r-plugins open-fuse-iso ifuse lsdvd --noconfirm
+sudo pacman -S clamav clamtk gufw filezilla nodejs npm --noconfirm
+sudo pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-vnc linux410-headers
+## END
+
+## BEGIN ~ Install packages (yaourt)
+yaourt -S jdk kf5-servicemenus-encfs --noconfirm
+yaourt -S ttf-ms-fonts ttf-vista-fonts --noconfirm
+yaourt -S hunspell-pt-br libreoffice-extension-vero --noconfirm
+yaourt -S google-chrome plasma5-applet-awesome-widgets --noconfirm
+yaourt -S smartgit brackets-bin intel-xdk --noconfirm
+## END
+
+## BEGIN ~ Install and set up apache, mysql, php
+if   [ "$lampp" == "y" ] || [ "$lampp" == "Y" ] || [ "$lampp" == "" ]; then
+    sudo pacman -S mariadb mysql-workbench apache phpmyadmin php php-apache php-cgi php-gd php-mcrypt php-pgsql php-sqlite php-intl --needed --noconfirm
+    sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+    sudo systemctl start mysqld
+    sudo mysql_secure_installation
+
+    sudo sed -i 's/DocumentRoot "\/srv\/http"/DocumentRoot "\/home\/'$user_name'\/Modelos\/www"/g' /etc/httpd/conf/httpd.conf
+    sudo sed -i 's/<Directory "\/srv\/http">/<Directory "\/home\/'$user_name'\/Modelos\/www">/g' /etc/httpd/conf/httpd.conf
+    echo -e 'Include conf/extra/phpmyadmin.conf\nInclude conf/extra/php7_module.conf' | sudo tee --append /etc/httpd/conf/httpd.conf
+    sudo sed -i 's/LoadModule mpm_event_module/#LoadModule mpm_event_module/g' /etc/httpd/conf/httpd.conf
+    sudo sed -i 's/#LoadModule mpm_prefork_module/LoadModule mpm_prefork_module/g' /etc/httpd/conf/httpd.conf
+    sudo sed -i 's/mod_mpm_event.so/mod_mpm_event.so\nLoadModule php7_module modules\/libphp7.so/g' /etc/httpd/conf/httpd.conf
+    sudo sed -i 's/display_errors = Off/display_errors = On/g' /etc/php/php.ini
+    sudo sed -i 's/extension=zip.so/extension=mysqli.so\nextension=mcrypt.so\nextension=pdo_mysql.so\nextension=bz2.so\nextension=zip.so\nextension=iconv.so/g' /etc/php/php.ini
+
+    echo -e 'Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"\n<Directory "/usr/share/webapps/phpMyAdmin">\n\tDirectoryIndex index.php\n\tAllowOverride All\n\tOptions FollowSymlinks\n\tRequire all granted\n</Directory>' | sudo tee --append /etc/httpd/conf/extra/phpmyadmin.conf
+fi
+## END
+
+## BEGIN ~ Install and set up systemd-swap
+if   [ "$swap" == "y" ] || [ "$swap" == "Y" ] || [ "$swap" == "" ]; then
+    sudo pacman -S systemd-swap --noconfirm
+    sudo sed -i 's/zram_enabled=0/zram_enabled=1/g' /etc/systemd/swap.conf
+fi
+## END
+
+## BEGIN ~ Configuring services
+sudo gpasswd -a $user_name vboxusers 
+sudo gpasswd -a $user_name bumblebee
+sudo modprobe fuse 
+sudo modprobe vboxdrv
+sudo dkms autoinstall
+echo -e "vboxdrv\nvboxnetadp\nvboxnetflt\nvboxpci" | sudo tee --append /etc/modules-load.d/virtualbox.conf
+
+sudo systemctl enable bumblebeed
+sudo systemctl enable ufw && sudo ufw enable
+sudo systemctl enable systemd-swap
+
+sudo systemctl disable ModemManager
+
+sudo ufw allow 1714:1764/udp && sudo ufw allow 1714:1764/tcp
+sudo ufw allow 8999/udp && sudo ufw allow 8999/tcp
+## END
+
+## BEGIN ~ Configuring and repairing other things
+
+sudo sed -i 's/IgnoreLid=false/IgnoreLid=true/g' /etc/UPower/UPower.conf
+echo -e "HandleLidSwitch=ignore\nLidSwitchIgnoreInhibited=off" | sudo tee --append /etc/systemd/logind.conf
+
+echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
+sudo mkdir -p /etc/systemd/coredump.conf.d/ && echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
+
+sudo sed -i 's/timeout=5/timeout='$grub_sec'/g' /boot/grub/grub.cfg
+echo -e 'Section "Device"\n\tIdentifier "Intel Graphics"\n\tDriver "intel"\n\tOption "DRI" "3"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/20-intel.conf
+## END
+
+## BEGIN ~ Configuring look-and-feel
+mkdir -p /home/$user_name/{Downloads/Torrents,Modelos/{intelXDK,nodejs,VirtualBox\ VMs,www}}
+
+sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
+
+cd /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/contents/ui/
+  sed -i 's/main.height <= 2/main.height <= 3/g' DigitalClock.qml
+  sed -i ': 1 ; N ; $!b1 ; s/height: timeLabel.height/height: timeLabel.height \/ 1.2/2' DigitalClock.qml
+cd ~
+## END
+
+## BEGIN ~ Finishing and Some tips
+sudo pacman -Rns $(pacman -Qtdq) && yaourt -Scc
+freshclam
+
+echo -e "\nAll done."
+
+    # Nvidia settings: optirun nvidia-settings -c :8
+    # Steam set game launch options (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun %command%
+    # Wakfu java config: Parameters runtime: -Xms4096m -Xmx8192m
+## END

@@ -16,7 +16,7 @@ downkbTooltip=false
 downkbTooltipColor=#00ffff
 fontColor=#000000
 fontFamily=Noto Sans
-fontSize=8
+fontSize=10
 fontStyle=normal
 fontWeight=normal
 height=0
@@ -29,20 +29,13 @@ queueLimit=0
 swapTooltip=false
 swapTooltipColor=#ffff00
 tempUnits=Celsius
-text="<table align=\"right\" cellpadding=\"2\">
-  <tr>
-    <td align=\"right\">$upkb KiB\/s<br>$downkb KiB\/s</td>
-    <td align=\"right\">CPU&nbsp; &nbsp;<br>$temp1\ºC&nbsp; &nbsp;</td>
-    <td align=\"right\">GPU<br>$gputemp.0\ºC</td>
-    <td align=\"right\">Mem<br>$memgb GB</td>
-  </tr>
-</table>"
+text="[&uarr;$upkb KiBs /$downkb KiBs &darr;] &nbsp;[CPU$temp1\ºC]  &nbsp;[GPU $gputemp.0\ºC] &nbsp;[Mem$memgb GB]"
 textAlign=right
 tooltipBackground=#ffffff
 tooltipNumber=100
 translateStrings=false
 upkbTooltipColor=#ff00ff
 useTooltipBackground=false
-width=175
+width=400
 wrapNewLines=false
 wrapText=false
