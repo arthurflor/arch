@@ -148,6 +148,7 @@ cp config/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/con
 echo -e "\nalias autoclean='pacaur -Scc && sudo rm -Rf /home/$user_name/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
 
 sed -i 's/function show_message/export STEAM_FRAME_FORCE_CLOSE=1\n\nfunction show_message/g' /usr/lib/steam/steam
+echo -e "export SAL_USE_VCLPLUGIN=gtk" >> /etc/profile.d/libreoffice-fresh.sh
 
 cp /etc/samba/smb.conf.default /etc/samba/smb.conf && pdbedit -a -u $user_name
 sed -i 's/\[homes\]/;\[homes\]/g' /etc/samba/smb.conf
