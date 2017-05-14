@@ -91,7 +91,6 @@ sudo ufw allow 8999/udp && sudo ufw allow 8999/tcp
 ## END
 
 ## BEGIN ~ Configuring and repairing other things
-
 sudo sed -i 's/IgnoreLid=false/IgnoreLid=true/g' /etc/UPower/UPower.conf
 echo -e "HandleLidSwitch=ignore\nLidSwitchIgnoreInhibited=off" | sudo tee --append /etc/systemd/logind.conf
 
@@ -105,6 +104,7 @@ echo -e 'Section "Device"\n\tIdentifier "Intel Graphics"\n\tDriver "intel"\n\tOp
 ## BEGIN ~ Configuring look-and-feel
 mkdir -p /home/$user_name/{Downloads/Torrents,Modelos/{intelXDK,nodejs,VirtualBox\ VMs,www}}
 
+echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
 
 cd /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/contents/ui/
@@ -118,7 +118,6 @@ sudo pacman -Rns $(pacman -Qtdq) && yaourt -Scc
 freshclam
 
 echo -e "\nAll done."
-
     # Nvidia settings: optirun nvidia-settings -c :8
     # Steam set game launch options (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun %command%
     # Wakfu java config: Parameters runtime: -Xms4096m -Xmx8192m
