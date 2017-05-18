@@ -69,7 +69,7 @@ pacman -S dolphin firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh
 ## END ~ Updating system and first packages
 
 ## BEGIN ~ Other packages
-pacman -S k3b devede gimp inkscape audacity kdenlive frei0r-plugins
+pacman -S k3b devede gimp inkscape audacity kdenlive frei0r-plugins latte-dock
 pacman -S handbrake handbrake-cli soundconverter converseen amarok
 pacman -S qbittorrent vlc steam steam-native-runtime zsnes kmines kpatience
 pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox virtualbox-guest-iso linux-headers

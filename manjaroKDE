@@ -23,7 +23,7 @@ fi
 sudo pacman-mirrors -g
 sudo pacman -Syy linux410
 
-sudo pacman -Rc digikam krita konversation qtav xine-ui kleopatra manjaro-documentation-en htop yakuake --noconfirm
+sudo pacman -Rc digikam krita konversation qtav xine-ui kleopatra manjaro-documentation-en htop --noconfirm
 sudo pacman -Rc thunderbird-kde kwrite libreoffice-still jdk8-openjdk jre8-openjdk jre8-openjdk-headless --noconfirm
 sudo pacman -Rns $(pacman -Qtdq) --noconfirm
 
@@ -33,7 +33,7 @@ sudo pacman -Syu sane libreoffice-fresh --noconfirm
 ## BEGIN ~ Install packages (pacman)
 sudo pacman -S gimp converseen devede handbrake handbrake-cli soundconverter audacity zsnes kmines kpatience --noconfirm
 sudo pacman -S frei0r-plugins open-fuse-iso ifuse lsdvd --noconfirm
-sudo pacman -S clamav clamtk gufw filezilla nodejs npm --noconfirm
+sudo pacman -S latte-dock clamav clamtk gufw filezilla nodejs npm --noconfirm
 sudo pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-vnc linux410-headers
 ## END
 
