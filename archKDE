@@ -81,7 +81,6 @@ sudo -H -u $user_name bash -c "pacaur -S jdk kf5-servicemenus-encfs plasma5-appl
 sudo -H -u $user_name bash -c "pacaur -S ttf-ms-fonts ttf-vista-fonts hunspell-pt-br libreoffice-extension-vero rar"
 sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge arc-kde-git numix-icon-theme-pack"
 sudo -H -u $user_name bash -c "pacaur -S multibootusb smartgit google-chrome brackets-bin pamac pamac-tray-appindicator"
-sudo -H -u $user_name bash -c "pacaur -S intel-xdk"
 freshclam
 ## END ~ Second packages
 
@@ -140,7 +139,7 @@ sed -i 's/Type=notify/Type=idle/g' /lib/systemd/system/org.cups.cupsd.service
 ## END ~ Configuring services
 
 ## BEGIN ~ Configuring and repairing other things
-mkdir -p /home/$user_name/{Desktop,Documentos,Downloads/Torrents,Imagens,Modelos/{intelXDK,nodejs,VirtualBox\ VMs,www},Músicas,Público,Vídeos}
+mkdir -p /home/$user_name/{Desktop,Documentos,Downloads/Torrents,Imagens,Modelos/{nodejs,VirtualBox\ VMs,www},Músicas,Público,Vídeos}
 
 cp icons/* /usr/share/icons/
 cp config/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/

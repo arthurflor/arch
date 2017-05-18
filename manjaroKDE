@@ -42,7 +42,7 @@ yaourt -S jdk kf5-servicemenus-encfs --noconfirm
 yaourt -S ttf-ms-fonts ttf-vista-fonts --noconfirm
 yaourt -S hunspell-pt-br libreoffice-extension-vero --noconfirm
 yaourt -S google-chrome plasma5-applet-awesome-widgets --noconfirm
-yaourt -S smartgit brackets-bin intel-xdk --noconfirm
+yaourt -S smartgit brackets-bin --noconfirm
 ## END
 
 ## BEGIN ~ Install and set up apache, mysql, php
@@ -102,7 +102,7 @@ echo -e 'Section "Device"\n\tIdentifier "Intel Graphics"\n\tDriver "intel"\n\tOp
 ## END
 
 ## BEGIN ~ Configuring look-and-feel
-mkdir -p /home/$user_name/{Downloads/Torrents,Modelos/{intelXDK,nodejs,VirtualBox\ VMs,www}}
+mkdir -p /home/$user_name/{Downloads/Torrents,Modelos/{nodejs,VirtualBox\ VMs,www}}
 
 echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
