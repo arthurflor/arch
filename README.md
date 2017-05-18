@@ -5,14 +5,17 @@ Baseado: https://github.com/helmuthdu/aui
 - Permissão de root
 - Conexão com Internet
 
-### Como baixar
+### Como baixar (Arch)
 - Mudando layout de teclado: loadkeys br-abnt2
 - Conectando ao wi-fi (caso necessário): wifi-menu -o
 - Baixando scripts: `wget https://github.com/arthurflor/arch/tarball/master -O - | tar xz`
 
-### Como usar
+### Como usar (Arch)
 - FIFO [base do sistema]: `cd <dir> && ./fifo`
     #### Pós-requisitos
     - Copiar scripts baixados para a pasta /root: `cd.. && mv <dir> /mnt/root`
 
-- KDE [instalação e configuração do sistema KDE]: `./kde`
+- Arch + KDE [instalação e configuração do sistema KDE]: `./archKDE`
+
+### Como usar: pós-instalação (Manjaro)
+- Manjaro KDE [instalação e configuração do sistema KDE]: `./manjaroKDE`
