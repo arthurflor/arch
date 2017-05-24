@@ -143,6 +143,7 @@ mkdir -p /home/$user_name/{Desktop,Documentos,Downloads/Torrents,Imagens,Modelos
 
 cp icons/* /usr/share/icons/
 cp config/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
+cp config/latte-dock-config.latterc /home/$user_name/
 
 echo -e "\nalias autoclean='pacaur -Scc && sudo rm -Rf /home/$user_name/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
 
