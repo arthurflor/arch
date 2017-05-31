@@ -111,6 +111,9 @@ cd /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/contents/ui/
   sed -i 's/main.height <= 2/main.height <= 3/g' DigitalClock.qml
   sed -i ': 1 ; N ; $!b1 ; s/height: timeLabel.height/height: timeLabel.height \/ 1.2/2' DigitalClock.qml
 cd ~
+
+sed -i 's/}/\t, "bb.beautify.languages": {"typescript": "js"}\n}/g' /home/$user_name/.config/Brackets/brackets.json
+
 ## END
 
 ## BEGIN ~ Finishing and Some tips

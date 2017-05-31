@@ -44,7 +44,7 @@ cd /tmp/
   sed -i 's/#Color/Color/g' /etc/pacman.conf
 cd ~
 
-pacman -S xorg-server xorg-server-utils xorg-xinit xorg-xkill xf86-video-intel --needed --noconfirm
+pacman -S xorg-server xorg-xinit xorg-xkill xf86-video-intel --needed --noconfirm
 pacman -S xf86-input-synaptics xf86-input-mouse xf86-input-keyboard --needed --noconfirm
 pacman -S nvidia nvidia-settings nvidia-utils lib32-nvidia-utils bumblebee bbswitch primus lib32-primus --needed --noconfirm
 
@@ -79,7 +79,7 @@ pacman -S clamav clamtk gufw filezilla nodejs npm virtualbox virtualbox-guest-is
 sudo -H -u $user_name bash -c "pacaur -S wd719x-firmware aic94xx-firmware open-fuse-iso ocs-url hplip-plugin"
 sudo -H -u $user_name bash -c "pacaur -S jdk kf5-servicemenus-encfs plasma5-applet-awesome-widgets virtualbox-ext-oracle"
 sudo -H -u $user_name bash -c "pacaur -S ttf-ms-fonts ttf-vista-fonts hunspell-pt-br libreoffice-extension-vero rar"
-sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge arc-kde-git numix-icon-theme-pack"
+sudo -H -u $user_name bash -c "pacaur -S plymouth plymouth-theme-arch-charge arc-kde-git numix-square-icon-theme-git numix-circle-icon-theme-git"
 sudo -H -u $user_name bash -c "pacaur -S multibootusb smartgit google-chrome brackets-bin pamac pamac-tray-appindicator"
 freshclam
 ## END ~ Second packages
@@ -145,6 +145,7 @@ cp icons/* /usr/share/icons/
 cp config/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
 
 echo -e "\nalias autoclean='pacaur -Scc && sudo rm -Rf /home/$user_name/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
+sed -i 's/}/\t, "bb.beautify.languages": {"typescript": "js"}\n}/g' /home/$user_name/.config/Brackets/brackets.json
 
 sed -i 's/function show_message/export STEAM_FRAME_FORCE_CLOSE=1\n\nfunction show_message/g' /usr/lib/steam/steam
 echo -e "export SAL_USE_VCLPLUGIN=gtk" >> /etc/profile.d/libreoffice-fresh.sh
