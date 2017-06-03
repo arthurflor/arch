@@ -145,7 +145,6 @@ cp icons/* /usr/share/icons/
 cp config/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
 
 echo -e "\nalias autoclean='pacaur -Scc && sudo rm -Rf /home/$user_name/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
-sed -i 's/}/\t, "bb.beautify.languages": {"typescript": "js"}\n}/g' /home/$user_name/.config/Brackets/brackets.json
 
 sed -i 's/function show_message/export STEAM_FRAME_FORCE_CLOSE=1\n\nfunction show_message/g' /usr/lib/steam/steam
 echo -e "export SAL_USE_VCLPLUGIN=gtk" >> /etc/profile.d/libreoffice-fresh.sh
@@ -184,10 +183,15 @@ cd /usr/share/plasma/look-and-feel/com.github.varlesh.arc-dark/contents/splash
     sed -i 's/background/black/g' Splash.qml
     sed -i 's/kde.png"/kde.svgz"\n\t\tsourceSize.width: 128\n\t\tsourceSize.height: 128/g' Splash.qml
 
-cd /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/contents/ui/
-  sed -i 's/main.height <= 2/main.height <= 3/g' DigitalClock.qml
-  sed -i ': 1 ; N ; $!b1 ; s/height: timeLabel.height/height: timeLabel.height \/ 1.2/2' DigitalClock.qml
+cd /home/$user_name/.local/share/plasma/plasmoids/
+mv /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/ ./
+chown -R $user_name:$user_name org.kde.plasma.digitalclock/
+cd org.kde.plasma.digitalclock/contents/ui/
+sed -i 's/main.height <= 2/main.height <= 3/g' DigitalClock.qml
+sed -i ': 1 ; N ; $!b1 ; s/height: timeLabel.height/height: timeLabel.height \/ 1.2/2' DigitalClock.qml
 cd ~
+
+sed -i 's/}/\t, "bb.beautify.languages": {"typescript": "js"}\n}/g' /home/$user_name/.config/Brackets/brackets.json
 ## END ~ Configuring look-and-feel arc-dark
 
 ## BEGIN ~ Finishing and Some tips
