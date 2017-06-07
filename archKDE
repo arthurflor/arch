@@ -184,7 +184,7 @@ cd /usr/share/plasma/look-and-feel/com.github.varlesh.arc-dark/contents/splash
     sed -i 's/kde.png"/kde.svgz"\n\t\tsourceSize.width: 128\n\t\tsourceSize.height: 128/g' Splash.qml
 
 cd /home/$user_name/.local/share/plasma/plasmoids/
-mv /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/ ./
+cp -R /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/ ./
 chown -R $user_name:$user_name org.kde.plasma.digitalclock/
 cd org.kde.plasma.digitalclock/contents/ui/
 sed -i 's/main.height <= 2/main.height <= 3/g' DigitalClock.qml

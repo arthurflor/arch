@@ -108,7 +108,7 @@ echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreo
 sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
 
 cd /home/$user_name/.local/share/plasma/plasmoids/
-sudo mv /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/ ./
+sudo cp -R /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/ ./
 sudo chown -R $user_name:$user_name org.kde.plasma.digitalclock/
 cd org.kde.plasma.digitalclock/contents/ui/
 sed -i 's/main.height <= 2/main.height <= 3/g' DigitalClock.qml
