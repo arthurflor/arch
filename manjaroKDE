@@ -22,17 +22,19 @@ fi
 ## BEGIN ~ Update mirrors, system and remove some default packages
 sudo pacman-mirrors -g
 
-sudo pacman -Rc digikam krita konversation qtav xine-ui kleopatra manjaro-documentation-en htop --noconfirm
+sudo pacman -Rc digikam krita konversation qtav xine-ui kleopatra manjaro-documentation-en htop cantata --noconfirm
 sudo pacman -Rc thunderbird-kde kwrite libreoffice-still jdk8-openjdk jre8-openjdk jre8-openjdk-headless --noconfirm
 sudo pacman -Rns $(pacman -Qtdq) --noconfirm
 
-sudo pacman -Syu sane libreoffice-fresh --noconfirm
+sudo pacman -Syu xf86-input-synaptics sane libreoffice-fresh --noconfirm
 ## END
 
 ## BEGIN ~ Install packages (pacman)
-sudo pacman -S gimp converseen devede handbrake handbrake-cli soundconverter audacity zsnes kmines kpatience --noconfirm
 sudo pacman -S frei0r-plugins open-fuse-iso ifuse lsdvd --noconfirm
-sudo pacman -S clamav clamtk gufw filezilla nodejs npm --noconfirm
+sudo pacman -S clementine gimp audacity --noconfirm
+sudo pacman -S converseen devede handbrake handbrake-cli soundconverter --noconfirm
+sudo pacman -S zsnes kmines kpatience --noconfirm
+sudo pacman -S clamav clamtk gufw nodejs npm --noconfirm
 sudo pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-vnc 
 ##linux410-headers
 ## END
@@ -41,8 +43,7 @@ sudo pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-e
 yaourt -S jdk kf5-servicemenus-encfs --noconfirm
 yaourt -S ttf-ms-fonts ttf-vista-fonts --noconfirm
 yaourt -S hunspell-pt-br libreoffice-extension-vero --noconfirm
-yaourt -S google-chrome plasma5-applet-awesome-widgets --noconfirm
-yaourt -S smartgit brackets-bin --noconfirm
+yaourt -S google-chrome smartgit brackets-bin --noconfirm
 ## END
 
 ## BEGIN ~ Install and set up apache, mysql, php
@@ -105,7 +106,7 @@ sudo sed -i 's/timeout=5/timeout='$grub_sec'/g' /boot/grub/grub.cfg
 ## END
 
 ## BEGIN ~ Configuring look-and-feel
-mkdir -p /home/$user_name/{Downloads/Torrents,Modelos/{nodejs,VirtualBox\ VMs,www}}
+mkdir -p /home/$user_name/{Downloads/Torrents,Modelos/{VirtualBox\ VMs,www}}
 
 echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
@@ -125,7 +126,7 @@ sed -i 's/}/\t, "bb.beautify.languages": {"typescript": "js"}\n}/g' /home/$user_
 
 ## BEGIN ~ Finishing and Some tips
 sudo pacman -Rns $(pacman -Qtdq) && yaourt -Scc
-freshclam
+sudo freshclam
 
 echo -e "\nAll done."
     # Nvidia settings: optirun nvidia-settings -c :8
