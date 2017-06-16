@@ -12,6 +12,7 @@ user_name=$(whoami)
 echo "User name: $user_name"
 read -p "Seconds to grub [0]: " grub_sec
 read -p "Install Apache, MariaDB, PHP? [y]: " lampp
+read -p "Install Ionic Framework? [y]: " ionic
 read -p "Install systemd-swap? [y]: " swap
 
 if   [ "$grub_sec" == "" ]; then
@@ -36,7 +37,7 @@ sudo pacman -S converseen devede handbrake handbrake-cli soundconverter --noconf
 sudo pacman -S zsnes kmines kpatience --noconfirm
 sudo pacman -S clamav clamtk gufw nodejs npm --noconfirm
 sudo pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-vnc 
-##linux410-headers
+##linux411-headers
 ## END
 
 ## BEGIN ~ Install packages (yaourt)
@@ -66,6 +67,19 @@ if   [ "$lampp" == "y" ] || [ "$lampp" == "Y" ] || [ "$lampp" == "" ]; then
 fi
 ## END
 
+## BEGIN ~ Install and set up apache, mysql, php
+if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
+    yaourt -S android-sdk android-platform android-sdk-platform-tools android-sdk-build-tools gradle
+    ##  android-platform-25
+    
+    export ANDROID_HOME=/opt/android-sdk
+    export PATH=$PATH:$ANDROID_HOME/tools
+
+    sudo npm install -g ionic cordova
+fi
+## END
+
+
 ## BEGIN ~ Install and set up systemd-swap
 if   [ "$swap" == "y" ] || [ "$swap" == "Y" ] || [ "$swap" == "" ]; then
     sudo pacman -S systemd-swap --noconfirm
@@ -85,10 +99,7 @@ sudo systemctl enable bumblebeed
 sudo systemctl enable ufw && sudo ufw enable
 sudo systemctl enable systemd-swap
 
-sudo systemctl disable ModemManager
-
 sudo ufw allow 1714:1764/udp && sudo ufw allow 1714:1764/tcp
-sudo ufw allow 8999/udp && sudo ufw allow 8999/tcp
 ## END
 
 ## BEGIN ~ Configuring and repairing other things
@@ -100,16 +111,15 @@ echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
 sudo mkdir -p /etc/systemd/coredump.conf.d/ && echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
 
 echo -e 'Section "Device"\n\tIdentifier "Intel Graphics"\n\tDriver "intel"\n\tOption "DRI" "3"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/20-intel.conf
-sudo sed -i 's/"quiet"/"quiet loglevel=3"/g' /etc/default/grub
-sudo grub-mkconfig -o /boot/grub/grub.cfg
 sudo sed -i 's/timeout=5/timeout='$grub_sec'/g' /boot/grub/grub.cfg
 ## END
 
 ## BEGIN ~ Configuring look-and-feel
 mkdir -p /home/$user_name/{Downloads/Torrents,Modelos/{VirtualBox\ VMs,www}}
 
-echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
+echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
+sed -i 's/}/\t, "bb.beautify.languages": {"typescript": "js"}\n}/g' /home/$user_name/.config/Brackets/brackets.json
 
 mkdir -p /home/$user_name/.local/share/plasma/plasmoids/
 cd /home/$user_name/.local/share/plasma/plasmoids/
@@ -119,9 +129,6 @@ cd org.kde.plasma.digitalclock/contents/ui/
 sed -i 's/main.height <= 2/main.height <= 3/g' DigitalClock.qml
 sed -i ': 1 ; N ; $!b1 ; s/height: timeLabel.height/height: timeLabel.height \/ 1.2/2' DigitalClock.qml
 cd ~
-
-sed -i 's/}/\t, "bb.beautify.languages": {"typescript": "js"}\n}/g' /home/$user_name/.config/Brackets/brackets.json
-
 ## END
 
 ## BEGIN ~ Finishing and Some tips
@@ -131,5 +138,5 @@ sudo freshclam
 echo -e "\nAll done."
     # Nvidia settings: optirun nvidia-settings -c :8
     # Steam set game launch options (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun %command%
-    # Wakfu java config: Parameters runtime: -Xms4096m -Xmx8192m
+    # Wakfu java config: Parameters runtime: -Xms8192m -Xmx8192m
 ## END
