@@ -21,7 +21,6 @@ fi
 
 ## BEGIN ~ Update mirrors, system and remove some default packages
 sudo pacman-mirrors -g
-sudo pacman -Syy linux410
 
 sudo pacman -Rc digikam krita konversation qtav xine-ui kleopatra manjaro-documentation-en htop --noconfirm
 sudo pacman -Rc thunderbird-kde kwrite libreoffice-still jdk8-openjdk jre8-openjdk jre8-openjdk-headless --noconfirm
@@ -34,7 +33,8 @@ sudo pacman -Syu sane libreoffice-fresh --noconfirm
 sudo pacman -S gimp converseen devede handbrake handbrake-cli soundconverter audacity zsnes kmines kpatience --noconfirm
 sudo pacman -S frei0r-plugins open-fuse-iso ifuse lsdvd --noconfirm
 sudo pacman -S clamav clamtk gufw filezilla nodejs npm --noconfirm
-sudo pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-vnc linux410-headers
+sudo pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-vnc 
+##linux410-headers
 ## END
 
 ## BEGIN ~ Install packages (yaourt)
@@ -91,14 +91,17 @@ sudo ufw allow 8999/udp && sudo ufw allow 8999/tcp
 ## END
 
 ## BEGIN ~ Configuring and repairing other things
+
 sudo sed -i 's/IgnoreLid=false/IgnoreLid=true/g' /etc/UPower/UPower.conf
 echo -e "HandleLidSwitch=ignore\nLidSwitchIgnoreInhibited=off" | sudo tee --append /etc/systemd/logind.conf
 
 echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
 sudo mkdir -p /etc/systemd/coredump.conf.d/ && echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
 
-sudo sed -i 's/timeout=5/timeout='$grub_sec'/g' /boot/grub/grub.cfg
 echo -e 'Section "Device"\n\tIdentifier "Intel Graphics"\n\tDriver "intel"\n\tOption "DRI" "3"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/20-intel.conf
+sudo sed -i 's/"quiet"/"quiet loglevel=3"/g' /etc/default/grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+sudo sed -i 's/timeout=5/timeout='$grub_sec'/g' /boot/grub/grub.cfg
 ## END
 
 ## BEGIN ~ Configuring look-and-feel
@@ -107,6 +110,7 @@ mkdir -p /home/$user_name/{Downloads/Torrents,Modelos/{nodejs,VirtualBox\ VMs,ww
 echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
 
+mkdir -p /home/$user_name/.local/share/plasma/plasmoids/
 cd /home/$user_name/.local/share/plasma/plasmoids/
 sudo cp -R /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/ ./
 sudo chown -R $user_name:$user_name org.kde.plasma.digitalclock/
