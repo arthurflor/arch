@@ -34,14 +34,14 @@ sudo pacman -Syu xf86-input-synaptics sane libreoffice-fresh --noconfirm
 sudo pacman -S frei0r-plugins open-fuse-iso ifuse lsdvd --noconfirm
 sudo pacman -S clementine gimp audacity --noconfirm
 sudo pacman -S converseen devede handbrake handbrake-cli soundconverter --noconfirm
-sudo pacman -S zsnes kmines kpatience --noconfirm
+sudo pacman -S steam-native zsnes kmines kpatience --noconfirm
 sudo pacman -S clamav clamtk gufw nodejs npm --noconfirm
 sudo pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-vnc 
 ##linux411-headers
 ## END
 
 ## BEGIN ~ Install packages (yaourt)
-yaourt -S jdk kf5-servicemenus-encfs --noconfirm
+yaourt -S jdk kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
 yaourt -S ttf-ms-fonts ttf-vista-fonts --noconfirm
 yaourt -S hunspell-pt-br libreoffice-extension-vero --noconfirm
 yaourt -S google-chrome smartgit brackets-bin --noconfirm
@@ -70,10 +70,14 @@ fi
 ## BEGIN ~ Install and set up apache, mysql, php
 if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
     yaourt -S android-sdk android-platform android-sdk-platform-tools android-sdk-build-tools gradle
-    ##  android-platform-25
+    
+    sudo chown $user_name:$user_name -R /opt/android-sdk
     
     export ANDROID_HOME=/opt/android-sdk
     export PATH=$PATH:$ANDROID_HOME/tools
+    
+    sudo mkdir "$ANDROID_HOME/licenses"
+    echo -e "8933bad161af4178b1185d1a37fbf41ea5269c55" | sudo tee --append "$ANDROID_HOME/licenses/android-sdk-license"
 
     sudo npm install -g ionic cordova
 fi
@@ -100,6 +104,7 @@ sudo systemctl enable ufw && sudo ufw enable
 sudo systemctl enable systemd-swap
 
 sudo ufw allow 1714:1764/udp && sudo ufw allow 1714:1764/tcp
+sudo ufw allow 8999/udp && sudo ufw allow 8999/tcp
 ## END
 
 ## BEGIN ~ Configuring and repairing other things
@@ -116,6 +121,9 @@ sudo sed -i 's/timeout=5/timeout='$grub_sec'/g' /boot/grub/grub.cfg
 
 ## BEGIN ~ Configuring look-and-feel
 mkdir -p /home/$user_name/{Downloads/Torrents,Modelos/{VirtualBox\ VMs,www}}
+
+cp icons/manjaro.svg /usr/share/icons/
+cp config/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
 
 sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
 echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
