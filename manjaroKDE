@@ -25,13 +25,13 @@ sudo pacman-mirrors -g
 
 sudo pacman -Rc digikam krita konversation qtav xine-ui kleopatra manjaro-documentation-en htop cantata --noconfirm
 sudo pacman -Rc thunderbird-kde kwrite libreoffice-still jdk8-openjdk jre8-openjdk jre8-openjdk-headless --noconfirm
-sudo pacman -Rns $(pacman -Qtdq) --noconfirm
+yaourt -Qtd
 
 sudo pacman -Syu xf86-input-synaptics sane libreoffice-fresh --noconfirm
 ## END
 
 ## BEGIN ~ Install packages (pacman)
-sudo pacman -S frei0r-plugins open-fuse-iso ifuse lsdvd --noconfirm
+sudo pacman -S virtualgl lib32-virtualgl frei0r-plugins lsdvd --noconfirm
 sudo pacman -S clementine gimp audacity --noconfirm
 sudo pacman -S converseen devede handbrake handbrake-cli soundconverter --noconfirm
 sudo pacman -S steam-native zsnes kmines kpatience --noconfirm
@@ -45,6 +45,7 @@ yaourt -S jdk kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
 yaourt -S ttf-ms-fonts ttf-vista-fonts --noconfirm
 yaourt -S hunspell-pt-br libreoffice-extension-vero --noconfirm
 yaourt -S google-chrome smartgit brackets-bin --noconfirm
+yaourt -S numix-icon-theme-git numix-circle-icon-theme-git numix-square-icon-theme-git
 ## END
 
 ## BEGIN ~ Install and set up apache, mysql, php
@@ -67,7 +68,7 @@ if   [ "$lampp" == "y" ] || [ "$lampp" == "Y" ] || [ "$lampp" == "" ]; then
 fi
 ## END
 
-## BEGIN ~ Install and set up apache, mysql, php
+## BEGIN ~ Install and set up Ionic Framework and Cordova
 if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
     yaourt -S android-sdk android-platform android-sdk-platform-tools android-sdk-build-tools gradle
     
@@ -104,19 +105,18 @@ sudo systemctl enable ufw && sudo ufw enable
 sudo systemctl enable systemd-swap
 
 sudo ufw allow 1714:1764/udp && sudo ufw allow 1714:1764/tcp
-sudo ufw allow 8999/udp && sudo ufw allow 8999/tcp
+sudo ufw allow 6881/udp && sudo ufw allow 6881/tcp
 ## END
 
 ## BEGIN ~ Configuring and repairing other things
-
 sudo sed -i 's/IgnoreLid=false/IgnoreLid=true/g' /etc/UPower/UPower.conf
 echo -e "HandleLidSwitch=ignore\nLidSwitchIgnoreInhibited=off" | sudo tee --append /etc/systemd/logind.conf
 
 echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
 sudo mkdir -p /etc/systemd/coredump.conf.d/ && echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
 
-echo -e 'Section "Device"\n\tIdentifier "Intel Graphics"\n\tDriver "intel"\n\tOption "DRI" "3"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/20-intel.conf
 sudo sed -i 's/timeout=5/timeout='$grub_sec'/g' /boot/grub/grub.cfg
+echo -e 'Section "Device"\n\tIdentifier "Intel Graphics"\n\tDriver "intel"\n\tOption "DRI" "3"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/20-intel.conf
 ## END
 
 ## BEGIN ~ Configuring look-and-feel
@@ -124,6 +124,7 @@ mkdir -p /home/$user_name/{Downloads/Torrents,Modelos/{VirtualBox\ VMs,www}}
 
 cp icons/manjaro.svg /usr/share/icons/
 cp config/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
+sudo sed -i 's/gnome,hicolor/gnome,hicolor,breeze-dark/g' /usr/share/icons/Numix/index.theme
 
 sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
 echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
@@ -140,11 +141,11 @@ cd ~
 ## END
 
 ## BEGIN ~ Finishing and Some tips
-sudo pacman -Rns $(pacman -Qtdq) && yaourt -Scc
+yaourt -Qtd && yaourt -Scc
 sudo freshclam
 
 echo -e "\nAll done."
     # Nvidia settings: optirun nvidia-settings -c :8
-    # Steam set game launch options (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun %command%
-    # Wakfu java config: Parameters runtime: -Xms8192m -Xmx8192m
+    # Steam (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun /usr/bin/steam %U
+    # Java config: Parameters runtime: -Xms8192m -Xmx8192m
 ## END
