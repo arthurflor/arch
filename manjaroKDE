@@ -23,7 +23,7 @@ fi
 ## BEGIN ~ Update mirrors, system and remove some default packages
 sudo pacman-mirrors -g
 
-sudo pacman -Rc digikam krita konversation qtav xine-ui kleopatra manjaro-documentation-en htop cantata --noconfirm
+sudo pacman -Rc digikam krita konversation qtav xine-ui kleopatra manjaro-documentation-en htop cantata yakuake --noconfirm
 sudo pacman -Rc thunderbird-kde kwrite libreoffice-still jdk8-openjdk jre8-openjdk jre8-openjdk-headless --noconfirm
 yaourt -Qtd
 
