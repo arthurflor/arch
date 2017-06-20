@@ -27,7 +27,7 @@ sudo pacman -Rc digikam krita konversation qtav xine-ui kleopatra manjaro-docume
 sudo pacman -Rc thunderbird-kde kwrite libreoffice-still jdk8-openjdk jre8-openjdk jre8-openjdk-headless --noconfirm
 yaourt -Qtd
 
-sudo pacman -Syu xf86-input-synaptics sane libreoffice-fresh --noconfirm
+sudo pacman -Syu xf86-input-synaptics sane arc-kde libreoffice-fresh --noconfirm
 ## END
 
 ## BEGIN ~ Install packages (pacman)
@@ -147,5 +147,6 @@ sudo freshclam
 echo -e "\nAll done."
     # Nvidia settings: optirun nvidia-settings -c :8
     # Steam (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun /usr/bin/steam %U
+        # Or steam set launch game: primusrun %command%
     # Java config: Parameters runtime: -Xms8192m -Xmx8192m
 ## END
