@@ -44,13 +44,13 @@ yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-vn
 yaourt -S jdk kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
 yaourt -S ttf-ms-fonts ttf-vista-fonts --noconfirm
 yaourt -S hunspell-pt-br libreoffice-extension-vero --noconfirm
-yaourt -S google-chrome smartgit brackets-bin --noconfirm
-yaourt -S numix-icon-theme-git numix-circle-icon-theme-git numix-square-icon-theme-git
+yaourt -S google-chrome smartgit brackets --noconfirm
+yaourt -S numix-icon-theme-git numix-circle-icon-theme-git numix-square-icon-theme-git --noconfirm
 ## END
 
 ## BEGIN ~ Install and set up apache, mysql, php
 if   [ "$lampp" == "y" ] || [ "$lampp" == "Y" ] || [ "$lampp" == "" ]; then
-    sudo pacman -S mariadb mysql-workbench apache phpmyadmin php php-apache php-cgi php-gd php-mcrypt php-pgsql php-sqlite php-intl --needed --noconfirm
+    yaourt -S mariadb mysql-workbench apache phpmyadmin php php-apache php-cgi php-gd php-mcrypt php-pgsql php-sqlite php-intl --needed --noconfirm
     sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
     sudo systemctl start mysqld
     sudo mysql_secure_installation
@@ -70,7 +70,7 @@ fi
 
 ## BEGIN ~ Install and set up Ionic Framework and Cordova
 if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
-    yaourt -S android-sdk android-platform android-sdk-platform-tools android-sdk-build-tools gradle
+    yaourt -S android-sdk android-platform android-sdk-platform-tools android-sdk-build-tools gradle --noconfirm
     
     sudo chown $user_name:$user_name -R /opt/android-sdk
     
@@ -87,7 +87,7 @@ fi
 
 ## BEGIN ~ Install and set up systemd-swap
 if   [ "$swap" == "y" ] || [ "$swap" == "Y" ] || [ "$swap" == "" ]; then
-    sudo pacman -S systemd-swap --noconfirm
+    yaourt -S systemd-swap --noconfirm
     sudo sed -i 's/zram_enabled=0/zram_enabled=1/g' /etc/systemd/swap.conf
 fi
 ## END
