@@ -6,7 +6,7 @@
 
 ## BEGIN ~ Collecting information
 clear
-echo -e "Manjaro 17.0.1 KDE ~ Install and set up some packages\n\n"
+echo -e "Manjaro KDE ~ Install and set up some packages\n\n"
 
 user_name=$(whoami)
 echo "User name: $user_name"
@@ -31,12 +31,12 @@ sudo pacman -Syu xf86-input-synaptics sane arc-kde libreoffice-fresh --noconfirm
 ## END
 
 ## BEGIN ~ Install packages (pacman)
-sudo pacman -S virtualgl lib32-virtualgl frei0r-plugins lsdvd --noconfirm
-sudo pacman -S clementine gimp audacity --noconfirm
-sudo pacman -S converseen devede handbrake handbrake-cli soundconverter --noconfirm
-sudo pacman -S steam-native zsnes kmines kpatience --noconfirm
-sudo pacman -S clamav clamtk gufw nodejs npm --noconfirm
-sudo pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-vnc 
+yaourt -S virtualgl lib32-virtualgl frei0r-plugins lsdvd --noconfirm
+yaourt -S clementine gimp audacity --noconfirm
+yaourt -S converseen devede handbrake handbrake-cli soundconverter --noconfirm
+yaourt -S steam-native zsnes kmines kpatience --noconfirm
+yaourt -S clamav clamtk gufw nodejs npm --noconfirm
+yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-vnc 
 ##linux411-headers
 ## END
 
@@ -118,6 +118,7 @@ sudo mkdir -p /etc/systemd/coredump.conf.d/ && echo -e '[Coredump]\nStorage=none
 echo -e 'Section "Device"\n\tIdentifier "Intel Graphics"\n\tDriver "intel"\n\tOption "DRI" "3"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/20-intel.conf
 
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
+sudo sed -i 's/GRUB_BACKGROUND/#GRUB_BACKGROUND/g' /etc/default/grub
 sudo update-grub
 ## END
 
