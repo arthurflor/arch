@@ -1,7 +1,7 @@
 #!/bin/bash
 #-----------------------------------------------------------------------------
 # Created by arthurflor mailto: arthurflor23[at]gmail[dot]com
-# Run this script after your first boot with Manjaro 17.0.1 KDE
+# Run this script after your first boot with Manjaro KDE
 #-----------------------------------------------------------------------------
 
 ## BEGIN ~ Collecting information
@@ -44,7 +44,7 @@ yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-vn
 yaourt -S jdk kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
 yaourt -S ttf-ms-fonts ttf-vista-fonts --noconfirm
 yaourt -S hunspell-pt-br libreoffice-extension-vero --noconfirm
-yaourt -S google-chrome smartgit brackets --noconfirm
+yaourt -S google-chrome smartgit brackets-bin --noconfirm
 yaourt -S numix-icon-theme-git numix-circle-icon-theme-git numix-square-icon-theme-git --noconfirm
 ## END
 
