@@ -125,8 +125,11 @@ sudo update-grub
 ## BEGIN ~ Configuring look-and-feel
 mkdir -p /home/$user_name/{Downloads/Torrents,Modelos/{VirtualBox\ VMs,www}}
 
-cp icons/manjaro.svg /usr/share/icons/
+mkdir -p /home/ranger/.local/share/awesomewidgets/configs/
 cp config/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
+
+sudo cp icons/manjaro.png /usr/share/icons/
+
 sudo sed -i 's/gnome,hicolor/gnome,hicolor,breeze-dark/g' /usr/share/icons/Numix/index.theme
 
 sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
