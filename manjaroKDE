@@ -35,7 +35,6 @@ yaourt -Syu xf86-input-synaptics sane arc-kde libreoffice-fresh --noconfirm
 yaourt -S virtualgl lib32-virtualgl frei0r-plugins --noconfirm
 yaourt -S clementine gimp audacity --noconfirm
 yaourt -S converseen soundconverter --noconfirm
-yaourt -S zsnes kmines kpatience --noconfirm
 yaourt -S clamav clamtk ufw gufw --noconfirm
 yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-vnc --noconfirm
 ##linux412-headers
