@@ -141,8 +141,8 @@ sed -i 's/Type=notify/Type=idle/g' /lib/systemd/system/org.cups.cupsd.service
 ## BEGIN ~ Configuring and repairing other things
 mkdir -p /home/$user_name/{Desktop,Documentos,Downloads/Torrents,Imagens,Modelos/{nodejs,VirtualBox\ VMs,www},Músicas,Público,Vídeos}
 
-cp icons/arch_menu_blue.svg /usr/share/icons/
-cp config/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
+cp ../icons/arch_menu_blue.svg /usr/share/icons/
+cp ../extra/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
 
 echo -e "\nalias autoclean='pacaur -Scc && sudo rm -Rf /home/$user_name/.cache/pacaur/* && pacaur -Rns \$(pacaur -Qtdq)'" >> /home/$user_name/.bashrc
 

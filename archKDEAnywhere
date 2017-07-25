@@ -1,13 +1,13 @@
 #!/bin/bash
 #-----------------------------------------------------------------------------
 # Created by arthurflor mailto: arthurflor23[at]gmail[dot]com
-# Run this script after your first boot with Manjaro KDE
+# Run this script after your first boot with archlinux (Anywhere)
 #-----------------------------------------------------------------------------
 
 ## BEGIN ~ Collecting information
 
     clear
-    echo -e "Manjaro KDE ~ Install and set up some packages\n\n"
+    echo -e "Arch KDE ~ Install and set up some packages\n\n"
 
     user_name=$(whoami)
     echo "User name: $user_name"
@@ -19,49 +19,82 @@
     if   [ "$grub_sec" == "" ]; then
         grub_sec="0"
     fi
-
+    
 ## END
 
-## BEGIN ~ Update mirrors, system and remove some default packages
+## BEGIN ~ Updating system and first packages
 
-    sudo pacman-mirrors -g
+    echo -e "en_US.UTF-8 UTF-8" | sudo tee --append /etc/locale.gen
+    sudo locale-gen
+    sudo localectl set-x11-keymap br abnt2
 
-    yaourt -Rc qtav xine-ui kleopatra manjaro-documentation-en htop yakuake --noconfirm
-    yaourt -Rc thunderbird-kde digikam krita konversation cantata k3b steam-manjaro --noconfirm
-    yaourt -Rc kwrite libreoffice-still jdk8-openjdk jre8-openjdk jre8-openjdk-headless --noconfirm
-    yaourt -Qtd
+    sudo pacman -Syyu base-devel git wget --needed --noconfirm
 
-    yaourt -Syu xf86-input-synaptics sane arc-kde libreoffice-fresh --noconfirm
-    ## END
+    cd /tmp/
+        git clone https://aur.archlinux.org/package-query.git
+        cd package-query
+        makepkg -si --noconfirm
+        cd ..
+  
+        git clone https://aur.archlinux.org/yaourt.git
+        cd yaourt
+        makepkg -si --noconfirm
+        cd ..
 
-    ## BEGIN ~ Install packages (pacman)
+        git clone https://github.com/helmuthdu/dotfiles
+        sudo sed -i 's/Java source/java/g' dotfiles/.nanorc
+        sudo cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc ~/
+        sudo cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc /home/$user_name/
+        sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
+    cd ~
+
+    yaourt -S xf86-video-intel xf86-input-mouse xf86-input-keyboard --needed --noconfirm
+    yaourt -S nvidia nvidia-settings nvidia-utils bumblebee --needed --noconfirm
+
+    yaourt -S plasma --needed --noconfirm
+    yaourt -S sddm-kcm partitionmanager ark kcalc kate kdeconnect kinfocenter kwalletmanager --noconfirm
+    yaourt -S gwenview okular spectacle kdegraphics-thumbnailers --noconfirm
+
+    yaourt -S libva-intel-driver intel-ucode samba smbnetfs zip unrar p7zip lzop cpio nfs-utils ntfs-3g exfat-utils f2fs-tools autofs net-tools pkgfile screenfetch --noconfirm
+
+    yaourt -S cups cups-pdf ghostscript gsfonts gutenprint pdfmod foomatic-db foomatic-db-engine foomatic-db-nonfree foomatic-filters foomatic-db-ppds foomatic-db-nonfree-ppds hplip splix --noconfirm
+
+    yaourt -S aspell-pt lib32-nss sshfs ffmpegthumbs systemd-kcm cmake extra-cmake-modules dkms xine-lib libquicktime libstdc++5 mencoder transcode ifuse automoc4 lib32-freetype2 cdrdao gst-plugins-good gst-plugins-ugly gst-libav --noconfirm
+
+    yaourt -S simple-scan print-manager system-config-printer filelight ttf-bitstream-vera ttf-liberation --noconfirm
+
+    yaourt -S firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh-pt-BR --noconfirm
+    
+## END
+
+## BEGIN ~ Install packages (pacman)
+
     yaourt -S virtualgl lib32-virtualgl frei0r-plugins --noconfirm
-    yaourt -S clementine gimp audacity --noconfirm
-    yaourt -S converseen soundconverter --noconfirm
+    yaourt -S clementine gimp inkscape audacity vlc kdenlive --noconfirm
+    yaourt -S converseen soundconverter qbittorrent --noconfirm
     yaourt -S zsnes kmines kpatience --noconfirm
     yaourt -S clamav clamtk ufw gufw --noconfirm
-    yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-vnc --noconfirm
-    ##linux412-headers
-
+    yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
+    
 ## END
 
 ## BEGIN ~ Other packages (dvd support & steam)
 
-    yaourt -S lsdvd k3b devede handbrake handbrake-cli
-    yaourt -S steam-manjaro steam-native
-
+    yaourt -S lsdvd libdvdcss dvd+rw-tools k3b devede handbrake handbrake-cli
+    yaourt -S steam steam-native-runtime
+    
 ## END
 
 ## BEGIN ~ Install packages (AUR)
 
-    yaourt -S jdk kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
-    yaourt -S numix-icon-theme-git numix-circle-icon-theme-git numix-square-icon-theme-git --noconfirm
-    yaourt -S ttf-ms-fonts ttf-vista-fonts --noconfirm
-    yaourt -S hunspell-pt-br libreoffice-extension-vero --noconfirm
-    yaourt -S google-chrome smartgit brackets-bin --noconfirm
-
+    yaourt -S jdk hplip-plugin kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
+    yaourt -S ttf-ms-fonts ttf-vista-fonts hunspell-pt-br libreoffice-extension-vero rar --noconfirm
+    yaourt -S plymouth plymouth-theme-arch-charge arc-kde-git --noconfirm
+    yaourt -S numix-square-icon-theme-git numix-circle-icon-theme-git --noconfirm
+    yaourt -S multibootusb smartgit google-chrome brackets-bin pamac-aur pamac-tray-appindicator --noconfirm
+    
     yaourt -S wakfu-transition
-
+    
 ## END
 
 ## BEGIN ~ Install and set up systemd-swap
@@ -99,79 +132,98 @@
 
     if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
         yaourt -S android-sdk android-platform android-sdk-platform-tools android-sdk-build-tools gradle --noconfirm
-        
-        sudo chown $user_name:$user_name -R /opt/android-sdk
-        
+    
+        sudo chown $user_name:wheel -R /opt/android-sdk
+    
         export ANDROID_HOME=/opt/android-sdk
         export PATH=$PATH:$ANDROID_HOME/tools
-        
+    
         sudo mkdir "$ANDROID_HOME/licenses"
         echo -e "8933bad161af4178b1185d1a37fbf41ea5269c55" | sudo tee --append "$ANDROID_HOME/licenses/android-sdk-license"
 
         yaourt -S nodejs npm 
         sudo npm install -g ionic cordova
     fi
-
+    
 ## END
 
 ## BEGIN ~ Configuring services
 
-    sudo gpasswd -a $user_name vboxusers 
+    sudo gpasswd -a $user_name vboxusers
     sudo gpasswd -a $user_name bumblebee
-    sudo modprobe fuse 
-    sudo modprobe vboxdrv
+    sudo modprobe fuse && sudo modprobe vboxdrv
     sudo dkms autoinstall
     echo -e "vboxdrv\nvboxnetadp\nvboxnetflt\nvboxpci" | sudo tee --append /etc/modules-load.d/virtualbox.conf
 
+    sudo systemctl enable bluetooth
+    #sudo systemctl enable smbd nmbd
+    sudo systemctl enable org.cups.cupsd
+    #sudo systemctl enable mysqld 
+    #sudo systemctl enable httpd
     sudo systemctl enable bumblebeed
     sudo systemctl enable ufw && sudo ufw enable
     sudo systemctl enable systemd-swap
 
     sudo ufw allow 1714:1764/udp && sudo ufw allow 1714:1764/tcp
     sudo ufw allow 6881/udp && sudo ufw allow 6881/tcp
-
+    
 ## END
 
 ## BEGIN ~ Configuring and repairing other things
+
+    mkdir -p /home/$user_name/{Downloads/Torrents,Modelos/{VirtualBox\ VMs,www}}
+
+    sudo cp icons/arch_menu_blue.svg /usr/share/icons/
+
+    mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
+    cp extra/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
+
+    echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
+    
+## END
+
+## BEGIN ~ Configuring and repairing other things
+
+    sudo cp /etc/samba/smb.conf.default /etc/samba/smb.conf && sudo pdbedit -a -u $user_name
+    sudo sed -i 's/\[homes\]/;\[homes\]/g' /etc/samba/smb.conf
+    sudo sed -i 's/comment = Home Directories/;comment = Home Directories/g' /etc/samba/smb.conf
+    sudo sed -i 's/browseable = no/;browseable = no/g' /etc/samba/smb.conf
+    sudo sed -i 's/writable = yes/;writable = yes/g' /etc/samba/smb.conf
 
     sudo sed -i 's/IgnoreLid=false/IgnoreLid=true/g' /etc/UPower/UPower.conf
     echo -e "HandleLidSwitch=ignore\nLidSwitchIgnoreInhibited=off" | sudo tee --append /etc/systemd/logind.conf
 
     echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
-    sudo mkdir -p /etc/systemd/coredump.conf.d/ && echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
+    
+    sudo mkdir -p /etc/systemd/coredump.conf.d/
+    echo -e '[Coredump]\nStorage=none'  | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
 
     echo -e 'Section "Device"\n\tIdentifier "Intel Graphics"\n\tDriver "intel"\n\tOption "DRI" "3"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/20-intel.conf
 
+    sed -i 's/base udev/base udev plymouth/g' /etc/mkinitcpio.conf
+    sed -i 's/encrypt/plymouth-encrypt/g' /etc/mkinitcpio.conf
+    
+    sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3 splash"/g' /etc/default/grub
     sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
-    sudo sed -i 's/GRUB_BACKGROUND/#GRUB_BACKGROUND/g' /etc/default/grub
-    sudo update-grub
-
+    
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
+    sudo plymouth-set-default-theme -R arch-charge
+    
 ## END
 
-## BEGIN ~ Configuring look-and-feel
-
-    mkdir -p /home/$user_name/{Downloads/Torrents,Modelos/{VirtualBox\ VMs,www}}
-
-    mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
-    cp extra/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
-
-    sudo cp icons/manjaro.png /usr/share/icons/
-
-    sudo sed -i 's/gnome,hicolor/gnome,hicolor,breeze-dark/g' /usr/share/icons/Numix/index.theme
-
-    sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
-    echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
-    sed -i 's/}/\t, "bb.beautify.languages": {"typescript": "js"}\n}/g' /home/$user_name/.config/Brackets/brackets.json
+## BEGIN ~ Configuring look-and-feel arc-dark
 
     mkdir -p /home/$user_name/.local/share/plasma/plasmoids/
     cd /home/$user_name/.local/share/plasma/plasmoids/
         sudo cp -R /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/ ./
-        sudo chown -R $user_name:$user_name org.kde.plasma.digitalclock/
+        sudo chown -R $user_name:wheel org.kde.plasma.digitalclock/
         cd org.kde.plasma.digitalclock/contents/ui/
         sed -i 's/main.height <= 2/main.height <= 3/g' DigitalClock.qml
         sed -i ': 1 ; N ; $!b1 ; s/height: timeLabel.height/height: timeLabel.height \/ 1.2/2' DigitalClock.qml
     cd ~
 
+    #sed -i 's/}/\t, "bb.beautify.languages": {"typescript": "js"}\n}/g' /home/$user_name/.config/Brackets/brackets.json
+    
 ## END
 
 ## BEGIN ~ Finishing and Some tips
@@ -184,5 +236,5 @@
         # Steam (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun /usr/bin/steam %U
             # Or steam set launch game: primusrun %command%
         # Java config: Parameters runtime: -Xms8192m -Xmx8192m
-    
+        
 ## END

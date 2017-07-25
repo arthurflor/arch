@@ -1,21 +1,24 @@
 ## Arch Install
-Baseado: https://github.com/helmuthdu/aui
+Based (folder aui): https://github.com/helmuthdu/aui
 
-### Pré-requisitos
-- Permissão de root
-- Conexão com Internet
+### Requirements
+- Internet connection
 
-### Como baixar (Arch)
-- Mudando layout de teclado: loadkeys br-abnt2
-- Conectando ao wi-fi (caso necessário): wifi-menu -o
-- Baixando scripts: `wget https://github.com/arthurflor/arch/tarball/master -O - | tar xz`
+### How to download
+- Change keyboard layout: loadkeys br-abnt2
+- Wi-fi (if necessary): wifi-menu -o
+- Downloading scripts: `wget https://github.com/arthurflor/arch/tarball/master -O - | tar xz`
 
-### Como usar (Arch)
-- FIFO [base do sistema]: `cd <dir> && ./fifo`
-    #### Pós-requisitos
-    - Copiar scripts baixados para a pasta /root: `cd.. && mv <dir> /mnt/root`
+### How to use (Arch)
+- FIFO [system base]: `cd <dir>/aui && ./fifo`
+    #### Post requirements
+    - Copy the downloaded script to the folder /root: `cd ~ && mv <dir> /mnt/root`
 
-- Arch + KDE [instalação e configuração do sistema KDE]: `./archKDE`
+### How to use (Arch AUI)
+- Arch KDE [System and packages install]: `./aui/archKDE`
 
-### Como usar: pós-instalação (Manjaro)
-- Manjaro KDE [instalação e configuração do sistema KDE]: `./manjaroKDE`
+### How to use (Arch Anywhere)
+- Arch KDE [packages install]: `./archKDEAnywhere`
+
+### How to use (Manjaro KDE)
+- Manjaro KDE [packages install]: `./manjaroKDE`
