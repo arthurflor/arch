@@ -46,8 +46,8 @@
     yaourt -S xf86-video-intel xf86-input-synaptics xf86-input-mouse xf86-input-keyboard --needed --noconfirm
     yaourt -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
 
-    yaourt -S plasma ark kcalc kate kdeconnect kwalletmanager --needed --noconfirm
-    yaourt -S kdegraphics-thumbnailers ffmpegthumbs partitionmanager filelight spectacle --noconfirm
+    yaourt -S plasma ark kcalc kate kdeconnect kwalletmanager kdenetwork-filesharing --needed --noconfirm
+    yaourt -S ksystemlog kdegraphics-thumbnailers ffmpegthumbs partitionmanager filelight spectacle --noconfirm
 
     yaourt -S dkms aspell-pt xine-lib ifuse ntfs-3g screenfetch zip p7zip rar --noconfirm
     yaourt -S gst-plugins-good gst-plugins-ugly gst-libav --noconfirm
@@ -65,7 +65,7 @@
 ## BEGIN ~ Install packages
 
     yaourt -S gwenview okular vlc clementine qbittorrent --noconfirm
-    yaourt -S gimp inkscape audacity kdenlive --noconfirm
+    yaourt -S gimp inkscape audacity kdenlive frei0r-plugins --noconfirm
     yaourt -S converseen soundconverter --noconfirm
     yaourt -S kmines kpatience clamav clamtk --noconfirm
     yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
