@@ -36,7 +36,7 @@
 
     ## BEGIN ~ Install packages (pacman)
     yaourt -S virtualgl lib32-virtualgl frei0r-plugins --noconfirm
-    yaourt -S clementine gimp audacity --noconfirm
+    yaourt -S clementine gimp audacity kamoso --noconfirm
     yaourt -S converseen soundconverter --noconfirm
     yaourt -S zsnes kmines kpatience --noconfirm
     yaourt -S clamav clamtk ufw gufw --noconfirm
@@ -54,7 +54,7 @@
 
 ## BEGIN ~ Install packages (AUR)
 
-    yaourt -S jdk kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
+    yaourt -S pdfshuffler jdk kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
     yaourt -S numix-icon-theme-git numix-circle-icon-theme-git numix-square-icon-theme-git --noconfirm
     yaourt -S ttf-ms-fonts ttf-vista-fonts --noconfirm
     yaourt -S hunspell-pt-br libreoffice-extension-vero --noconfirm

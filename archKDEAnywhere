@@ -65,12 +65,12 @@
 ## BEGIN ~ Install packages
 
     yaourt -S gwenview okular vlc clementine qbittorrent --noconfirm
-    yaourt -S gimp inkscape audacity kdenlive frei0r-plugins --noconfirm
+    yaourt -S gimp inkscape audacity kamoso kdenlive frei0r-plugins --noconfirm
     yaourt -S converseen soundconverter --noconfirm
     yaourt -S kmines kpatience clamav clamtk --noconfirm
     yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
     
-    yaourt -S jdk hplip-plugin pamac-aur pamac-tray-appindicator --noconfirm
+    yaourt -S pdfshuffler jdk hplip-plugin pamac-aur pamac-tray-appindicator --noconfirm
     yaourt -S libreoffice-extension-vero kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
     yaourt -S plymouth plymouth-theme-arch-charge arc-kde-git --noconfirm
     yaourt -S numix-circle-icon-theme-git numix-square-icon-theme-git --noconfirm
