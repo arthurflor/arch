@@ -174,7 +174,7 @@
 
     mkdir -p /home/$user_name/{Downloads/Torrents,Modelos/{VirtualBox\ VMs,www}}
 
-    sudo cp -R icons/Menu/ /usr/share/icons/
+    sudo cp -R icons/MenuKDE/ /usr/share/icons/
 
     mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
     cp extra/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
