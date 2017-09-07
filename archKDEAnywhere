@@ -43,7 +43,7 @@
         sudo cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc /home/$user_name/
     cd ~
 
-    yaourt -S xf86-video-intel xf86-input-synaptics xf86-input-mouse xf86-input-keyboard --needed --noconfirm
+    yaourt -S xf86-video-intel xf86-input-synaptics --needed --noconfirm
     yaourt -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
 
     yaourt -S plasma ark kcalc kate kdeconnect kwalletmanager kdenetwork-filesharing --needed --noconfirm
@@ -53,7 +53,7 @@
     yaourt -S gst-plugins-good gst-plugins-ugly gst-libav --noconfirm
     
     yaourt -S cups cups-filters cups-pdf --noconfirm
-    yaourt -S pdfmod simple-scan print-manager system-config-printer --noconfirm
+    yaourt -S pdfshuffler simple-scan print-manager system-config-printer --noconfirm
 
     yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts ttf-vista-fonts --noconfirm
     
@@ -66,14 +66,13 @@
 
     yaourt -S gwenview okular vlc clementine qbittorrent --noconfirm
     yaourt -S gimp inkscape audacity kamoso kdenlive frei0r-plugins --noconfirm
-    yaourt -S converseen soundconverter --noconfirm
-    yaourt -S kmines kpatience clamav clamtk --noconfirm
+    yaourt -S converseen soundconverter kmines kpatience --noconfirm
     yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
     
-    yaourt -S pdfshuffler jdk hplip-plugin pamac-aur pamac-tray-appindicator --noconfirm
+    yaourt -S jdk hplip-plugin pamac-aur pamac-tray-appindicator --noconfirm
     yaourt -S libreoffice-extension-vero kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
-    yaourt -S plymouth plymouth-theme-arch-charge arc-kde-git --noconfirm
-    yaourt -S numix-circle-icon-theme-git numix-square-icon-theme-git --noconfirm
+    yaourt -S plymouth plymouth-theme-arch-glow arc-kde-git --noconfirm
+    yaourt -S numix-circle-icon-theme-git numix-square-icon-theme-git paper-icon-theme-git papirus-icon-theme-git --noconfirm
     yaourt -S multibootusb google-chrome --noconfirm
     
     yaourt -S wakfu-transition
