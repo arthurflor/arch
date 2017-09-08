@@ -73,11 +73,8 @@
     yaourt -S jdk hplip-plugin pamac-aur pamac-tray-appindicator --noconfirm
     yaourt -S libreoffice-extension-vero kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
     yaourt -S arc-kde-git papirus-icon-theme-git --noconfirm
-    #yaourt -S numix-circle-icon-theme-git numix-square-icon-theme-git --noconfirm
-    yaourt -S multibootusb google-chrome --noconfirm
-    
-    yaourt -S wakfu-transition
-    
+    yaourt -S multibootusb google-chrome wakfu-transition --noconfirm
+        
 ## END
 
 ## BEGIN ~ Install and set up systemd-swap
@@ -174,7 +171,7 @@
 
     mkdir -p /home/$user_name/{Downloads/Torrents,Modelos/{VirtualBox\ VMs,www}}
 
-    sudo cp -R icons/MenuKDE/ /usr/share/icons/
+    sudo cp -R MenuKDE/ /usr/share/icons/
 
     mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
     cp extra/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
@@ -213,7 +210,9 @@
         sed -i ': 1 ; N ; $!b1 ; s/height: timeLabel.height/height: timeLabel.height \/ 1.2/2' DigitalClock.qml
     cd ~
 
-    sudo sed -i 's/gnome,hicolor/gnome,hicolor,breeze-dark/g' /usr/share/icons/Numix/index.theme
+    sudo sed -i 's/ubuntu-mono-dark,Mint-X,elementary,gnome,//g' /usr/share/icons/Papirus/index.theme
+    sudo sed -i 's/ubuntu-mono-dark,Mint-X,elementary,gnome,//g' /usr/share/icons/Papirus-Dark/index.theme
+    sudo sed -i 's/ubuntu-mono-dark,Mint-X,elementary,gnome,//g' /usr/share/icons/Papirus-Light/index.theme
     
 ## END
 
