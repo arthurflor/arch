@@ -43,13 +43,12 @@
         sudo cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc /home/$user_name/
     cd ~
 
-    yaourt -Rc discover --noconfirm
-
-    yaourt -S xf86-video-intel xf86-input-synaptics --needed --noconfirm
+    #yaourt -S xf86-video-intel xf86-input-synaptics --needed --noconfirm
     yaourt -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
 
     yaourt -S plasma ark kcalc kate kdeconnect kwalletmanager kdenetwork-filesharing --needed --noconfirm
     yaourt -S ksystemlog kdegraphics-thumbnailers ffmpegthumbs partitionmanager filelight spectacle --noconfirm
+    yaourt -Rc discover --noconfirm
 
     yaourt -S dkms aspell-pt xine-lib ifuse ntfs-3g screenfetch zip p7zip rar --noconfirm
     yaourt -S gst-plugins-good gst-plugins-ugly gst-libav --noconfirm
