@@ -65,7 +65,7 @@
 
 ## BEGIN ~ Install packages
 
-    yaourt -S gwenview okular vlc clementine qbittorrent --noconfirm
+    yaourt -S gwenview okular vlc deepin-music qbittorrent --noconfirm
     yaourt -S gimp inkscape audacity kamoso kdenlive frei0r-plugins --noconfirm
     yaourt -S converseen soundconverter kmines kpatience --noconfirm
     yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
