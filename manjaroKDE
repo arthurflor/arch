@@ -155,7 +155,7 @@
     mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
     cp extra/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
 
-    sudo cp icons/manjaro.png /usr/share/icons/
+    sudo cp -R MenuKDE/ /usr/share/icons/
 
     sudo sed -i 's/gnome,hicolor/gnome,hicolor,breeze-dark/g' /usr/share/icons/Numix/index.theme
 
