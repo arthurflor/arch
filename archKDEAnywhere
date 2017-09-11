@@ -12,6 +12,8 @@
     user_name=$(whoami)
     echo "User name: $user_name"
     read -p "Seconds to grub [0]: " grub_sec
+    read -p "Install Samba? [y]: " samba
+    read -p "Install Firewall and Antivirus? [y]: " security
     read -p "Install Apache, MariaDB, PHP? [y]: " lampp
     read -p "Install Ionic Framework? [y]: " ionic
     read -p "Install systemd-swap? [y]: " swap
@@ -89,7 +91,7 @@
 ## BEGIN ~ Install and set up apache, mysql, php
 
     if   [ "$lampp" == "y" ] || [ "$lampp" == "Y" ] || [ "$lampp" == "" ]; then
-        yaourt -S mariadb dbeaver --needed --noconfirm
+        yaourt -S mariadb --needed --noconfirm
         
         sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
         sudo systemctl start mysqld
@@ -124,10 +126,46 @@
         sudo mkdir "$ANDROID_HOME/licenses"
         echo -e "8933bad161af4178b1185d1a37fbf41ea5269c55" | sudo tee --append "$ANDROID_HOME/licenses/android-sdk-license"
 
-        yaourt -S smartgit brackets-bin nodejs npm --needed --noconfirm
+        yaourt -S dbeaver smartgit brackets-bin nodejs npm --needed --noconfirm
         sudo npm install -g nodemon cordova ionic
     fi
     
+## END
+
+## BEGIN ~ Samba install
+
+    if   [ "$samba" == "y" ] || [ "$samba" == "Y" ] || [ "$samba" == "" ]; then
+        yaourt -S samba smbnetfs kdenetwork-filesharing
+        
+        sudo cp /etc/samba/smb.conf.default /etc/samba/smb.conf 
+        sudo pdbedit -a -u $user_name
+
+        sudo sed -i 's/workgroup = MYGROUP/;workgroup = MYGROUP/g' /etc/samba/smb.conf
+        sudo sed -i 's/\[homes\]/;\[homes\]/g' /etc/samba/smb.conf
+        sudo sed -i 's/comment = Home Directories/;comment = Home Directories/g' /etc/samba/smb.conf
+        sudo sed -i 's/browseable = no/;browseable = no/g' /etc/samba/smb.conf
+        sudo sed -i 's/writable = yes/;writable = yes/g' /etc/samba/smb.conf
+        
+        sudo systemctl enable smbd nmbd
+        sudo systemctl start smbd.socket
+    fi
+    
+## END
+
+## BEGIN ~ Security install
+
+    if   [ "$security" == "y" ] || [ "$security" == "Y" ] || [ "$security" == "" ]; then
+        yaourt -S clamav clamtk ufw gufw --noconfirm
+        
+        sudo systemctl enable ufw && sudo ufw enable
+        sudo ufw allow 1714:1764/udp
+        sudo ufw allow 1714:1764/tcp
+        sudo ufw allow qBittorrent
+        sudo ufw reload
+        
+        sudo freshclam
+    fi
+
 ## END
 
 ## BEGIN ~ Configuring services
@@ -146,25 +184,6 @@
     sudo systemctl enable systemd-swap
     #sudo systemctl enable mysqld httpd
     
-## END
-
-## BEGIN ~ Installation and configuration services (sharing and firewall)
-
-    #yaourt -S samba smbnetfs
-    #sudo systemctl enable smbd nmbd
-    #sudo cp /etc/samba/smb.conf.default /etc/samba/smb.conf && sudo pdbedit -a -u $user_name
-    #sudo sed -i 's/\[homes\]/;\[homes\]/g' /etc/samba/smb.conf
-    #sudo sed -i 's/comment = Home Directories/;comment = Home Directories/g' /etc/samba/smb.conf
-    #sudo sed -i 's/browseable = no/;browseable = no/g' /etc/samba/smb.conf
-    #sudo sed -i 's/writable = yes/;writable = yes/g' /etc/samba/smb.conf
-    
-    #yaourt -S ufw gufw
-    #sudo systemctl enable ufw && sudo ufw enable
-    #sudo ufw allow 1714:1764/udp
-    #sudo ufw allow 1714:1764/tcp
-    #sudo ufw allow qBittorrent
-    #sudo ufw reload
-
 ## END
 
 ## BEGIN ~ Configuring and repairing other things

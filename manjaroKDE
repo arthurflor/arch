@@ -76,7 +76,7 @@
 ## BEGIN ~ Install and set up apache, mysql, php
 
     if   [ "$lampp" == "y" ] || [ "$lampp" == "Y" ] || [ "$lampp" == "" ]; then
-        yaourt -S mariadb dbeaver --noconfirm
+        yaourt -S mariadb --noconfirm
         yaourt -S apache phpmyadmin php php-apache php-cgi php-gd php-mcrypt php-pgsql php-sqlite php-intl --needed --noconfirm
         sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
         sudo systemctl start mysqld
@@ -109,7 +109,7 @@
         sudo mkdir "$ANDROID_HOME/licenses"
         echo -e "8933bad161af4178b1185d1a37fbf41ea5269c55" | sudo tee --append "$ANDROID_HOME/licenses/android-sdk-license"
 
-        yaourt -S nodejs npm 
+        yaourt -S dbeaver nodejs npm 
         sudo npm install -g ionic cordova
     fi
 
