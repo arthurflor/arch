@@ -74,7 +74,7 @@
     
     yaourt -S jdk hplip-plugin pamac-aur pamac-tray-appindicator --noconfirm
     yaourt -S libreoffice-extension-vero kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
-    yaourt -S arc-kde-git papirus-icon-theme-git --noconfirm
+    yaourt -S arc-kde papirus-icon-theme-git --noconfirm
     yaourt -S multibootusb google-chrome wakfu-transition --noconfirm
         
 ## END
@@ -172,6 +172,7 @@
 
     sudo gpasswd -a $user_name vboxusers
     sudo gpasswd -a $user_name bumblebee
+    sudo gpasswd -a $user_name games
     
     sudo modprobe fuse && sudo modprobe vboxdrv
     sudo dkms autoinstall
@@ -218,7 +219,7 @@
         
 ## END
 
-## BEGIN ~ Configuring look-and-feel arc-dark
+## BEGIN ~ Configuring look-and-feel
 
     mkdir -p /home/$user_name/.local/share/plasma/plasmoids/
     cd /home/$user_name/.local/share/plasma/plasmoids/
@@ -232,6 +233,9 @@
     sudo sed -i 's/ubuntu-mono-dark,Mint-X,elementary,gnome,//g' /usr/share/icons/Papirus/index.theme
     sudo sed -i 's/ubuntu-mono-dark,Mint-X,elementary,gnome,//g' /usr/share/icons/Papirus-Dark/index.theme
     sudo sed -i 's/ubuntu-mono-dark,Mint-X,elementary,gnome,//g' /usr/share/icons/Papirus-Light/index.theme
+    
+    setfacl -m u:sddm:x /home/$user_name
+    setfacl -m u:sddm:r /home/$user_name/.face.icon
     
 ## END
 
