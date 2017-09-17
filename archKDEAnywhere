@@ -67,8 +67,9 @@
 
 ## BEGIN ~ Install packages
 
-    yaourt -S gwenview okular vlc deepin-music qbittorrent --noconfirm
+    yaourt -S gwenview okular vlc qbittorrent --noconfirm
     yaourt -S gimp inkscape audacity kamoso kdenlive frei0r-plugins --noconfirm
+    yaourt -S spotify zenity ffmpeg0.10 --noconfirm
     yaourt -S converseen soundconverter kmines kpatience --noconfirm
     yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
     
@@ -247,6 +248,7 @@
 
     echo -e "\nAll done."
         # Nvidia settings: optirun nvidia-settings -c :8
+        # optirun /usr/bin/wakfu
         # Steam (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun /usr/bin/steam %U
             # Or steam set launch game: primusrun %command%
         # Java config: Parameters runtime: -Xms8192m -Xmx8192m
