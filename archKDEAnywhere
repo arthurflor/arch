@@ -72,7 +72,7 @@
     yaourt -S converseen soundconverter kmines kpatience --noconfirm
     yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
     
-    yaourt -S jdk hplip-plugin pamac-aur pamac-tray-appindicator --noconfirm
+    yaourt -S jdk hplip-plugin octopi-git --noconfirm
     yaourt -S libreoffice-extension-vero kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
     yaourt -S arc-kde papirus-icon-theme-git --noconfirm
     yaourt -S multibootusb google-chrome wakfu-transition --noconfirm
