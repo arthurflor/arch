@@ -73,7 +73,7 @@
     yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
     
     yaourt -S jdk9-openjdk multibootusb google-chrome --noconfirm
-    yaourt -S arc-kde papirus-icon-theme-git --noconfirm
+    yaourt -S arc-kde arc-gtk-theme papirus-icon-theme-git --noconfirm
     yaourt -S libreoffice-extension-vero kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
     yaourt -S hplip-plugin octopi-git wakfu-transition --noconfirm
         
@@ -127,8 +127,9 @@
         sudo mkdir "$ANDROID_HOME/licenses"
         echo -e "8933bad161af4178b1185d1a37fbf41ea5269c55" | sudo tee --append "$ANDROID_HOME/licenses/android-sdk-license"
 
-        yaourt -S dbeaver smartgit brackets-bin nodejs npm --needed --noconfirm
-        sudo npm install -g cordova ionic nodemon express-generator
+        yaourt -S libudev0-shim brackets --noconfirm
+        yaourt -S dbeaver smartgit nodejs npm --needed --noconfirm
+        sudo npm install -g cordova ionic nodemon typescript typescript-formatter
     fi
     
 ## END
