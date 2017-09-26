@@ -221,6 +221,9 @@
 ## END
 
 ## BEGIN ~ Configuring look-and-feel
+    
+    mkdir -p ~/.config/Brackets/
+    echo -e '{ "fonts.fontSize": "12px", "fonts.fontFamily": "'SourceCodePro-Medium', ＭＳ ゴシック, 'MS Gothic', monospace", "linting.collapsed": true, "bb.beautify.hideDialog": false, "useTabChar": false, "themes.theme": "dark-theme", "highlightMatches": true, "styleActiveLine": true }' >> ~/.config/Brackets/brackets.json
 
     mkdir -p /home/$user_name/.local/share/plasma/plasmoids/
     cd /home/$user_name/.local/share/plasma/plasmoids/
