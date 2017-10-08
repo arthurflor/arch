@@ -12,11 +12,6 @@
     user_name=$(whoami)
     echo "User name: $user_name"
     read -p "Seconds to grub [0]: " grub_sec
-    read -p "Install Samba? [y]: " samba
-    read -p "Install Firewall and Antivirus? [y]: " security
-    read -p "Install Apache, MariaDB, PHP? [y]: " lampp
-    read -p "Install Ionic Framework? [y]: " ionic
-    read -p "Install systemd-swap? [y]: " swap
 
     if   [ "$grub_sec" == "" ]; then
         grub_sec="0"
@@ -80,95 +75,22 @@
         
 ## END
 
-## BEGIN ~ Install and set up systemd-swap
-
-    if   [ "$swap" == "y" ] || [ "$swap" == "Y" ] || [ "$swap" == "" ]; then
-        yaourt -S systemd-swap --noconfirm
-        sudo sed -i 's/zram_enabled=0/zram_enabled=1/g' /etc/systemd/swap.conf
-    fi
-
-## END
-
-## BEGIN ~ Install and set up apache, mysql, php
-
-    if   [ "$lampp" == "y" ] || [ "$lampp" == "Y" ] || [ "$lampp" == "" ]; then
-        yaourt -S mariadb --needed --noconfirm
-        
-        sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
-        sudo systemctl start mysqld
-        sudo mysql_secure_installation
-
-        yaourt -S apache phpmyadmin php php-apache php-cgi php-gd php-mcrypt php-pgsql php-sqlite php-intl --needed --noconfirm
-
-        sudo sed -i 's/DocumentRoot "\/srv\/http"/DocumentRoot "\/home\/'$user_name'\/Modelos\/www"/g' /etc/httpd/conf/httpd.conf
-        sudo sed -i 's/<Directory "\/srv\/http">/<Directory "\/home\/'$user_name'\/Modelos\/www">/g' /etc/httpd/conf/httpd.conf
-        echo -e 'Include conf/extra/phpmyadmin.conf\nInclude conf/extra/php7_module.conf' | sudo tee --append /etc/httpd/conf/httpd.conf
-        sudo sed -i 's/LoadModule mpm_event_module/#LoadModule mpm_event_module/g' /etc/httpd/conf/httpd.conf
-        sudo sed -i 's/#LoadModule mpm_prefork_module/LoadModule mpm_prefork_module/g' /etc/httpd/conf/httpd.conf
-        sudo sed -i 's/mod_mpm_event.so/mod_mpm_event.so\nLoadModule php7_module modules\/libphp7.so/g' /etc/httpd/conf/httpd.conf
-        sudo sed -i 's/display_errors = Off/display_errors = On/g' /etc/php/php.ini
-        sudo sed -i 's/extension=zip.so/extension=mysqli.so\nextension=mcrypt.so\nextension=pdo_mysql.so\nextension=bz2.so\nextension=zip.so\nextension=iconv.so/g' /etc/php/php.ini
-
-        echo -e 'Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"\n<Directory "/usr/share/webapps/phpMyAdmin">\n\tDirectoryIndex index.php\n\tAllowOverride All\n\tOptions FollowSymlinks\n\tRequire all granted\n</Directory>' | sudo tee --append /etc/httpd/conf/extra/phpmyadmin.conf
-        mkdir -p /home/$user_name/Modelos/www
-    fi
-
-## END
-
 ## BEGIN ~ Install and set up Ionic Framework and Cordova
 
-    if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
-        yaourt -S android-sdk-build-tools gradle --noconfirm
+    yaourt -S android-sdk-build-tools gradle --noconfirm
+   
+    sudo chown $user_name:wheel -R /opt/android-sdk
     
-        sudo chown $user_name:wheel -R /opt/android-sdk
+    export ANDROID_HOME=/opt/android-sdk
+    export PATH=$PATH:$ANDROID_HOME/tools
     
-        export ANDROID_HOME=/opt/android-sdk
-        export PATH=$PATH:$ANDROID_HOME/tools
+    sudo mkdir "$ANDROID_HOME/licenses"
+    echo -e "8933bad161af4178b1185d1a37fbf41ea5269c55" | sudo tee --append "$ANDROID_HOME/licenses/android-sdk-license"
+
+    yaourt -S libudev0-shim brackets --noconfirm
+    yaourt -S filezilla dbeaver smartgit nodejs npm --needed --noconfirm
+    sudo npm install -g cordova ionic nodemon typescript typescript-formatter
     
-        sudo mkdir "$ANDROID_HOME/licenses"
-        echo -e "8933bad161af4178b1185d1a37fbf41ea5269c55" | sudo tee --append "$ANDROID_HOME/licenses/android-sdk-license"
-
-        yaourt -S libudev0-shim brackets --noconfirm
-        yaourt -S dbeaver smartgit nodejs npm --needed --noconfirm
-        sudo npm install -g cordova ionic nodemon typescript typescript-formatter
-    fi
-    
-## END
-
-## BEGIN ~ Samba install
-
-    if   [ "$samba" == "y" ] || [ "$samba" == "Y" ] || [ "$samba" == "" ]; then
-        yaourt -S samba smbnetfs kdenetwork-filesharing
-        
-        sudo cp /etc/samba/smb.conf.default /etc/samba/smb.conf 
-        sudo pdbedit -a -u $user_name
-
-        sudo sed -i 's/workgroup = MYGROUP/;workgroup = MYGROUP/g' /etc/samba/smb.conf
-        sudo sed -i 's/\[homes\]/;\[homes\]/g' /etc/samba/smb.conf
-        sudo sed -i 's/comment = Home Directories/;comment = Home Directories/g' /etc/samba/smb.conf
-        sudo sed -i 's/browseable = no/;browseable = no/g' /etc/samba/smb.conf
-        sudo sed -i 's/writable = yes/;writable = yes/g' /etc/samba/smb.conf
-        
-        sudo systemctl enable smbd nmbd
-        sudo systemctl start smbd.socket
-    fi
-    
-## END
-
-## BEGIN ~ Security install
-
-    if   [ "$security" == "y" ] || [ "$security" == "Y" ] || [ "$security" == "" ]; then
-        yaourt -S clamav clamtk ufw gufw --noconfirm
-        
-        sudo systemctl enable ufw && sudo ufw enable
-        sudo ufw allow 1714:1764/udp
-        sudo ufw allow 1714:1764/tcp
-        sudo ufw allow qBittorrent
-        sudo ufw reload
-        
-        sudo freshclam
-    fi
-
 ## END
 
 ## BEGIN ~ Configuring services
@@ -183,10 +105,7 @@
     echo -e "vboxdrv\nvboxnetadp\nvboxnetflt\nvboxpci" | sudo tee --append /etc/modules-load.d/virtualbox.conf
 
     sudo systemctl enable bumblebeed
-    #sudo systemctl enable bluetooth
     sudo systemctl enable org.cups.cupsd
-    sudo systemctl enable systemd-swap
-    #sudo systemctl enable mysqld httpd
     
 ## END
 
