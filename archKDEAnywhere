@@ -113,7 +113,7 @@
 
     mkdir -p /home/$user_name/{Downloads/Torrents,Documentos/VirtualBox\ VMs}
 
-    sudo cp -R MenuKDE/ /usr/share/icons/
+    sudo cp -R extra/128x128.png /usr/share/icons/
 
     mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
     cp extra/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
