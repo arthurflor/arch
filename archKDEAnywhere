@@ -7,16 +7,19 @@
 ## BEGIN ~ Collecting information
 
     clear
-    echo -e "Arch KDE ~ Install and set up some packages\n\n"
+    echo -e "Manjaro KDE ~ Install and set up some packages\n\n"
 
     user_name=$(whoami)
     echo "User name: $user_name"
     read -p "Seconds to grub [0]: " grub_sec
+    read -p "Install Ionic Framework? [y]: " ionic
+    read -p "Install Apache, MariaDB, PHP? [y]: " lampp
+    read -p "Install JavaEE? [y]: " javaee
 
     if   [ "$grub_sec" == "" ]; then
         grub_sec="0"
     fi
-    
+
 ## END
 
 ## BEGIN ~ Updating system and first packages
@@ -55,8 +58,7 @@
 
     yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts ttf-vista-fonts --noconfirm
     
-    yaourt -S firefox firefox-i18n-pt-br --noconfirm
-    yaourt -S libreoffice-fresh libreoffice-fresh-pt-BR --noconfirm
+    yaourt -S latte-dock firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh-pt-BR --noconfirm
     
 ## END
 
@@ -68,7 +70,7 @@
     yaourt -S converseen soundconverter kmines kpatience --noconfirm
     yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
     
-    yaourt -S jdk9-openjdk multibootusb google-chrome --noconfirm
+    yaourt -S jdk8-openjdk multibootusb google-chrome --noconfirm
     yaourt -S arc-kde arc-gtk-theme papirus-icon-theme --noconfirm
     yaourt -S libreoffice-extension-vero kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
     yaourt -S hplip-plugin octopi-git wakfu-transition --noconfirm
@@ -77,26 +79,63 @@
 
 ## BEGIN ~ Install and set up Ionic Framework and Cordova
 
-    yaourt -S android-sdk-build-tools gradle --noconfirm
-   
-    sudo chown $user_name:wheel -R /opt/android-sdk
-    
-    export ANDROID_HOME=/opt/android-sdk
-    export PATH=$PATH:$ANDROID_HOME/tools
-    
-    sudo mkdir "$ANDROID_HOME/licenses"
-    echo -e "8933bad161af4178b1185d1a37fbf41ea5269c55" | sudo tee --append "$ANDROID_HOME/licenses/android-sdk-license"
+    if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
 
-    yaourt -S libudev0-shim brackets --noconfirm
-    yaourt -S filezilla dbeaver smartgit nodejs npm --needed --noconfirm
-    sudo npm install -g cordova ionic nodemon typescript typescript-formatter
+        yaourt -S android-sdk android-platform android-sdk-platform-tools android-sdk-build-tools gradle --noconfirm
     
+        sudo chown $user_name:wheel -R /opt/android-sdk
+        
+        echo -e "ANDROID_HOME=/opt/android-sdk" | sudo tee --append /etc/environment
+            
+        sudo mkdir "$ANDROID_HOME/licenses"
+        echo -e "8933bad161af4178b1185d1a37fbf41ea5269c55" | sudo tee --append "$ANDROID_HOME/licenses/android-sdk-license"
+
+        yaourt -S libudev0-shim brackets --noconfirm
+        yaourt -S filezilla dbeaver smartgit nodejs npm --needed --noconfirm
+        sudo npm install -g cordova ionic nodemon typescript typescript-formatter
+    fi
+    
+## END
+
+## BEGIN ~ Install and set up apache, mysql, php
+
+    if   [ "$lampp" == "y" ] || [ "$lampp" == "Y" ] || [ "$lampp" == "" ]; then
+        yaourt -S mariadb --noconfirm
+        yaourt -S apache phpmyadmin php php-apache php-cgi php-gd php-mcrypt php-pgsql php-sqlite php-intl --needed --noconfirm
+        sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+        sudo systemctl start mysqld
+        sudo mysql_secure_installation
+
+        sudo sed -i 's/DocumentRoot "\/srv\/http"/DocumentRoot "\/home\/'$user_name'\/Modelos\/www"/g' /etc/httpd/conf/httpd.conf
+        sudo sed -i 's/<Directory "\/srv\/http">/<Directory "\/home\/'$user_name'\/Modelos\/www">/g' /etc/httpd/conf/httpd.conf
+        echo -e 'Include conf/extra/phpmyadmin.conf\nInclude conf/extra/php7_module.conf' | sudo tee --append /etc/httpd/conf/httpd.conf
+        sudo sed -i 's/LoadModule mpm_event_module/#LoadModule mpm_event_module/g' /etc/httpd/conf/httpd.conf
+        sudo sed -i 's/#LoadModule mpm_prefork_module/LoadModule mpm_prefork_module/g' /etc/httpd/conf/httpd.conf
+        sudo sed -i 's/mod_mpm_event.so/mod_mpm_event.so\nLoadModule php7_module modules\/libphp7.so/g' /etc/httpd/conf/httpd.conf
+        sudo sed -i 's/display_errors = Off/display_errors = On/g' /etc/php/php.ini
+        sudo sed -i 's/extension=zip.so/extension=mysqli.so\nextension=mcrypt.so\nextension=pdo_mysql.so\nextension=bz2.so\nextension=zip.so\nextension=iconv.so/g' /etc/php/php.ini
+
+        sudo sed -i 's/User http/User '$user_name'/g' /etc/httpd/conf/httpd.conf
+        echo -e 'Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"\n<Directory "/usr/share/webapps/phpMyAdmin">\n\tDirectoryIndex index.php\n\tAllowOverride All\n\tOptions FollowSymlinks\n\tRequire all granted\n</Directory>' | sudo tee --append /etc/httpd/conf/extra/phpmyadmin.conf
+    fi
+
+## END
+
+## BEGIN ~ Install java ee
+
+    if   [ "$javaee" == "y" ] || [ "$javaee" == "Y" ] || [ "$javaee" == "" ]; then
+        yaourt -S maven tomcat8 eclipse-jee --noconfirm
+        sudo gpasswd --add $user_name tomcat8
+        sudo chown root:tomcat8 -R /usr/share/tomcat8/
+    fi
+
 ## END
 
 ## BEGIN ~ Configuring services
 
     sudo gpasswd -a $user_name vboxusers
     sudo gpasswd -a $user_name bumblebee
+    sudo gpasswd -a $user_name http
     sudo gpasswd -a $user_name games
     
     sudo modprobe fuse && sudo modprobe vboxdrv
@@ -117,6 +156,9 @@
 
     mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
     cp extra/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
+    
+    mkdir -p /home/$user_name/.config/latte/
+    cp extra/My\ Layout.layout.latte /home/$user_name/.config/latte/
 
     echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
     

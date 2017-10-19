@@ -12,9 +12,9 @@
     user_name=$(whoami)
     echo "User name: $user_name"
     read -p "Seconds to grub [0]: " grub_sec
-    read -p "Install Apache, MariaDB, PHP? [y]: " lampp
     read -p "Install Ionic Framework? [y]: " ionic
-    read -p "Install systemd-swap? [y]: " swap
+    read -p "Install Apache, MariaDB, PHP? [y]: " lampp
+    read -p "Install JavaEE? [y]: " javaee
 
     if   [ "$grub_sec" == "" ]; then
         grub_sec="0"
@@ -26,51 +26,105 @@
 
     sudo pacman-mirrors -g
 
-    yaourt -Rc qtav xine-ui kleopatra manjaro-documentation-en htop yakuake --noconfirm
-    yaourt -Rc thunderbird-kde digikam krita konversation cantata k3b steam-manjaro --noconfirm
+    yaourt -Rc kleopatra manjaro-documentation-en htop yakuake --noconfirm
+    yaourt -Rc thunderbird-kde kamera krita konversation cantata k3b steam-manjaro --noconfirm
     yaourt -Rc kwrite libreoffice-still jdk8-openjdk jre8-openjdk jre8-openjdk-headless --noconfirm
+    
     yaourt -Qtd
-
-    yaourt -Syu xf86-input-synaptics sane arc-kde libreoffice-fresh --noconfirm
-    ## END
-
-    ## BEGIN ~ Install packages (pacman)
-    yaourt -S virtualgl lib32-virtualgl frei0r-plugins --noconfirm
-    yaourt -S clementine gimp audacity kamoso --noconfirm
-    yaourt -S converseen soundconverter --noconfirm
-    yaourt -S zsnes kmines kpatience --noconfirm
-    yaourt -S clamav clamtk ufw gufw --noconfirm
-    yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-vnc --noconfirm
-    ##linux412-headers
-
+    yaourt -Syu xf86-input-synaptics arc-kde libreoffice-fresh latte-dock net-tools --noconfirm
+    
+## END
+    
+## BEGIN ~ Configuring look-and-feel
+    
+    mkdir -p /home/$user_name/.config/Brackets/
+    echo -e '{\n\t "fonts.fontSize": "12px",\n\t "fonts.fontFamily": "'SourceCodePro-Medium', ＭＳ ゴシック, 'MS Gothic', monospace",\n\t "linting.collapsed": true,\n\t "bb.beautify.hideDialog": false,\n\t "useTabChar": false,\n\t "themes.theme": "dark-theme",\n\t "highlightMatches": true,\n\t "styleActiveLine": true,\n\t "brackets-minimap.width": 140,\n\t "bb.beautify.beautifiers": { \n\t\t"tsfmt": { \n\t\t\t"command": "tsfmt" \n\t\t} \n\t},\n\t "bb.beautify.languages": {\n\t\t "css": "css",\n\t\t "ejs": "html",\n\t\t "handlebars": "html",\n\t\t "html": "html",\n\t\t "javascript": "js",\n\t\t "json": "js",\n\t\t "less": "css",\n\t\t "php": "html",\n\t\t "scss": "css",\n\t\t "svg": "html",\n\t\t "vue": "html",\n\t\t "xml": "html",\n\t\t "typescript": "tsfmt" \n\t} \n}' > /home/$user_name/.config/Brackets/brackets.json
+    
+    mkdir -p /home/$user_name/.local/share/plasma/plasmoids/
+    cd /home/$user_name/.local/share/plasma/plasmoids/
+        sudo cp -R /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/ ./
+        sudo chown -R $user_name:wheel org.kde.plasma.digitalclock/
+        cd org.kde.plasma.digitalclock/contents/ui/
+        sed -i 's/main.height <= 2/main.height <= 3/g' DigitalClock.qml
+        sed -i ': 1 ; N ; $!b1 ; s/height: timeLabel.height/height: timeLabel.height \/ 1.2/2' DigitalClock.qml
+    cd ~
+    
+    mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
+    cp extra/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
+    
+    mkdir -p /home/$user_name/.config/latte/
+    cp extra/My\ Layout.layout.latte /home/$user_name/.config/latte/
+    
+    sudo cp -R extra/128x128.png /usr/share/icons/
+    
+    mkdir -p /home/$user_name/{Downloads/Torrents,Documentos/VirtualBox\ VMs}
+    
+    setfacl -m u:sddm:x /home/$user_name/
+    touch /home/$user_name/.face.icon
+    setfacl -m u:sddm:r /home/$user_name/.face.icon
+    
+    echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
+    
 ## END
 
-## BEGIN ~ Other packages (dvd support & steam)
+## BEGIN ~ Configuring and repairing other things
 
-    yaourt -S lsdvd k3b devede handbrake handbrake-cli
-    yaourt -S steam-manjaro steam-native
+    sudo sed -i 's/IgnoreLid=false/IgnoreLid=true/g' /etc/UPower/UPower.conf
+    echo -e "HandleLidSwitch=ignore\nLidSwitchIgnoreInhibited=off" | sudo tee --append /etc/systemd/logind.conf
 
+    echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
+    
+    sudo mkdir -p /etc/systemd/coredump.conf.d/
+    echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
+
+    #echo -e 'Section "Device"\n\tIdentifier "Intel Graphics"\n\tDriver "intel"\n\tOption "DRI" "3"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/20-intel.conf
+    
+#     sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3 pci=noaer"/g' /etc/default/grub
+    sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
+    sudo sed -i 's/GRUB_BACKGROUND/#GRUB_BACKGROUND/g' /etc/default/grub
+    
+    sudo update-grub
+            
+## END
+    
+## BEGIN ~ Install packages (pacman)
+    yaourt -S spotify zenity ffmpeg0.10 --noconfirm
+    yaourt -S gimp audacity kamoso kdenlive frei0r-plugins --noconfirm
+    yaourt -S converseen soundconverter zsnes kmines kpatience --noconfirm
+    yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-vnc --noconfirm
+    ##linux413-headers
+    
 ## END
 
 ## BEGIN ~ Install packages (AUR)
 
-    yaourt -S pdfshuffler jdk kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
-    yaourt -S numix-icon-theme-git numix-circle-icon-theme-git numix-square-icon-theme-git --noconfirm
-    yaourt -S ttf-ms-fonts ttf-vista-fonts --noconfirm
-    yaourt -S hunspell-pt-br libreoffice-extension-vero --noconfirm
-    yaourt -S google-chrome smartgit brackets-bin --noconfirm
+    yaourt -S libreoffice-extension-vero hplip --noconfirm
+    yaourt -S pdfshuffler kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
+    yaourt -S jdk8-openjdk google-chrome --noconfirm
+    yaourt -S arc-kde arc-gtk-theme papirus-icon-theme --noconfirm
 
     yaourt -S wakfu-transition
 
 ## END
 
-## BEGIN ~ Install and set up systemd-swap
+## BEGIN ~ Install and set up Ionic Framework and Cordova
 
-    if   [ "$swap" == "y" ] || [ "$swap" == "Y" ] || [ "$swap" == "" ]; then
-        yaourt -S systemd-swap --noconfirm
-        sudo sed -i 's/zram_enabled=0/zram_enabled=1/g' /etc/systemd/swap.conf
+    if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
+        yaourt -S android-sdk android-platform android-sdk-platform-tools android-sdk-build-tools gradle --noconfirm
+    
+        sudo chown $user_name:wheel -R /opt/android-sdk
+        
+        echo -e "ANDROID_HOME=/opt/android-sdk" | sudo tee --append /etc/environment
+        
+        sudo mkdir "$ANDROID_HOME/licenses"
+        echo -e "8933bad161af4178b1185d1a37fbf41ea5269c55" | sudo tee --append "$ANDROID_HOME/licenses/android-sdk-license"
+
+        yaourt -S filezilla dbeaver smartgit nodejs npm --needed --noconfirm
+        yaourt -S libudev0-shim brackets --noconfirm
+        
+        sudo npm install -g cordova ionic nodemon typescript typescript-formatter
     fi
-
+    
 ## END
 
 ## BEGIN ~ Install and set up apache, mysql, php
@@ -91,94 +145,49 @@
         sudo sed -i 's/display_errors = Off/display_errors = On/g' /etc/php/php.ini
         sudo sed -i 's/extension=zip.so/extension=mysqli.so\nextension=mcrypt.so\nextension=pdo_mysql.so\nextension=bz2.so\nextension=zip.so\nextension=iconv.so/g' /etc/php/php.ini
 
+        sudo sed -i 's/User http/User '$user_name'/g' /etc/httpd/conf/httpd.conf
         echo -e 'Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"\n<Directory "/usr/share/webapps/phpMyAdmin">\n\tDirectoryIndex index.php\n\tAllowOverride All\n\tOptions FollowSymlinks\n\tRequire all granted\n</Directory>' | sudo tee --append /etc/httpd/conf/extra/phpmyadmin.conf
     fi
 
 ## END
 
-## BEGIN ~ Install and set up Ionic Framework and Cordova
+## BEGIN ~ Install java ee
 
-    if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
-        yaourt -S android-sdk android-platform android-sdk-platform-tools android-sdk-build-tools gradle --noconfirm
-        
-        sudo chown $user_name:$user_name -R /opt/android-sdk
-        
-        export ANDROID_HOME=/opt/android-sdk
-        export PATH=$PATH:$ANDROID_HOME/tools
-        
-        sudo mkdir "$ANDROID_HOME/licenses"
-        echo -e "8933bad161af4178b1185d1a37fbf41ea5269c55" | sudo tee --append "$ANDROID_HOME/licenses/android-sdk-license"
-
-        yaourt -S dbeaver nodejs npm 
-        sudo npm install -g ionic cordova
+    if   [ "$javaee" == "y" ] || [ "$javaee" == "Y" ] || [ "$javaee" == "" ]; then
+        yaourt -S maven tomcat8 eclipse-jee --noconfirm
+        sudo gpasswd --add $user_name tomcat8
+        sudo chown root:tomcat8 -R /usr/share/tomcat8/
     fi
 
 ## END
 
 ## BEGIN ~ Configuring services
 
-    sudo gpasswd -a $user_name vboxusers 
+    sudo gpasswd -a $user_name vboxusers
     sudo gpasswd -a $user_name bumblebee
-    sudo modprobe fuse 
+    sudo gpasswd -a $user_name http
+    sudo gpasswd -a $user_name games
+    
     sudo modprobe vboxdrv
     sudo dkms autoinstall
+    
     echo -e "vboxdrv\nvboxnetadp\nvboxnetflt\nvboxpci" | sudo tee --append /etc/modules-load.d/virtualbox.conf
 
     sudo systemctl enable bumblebeed
-    sudo systemctl enable ufw && sudo ufw enable
-    sudo systemctl enable systemd-swap
-
-    sudo ufw allow 1714:1764/udp && sudo ufw allow 1714:1764/tcp
-    sudo ufw allow 6881/udp && sudo ufw allow 6881/tcp
-
-## END
-
-## BEGIN ~ Configuring and repairing other things
-
-    sudo sed -i 's/IgnoreLid=false/IgnoreLid=true/g' /etc/UPower/UPower.conf
-    echo -e "HandleLidSwitch=ignore\nLidSwitchIgnoreInhibited=off" | sudo tee --append /etc/systemd/logind.conf
-
-    echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
-    sudo mkdir -p /etc/systemd/coredump.conf.d/ && echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
-
-    echo -e 'Section "Device"\n\tIdentifier "Intel Graphics"\n\tDriver "intel"\n\tOption "DRI" "3"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/20-intel.conf
-
-    sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
-    sudo sed -i 's/GRUB_BACKGROUND/#GRUB_BACKGROUND/g' /etc/default/grub
-    sudo update-grub
 
 ## END
 
 ## BEGIN ~ Configuring look-and-feel
 
-    mkdir -p /home/$user_name/{Downloads/Torrents,Modelos/{VirtualBox\ VMs,www}}
-
-    mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
-    cp extra/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
-
-    sudo cp -R extra/128x128.png /usr/share/icons/
-
-    sudo sed -i 's/gnome,hicolor/gnome,hicolor,breeze-dark/g' /usr/share/icons/Numix/index.theme
-
-    sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
-    echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
-    sed -i 's/}/\t, "bb.beautify.languages": {"typescript": "js"}\n}/g' /home/$user_name/.config/Brackets/brackets.json
-
-    mkdir -p /home/$user_name/.local/share/plasma/plasmoids/
-    cd /home/$user_name/.local/share/plasma/plasmoids/
-        sudo cp -R /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/ ./
-        sudo chown -R $user_name:$user_name org.kde.plasma.digitalclock/
-        cd org.kde.plasma.digitalclock/contents/ui/
-        sed -i 's/main.height <= 2/main.height <= 3/g' DigitalClock.qml
-        sed -i ': 1 ; N ; $!b1 ; s/height: timeLabel.height/height: timeLabel.height \/ 1.2/2' DigitalClock.qml
-    cd ~
+    sudo sed -i 's/ubuntu-mono-dark,Mint-X,elementary,gnome,//g' /usr/share/icons/Papirus/index.theme
+    sudo sed -i 's/ubuntu-mono-dark,Mint-X,elementary,gnome,//g' /usr/share/icons/Papirus-Dark/index.theme
+    sudo sed -i 's/ubuntu-mono-dark,Mint-X,elementary,gnome,//g' /usr/share/icons/Papirus-Light/index.theme
 
 ## END
 
 ## BEGIN ~ Finishing and Some tips
 
     yaourt -Qtd && yaourt -Scc
-    sudo freshclam
 
     echo -e "\nAll done."
         # Nvidia settings: optirun nvidia-settings -c :8
