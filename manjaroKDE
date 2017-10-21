@@ -131,14 +131,14 @@
 
     if   [ "$lampp" == "y" ] || [ "$lampp" == "Y" ] || [ "$lampp" == "" ]; then
         yaourt -S mariadb --noconfirm
-        yaourt -S apache phpmyadmin php php-apache php-cgi php-gd php-mcrypt php-pgsql php-sqlite php-intl --needed --noconfirm
+        yaourt -S apache php php-apache php-cgi php-gd php-mcrypt php-pgsql php-sqlite php-intl --needed --noconfirm
         sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
         sudo systemctl start mysqld
         sudo mysql_secure_installation
 
-        sudo sed -i 's/DocumentRoot "\/srv\/http"/DocumentRoot "\/home\/'$user_name'\/Modelos\/www"/g' /etc/httpd/conf/httpd.conf
-        sudo sed -i 's/<Directory "\/srv\/http">/<Directory "\/home\/'$user_name'\/Modelos\/www">/g' /etc/httpd/conf/httpd.conf
-        echo -e 'Include conf/extra/phpmyadmin.conf\nInclude conf/extra/php7_module.conf' | sudo tee --append /etc/httpd/conf/httpd.conf
+        sudo sed -i 's/DocumentRoot "\/srv\/http"/DocumentRoot "\/home\/'$user_name'\/Modelos\/"/g' /etc/httpd/conf/httpd.conf
+        sudo sed -i 's/<Directory "\/srv\/http">/<Directory "\/home\/'$user_name'\/Modelos\/">/g' /etc/httpd/conf/httpd.conf
+        echo -e 'Include conf/extra/php7_module.conf' | sudo tee --append /etc/httpd/conf/httpd.conf
         sudo sed -i 's/LoadModule mpm_event_module/#LoadModule mpm_event_module/g' /etc/httpd/conf/httpd.conf
         sudo sed -i 's/#LoadModule mpm_prefork_module/LoadModule mpm_prefork_module/g' /etc/httpd/conf/httpd.conf
         sudo sed -i 's/mod_mpm_event.so/mod_mpm_event.so\nLoadModule php7_module modules\/libphp7.so/g' /etc/httpd/conf/httpd.conf
@@ -146,7 +146,6 @@
         sudo sed -i 's/extension=zip.so/extension=mysqli.so\nextension=mcrypt.so\nextension=pdo_mysql.so\nextension=bz2.so\nextension=zip.so\nextension=iconv.so/g' /etc/php/php.ini
 
         sudo sed -i 's/User http/User '$user_name'/g' /etc/httpd/conf/httpd.conf
-        echo -e 'Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"\n<Directory "/usr/share/webapps/phpMyAdmin">\n\tDirectoryIndex index.php\n\tAllowOverride All\n\tOptions FollowSymlinks\n\tRequire all granted\n</Directory>' | sudo tee --append /etc/httpd/conf/extra/phpmyadmin.conf
     fi
 
 ## END
