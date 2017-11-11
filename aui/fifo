@@ -60,8 +60,8 @@ select_editor(){
 #}}}
 #MIRRORLIST {{{
 configure_mirrorlist(){
-  local countries_code=("AU" "AT" "BY" "BE" "BR" "BG" "CA" "CL" "CN" "CO" "CZ" "DK" "EE" "FI" "FR" "DE" "GR" "HK" "HU" "ID" "IN" "IE" "IL" "IT" "JP" "KZ" "KR" "LV" "LU" "MK" "NL" "NC" "NZ" "NO" "PL" "PT" "RO" "RU" "RS" "SG" "SK" "ZA" "ES" "LK" "SE" "CH" "TW" "TR" "UA" "GB" "US" "UZ" "VN")
-  local countries_name=("Australia" "Austria" "Belarus" "Belgium" "Brazil" "Bulgaria" "Canada" "Chile" "China" "Colombia" "Czech Republic" "Denmark" "Estonia" "Finland" "France" "Germany" "Greece" "Hong Kong" "Hungary" "Indonesia" "India" "Ireland" "Israel" "Italy" "Japan" "Kazakhstan" "Korea" "Latvia" "Luxembourg" "Macedonia" "Netherlands" "New Caledonia" "New Zealand" "Norway" "Poland" "Portugal" "Romania" "Russia" "Serbia" "Singapore" "Slovakia" "South Africa" "Spain" "Sri Lanka" "Sweden" "Switzerland" "Taiwan" "Turkey" "Ukraine" "United Kingdom" "United States" "Uzbekistan" "Viet Nam")
+  local countries_code=("AU" "AT" "BY" "BE" "BR" "BG" "CA" "CL" "CN" "CO" "CZ" "DK" "EE" "FI" "FR" "DE" "GR" "HK" "HU" "ID" "IN" "IR" "IE" "IL" "IT" "JP" "KZ" "KR" "LV" "LU" "MK" "NL" "NC" "NZ" "NO" "PL" "PT" "RO" "RU" "RS" "SG" "SK" "ZA" "ES" "LK" "SE" "CH" "TW" "TR" "UA" "GB" "US" "UZ" "VN")
+  local countries_name=("Australia" "Austria" "Belarus" "Belgium" "Brazil" "Bulgaria" "Canada" "Chile" "China" "Colombia" "Czech Republic" "Denmark" "Estonia" "Finland" "France" "Germany" "Greece" "Hong Kong" "Hungary" "Indonesia" "India" "Iran" "Ireland" "Israel" "Italy" "Japan" "Kazakhstan" "Korea" "Latvia" "Luxembourg" "Macedonia" "Netherlands" "New Caledonia" "New Zealand" "Norway" "Poland" "Portugal" "Romania" "Russia" "Serbia" "Singapore" "Slovakia" "South Africa" "Spain" "Sri Lanka" "Sweden" "Switzerland" "Taiwan" "Turkey" "Ukraine" "United Kingdom" "United States" "Uzbekistan" "Viet Nam")
   country_list(){
     #`reflector --list-countries | sed 's/[0-9]//g' | sed 's/^/"/g' | sed 's/,.*//g' | sed 's/ *$//g'  | sed 's/$/"/g' | sed -e :a -e '$!N; s/\n/ /; ta'`
     PS3="$prompt1"
@@ -118,18 +118,15 @@ nameserver 208.67.220.220
 # OpenDNS IPv6 nameservers
 nameserver 2620:0:ccc::2
 nameserver 2620:0:ccd::2
-
 # Google IPv4 nameservers
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 # Google IPv6 nameservers
 nameserver 2001:4860:4860::8888
 nameserver 2001:4860:4860::8844
-
 # Comodo nameservers
 nameserver 8.26.56.26
 nameserver 8.20.247.20
-
 # Basic Yandex.DNS - Quick and reliable DNS
 nameserver 77.88.8.8
 nameserver 77.88.8.1
@@ -139,7 +136,6 @@ nameserver 77.88.8.2
 # Family Yandex.DNS - Without adult content
 nameserver 77.88.8.7
 nameserver 77.88.8.3
-
 # censurfridns.dk IPv4 nameservers
 nameserver 91.239.100.100
 nameserver 89.233.43.71
@@ -501,6 +497,8 @@ format_partitions(){
 #INSTALL BASE SYSTEM {{{
 install_base_system(){
   print_title "INSTALL BASE SYSTEM"
+  print_info "Installing PGP keyring"
+  pacman -Sy archlinux-keyring
   print_info "Using the pacstrap script we install the base system. The base-devel package group will be installed also."
   rm ${MOUNTPOINT}${EFI_MOUNTPOINT}/vmlinuz-linux
   pacstrap ${MOUNTPOINT} base base-devel parted btrfs-progs f2fs-tools ntp net-tools
@@ -594,7 +592,7 @@ configure_timezone(){
   arch_chroot "sed -i '/#NTP=/d' /etc/systemd/timesyncd.conf"
   arch_chroot "sed -i 's/#Fallback//' /etc/systemd/timesyncd.conf"
   arch_chroot "echo \"FallbackNTP=0.pool.ntp.org 1.pool.ntp.org 0.fr.pool.ntp.org\" >> /etc/systemd/timesyncd.conf"
-  arch_chroot "timedatectl set-ntp true "
+  arch_chroot "systemctl enable systemd-timesyncd.service"
 }
 #}}}
 #CONFIGURE HARDWARECLOCK {{{

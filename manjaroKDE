@@ -160,7 +160,7 @@
         sudo sed -i 's/<\/tomcat-users>/<role rolename="tomcat"\/>\n<user username="tomcat" password="" roles="tomcat,manager-script"\/>\n<\/tomcat-users>/g' /usr/share/tomcat8/conf/tomcat-users.xml
                 
         mkdir -p /home/$user_name/.netbeans/8.2/config/Preferences/org/netbeans/modules/
-        echo -e "projectsFolder=/home/"$user_name"/Modelos/NetBeansProjects" > /home/$user_name/.netbeans/8.2/config/Preferences/org/netbeans/modules/projectui.properties
+        echo -e "projectsFolder=/home/"$user_name"/Modelos/" > /home/$user_name/.netbeans/8.2/config/Preferences/org/netbeans/modules/projectui.properties
     fi
 
 ## END
