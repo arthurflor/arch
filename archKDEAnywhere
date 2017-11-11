@@ -123,9 +123,14 @@
 ## BEGIN ~ Install java ee
 
     if   [ "$javaee" == "y" ] || [ "$javaee" == "Y" ] || [ "$javaee" == "" ]; then
-        yaourt -S maven tomcat8 eclipse-jee --noconfirm
+        yaourt -S maven tomcat8 netbeans --noconfirm
+
         sudo gpasswd --add $user_name tomcat8
         sudo chown root:tomcat8 -R /usr/share/tomcat8/
+        sudo sed -i 's/<\/tomcat-users>/<role rolename="tomcat"\/>\n<user username="tomcat" password="" roles="tomcat,manager-script"\/>\n<\/tomcat-users>/g' /usr/share/tomcat8/conf/tomcat-users.xml
+        
+        mkdir -p /home/$user_name/.netbeans/8.2/config/Preferences/org/netbeans/modules/
+        echo -e "projectsFolder=/home/"$user_name"/Modelos/NetBeansProjects" > /home/$user_name/.netbeans/8.2/config/Preferences/org/netbeans/modules/projectui.properties
     fi
 
 ## END
