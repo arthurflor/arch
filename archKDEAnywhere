@@ -50,7 +50,7 @@
     yaourt -S ksystemlog kdegraphics-thumbnailers ffmpegthumbs partitionmanager filelight spectacle --noconfirm
     yaourt -Rc discover --noconfirm
 
-    yaourt -S dkms aspell-pt xine-lib ifuse ntfs-3g screenfetch zip p7zip rar --noconfirm
+    yaourt -S dkms aspell-pt xine-lib ifuse ntfs-3g screenfetch zip p7zip unrar --noconfirm
     yaourt -S gst-plugins-good gst-plugins-ugly gst-libav --noconfirm
     
     yaourt -S cups cups-filters cups-pdf --noconfirm
