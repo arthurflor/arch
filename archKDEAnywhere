@@ -46,7 +46,7 @@
     #yaourt -S xf86-video-intel xf86-input-synaptics --needed --noconfirm
     yaourt -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
 
-    yaourt -S plasma ark kcalc kate kdeconnect kwalletmanager kdenetwork-filesharing --needed --noconfirm
+    yaourt -S plasma ark kcalc kate kdeconnect kwalletmanager kdenetwork-filesharing samba --needed --noconfirm
     yaourt -S openssh ksystemlog kdegraphics-thumbnailers ffmpegthumbs partitionmanager filelight spectacle --noconfirm
     yaourt -Rc discover --noconfirm
 
