@@ -72,7 +72,7 @@
     yaourt -S jdk8-openjdk imagewriter google-chrome --noconfirm
     yaourt -S arc-kde arc-gtk-theme papirus-icon-theme --noconfirm
     yaourt -S libreoffice-extension-vero kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
-    yaourt -S hplip-plugin octopi-git wakfu-transition --noconfirm
+    yaourt -S pamac-aur pamac-tray-appindicator hplip-plugin wakfu-transition --noconfirm
         
 ## END
 
