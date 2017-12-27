@@ -65,14 +65,14 @@
 
     yaourt -S gwenview okular vlc phonon-qt5-vlc qbittorrent --noconfirm
     yaourt -S spotify zenity ffmpeg0.10 --noconfirm
-    yaourt -S gimp inkscape audacity kamoso kdenlive frei0r-plugins --noconfirm
+    yaourt -S gimp gimp-plugin-beautify inkscape audacity kamoso kdenlive frei0r-plugins --noconfirm
     yaourt -S converseen soundconverter kmines kpatience --noconfirm
     yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
     
     yaourt -S jdk8-openjdk imagewriter google-chrome --noconfirm
     yaourt -S arc-kde arc-gtk-theme papirus-icon-theme --noconfirm
     yaourt -S libreoffice-extension-vero kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
-    yaourt -S pamac-aur pamac-tray-appindicator hplip-plugin wakfu-transition --noconfirm
+    yaourt -S octopi-git hplip-plugin wakfu-transition --noconfirm
         
 ## END
 
