@@ -147,6 +147,9 @@
     sudo systemctl enable bumblebeed
     sudo systemctl enable org.cups.cupsd
     
+    sudo wget "https://git.samba.org/samba.git/?p=samba.git;a=blob_plain;f=examples/smb.conf.default;hb=HEAD" -O /etc/samba/smb.conf
+    sudo sed -i 's/myhostname/myhostname wins /g' /etc/nsswitch.conf
+    
 ## END
 
 ## BEGIN ~ Configuring and repairing other things
