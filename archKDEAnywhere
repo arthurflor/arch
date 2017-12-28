@@ -70,7 +70,7 @@
     yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
     
     yaourt -S jdk8-openjdk imagewriter google-chrome --noconfirm
-    yaourt -S arc-kde arc-gtk-theme papirus-icon-theme --noconfirm
+    yaourt -S arc-kde-git gtk-theme-arc-git papirus-icon-theme-git --noconfirm
     yaourt -S libreoffice-extension-vero kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
     yaourt -S octopi-git hplip-plugin wakfu-transition --noconfirm
         
