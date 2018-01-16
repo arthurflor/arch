@@ -1,13 +1,12 @@
 #!/bin/bash
 #-----------------------------------------------------------------------------
-# Created by arthurflor mailto: arthurflor23[at]gmail[dot]com
 # Run this script after your first boot with archlinux (Anywhere)
 #-----------------------------------------------------------------------------
 
 ## BEGIN ~ Collecting information
 
     clear
-    echo -e "Manjaro KDE ~ Install and set up some packages\n\n"
+    echo -e "Arch KDE ~ Install and set up some packages\n\n"
 
     user_name=$(whoami)
     echo "User name: $user_name"

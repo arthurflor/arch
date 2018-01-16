@@ -13,6 +13,3 @@ Scripts to automate the process of installing packages and some configurations o
 
 #### Manjaro KDE
 - script: `./manjaro-kde`
-
-#### Fedora 27 Gnome
-- script: `./fedora-27-gnome`
