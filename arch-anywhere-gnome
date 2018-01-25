@@ -1,0 +1,176 @@
+#!/bin/bash
+#-----------------------------------------------------------------------------
+# Run this script after your first boot with archlinux (Anywhere)
+#-----------------------------------------------------------------------------
+
+## BEGIN ~ Collecting information
+
+    clear
+    echo -e "Arch Gnome ~ Install and set up some packages\n\n"
+
+    user_name=$(whoami)
+    echo "User name: $user_name"
+    read -p "Seconds to grub [0]: " grub_sec
+    read -p "Install Development Web Kit? [y]: " ionic
+    read -p "Install Apache, MariaDB, PHP? [y]: " lampp
+    read -p "Install JavaEE? [y]: " javaee
+
+    if   [ "$grub_sec" == "" ]; then
+        grub_sec="0"
+    fi
+
+## END
+
+## BEGIN ~ Updating system and packages
+
+    sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
+    sudo sed -i 's/#TotalDownload/TotalDownload/g' /etc/pacman.conf
+
+    sudo localectl set-x11-keymap br abnt2
+    sudo pacman -Syyu base-devel git wget --needed --noconfirm
+
+    cd /tmp/
+        git clone https://aur.archlinux.org/package-query.git
+        cd package-query && makepkg -si --noconfirm && cd ..
+
+        git clone https://aur.archlinux.org/yaourt.git
+        cd yaourt && makepkg -si --noconfirm && cd ..
+
+        git clone https://github.com/helmuthdu/dotfiles
+        sudo sed -i 's/Java source/java/g' dotfiles/.nanorc
+        sudo cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc ~/
+        sudo cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc /home/$user_name/
+    cd ~
+
+    yaourt -S nvidia nvidia-utils nvidia-settings bumblebee mesa-demos --needed --noconfirm
+
+    echo "HandleLidSwitch=ignore" | sudo tee --append /etc/systemd/logind.conf
+    echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
+
+    sudo mkdir -p /etc/systemd/coredump.conf.d/
+    echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
+
+    sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"/g' /etc/default/grub
+    sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+    mkdir -p /home/$user_name/{Downloads/Torrents,Documentos/VirtualBox\ VMs}
+    sudo cp -R extra/128x128.png /usr/share/icons/
+
+    sudo mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
+    sudo chown $user_name:users -R /home/$user_name/.local/share/gnome-shell/extensions/
+
+    yaourt -Rcc accerciser ipython anjuta glade empathy polari epiphany brasero totem --noconfirm
+    yaourt -Rcc gnome-{2048,klotski,mahjongg,nibbles,robots,taquin,tetravex,chess} --noconfirm
+    yaourt -Rcc atomix bijiben five-or-more hitori iagno lightsoff four-in-a-row swell-foop tali quadrapassel --noconfirm
+    yaourt -Rcc gnome-{maps,weather,clocks,todo,contacts,dictionary,calendar,sound-recorder,shell-extensions} evolution --noconfirm
+    yaourt -Qtd
+
+    yaourt -S alacarte flatpak-builder nautilus-share openssh --noconfirm
+    yaourt -S sshfs ifuse ntfs-3g screenfetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
+    yaourt -S cups cups-filters cups-pdf simple-scan system-config-printer pdfshuffler --noconfirm
+
+    yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts ttf-vista-fonts --noconfirm
+    yaourt -S firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh-pt-BR libreoffice-extension-vero --noconfirm
+
+    echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
+
+    yaourt -S adapta-gtk-theme papirus-icon-theme chrome-gnome-shell gnome-shell-extension-gsconnect --noconfirm
+
+    yaourt -S jdk8 google-chrome pamac-aur hplip-plugin steam steam-native-runtime --noconfirm
+    yaourt -S qt4 vlc transmission-gtk gimp gimp-plugin-beautify inkscape audacity --noconfirm
+    yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
+
+## END
+
+## BEGIN ~ Install and set up Ionic Framework and Cordova
+
+    if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
+
+        yaourt -S android-studio filezilla dbeaver nodejs npm brackets-bin --noconfirm
+
+	sudo npm install -g cordova ionic @angular/cli nodemon typescript typescript-formatter
+
+	sudo mkdir /opt/android-sdk
+        sudo chown $user_name:wheel -R /opt/android-sdk
+
+        mkdir -p ~/.config/Brackets/
+    	echo -e '{\n\t "fonts.fontSize": "13px",\n\t "fonts.fontFamily": "'SourceCodePro-Medium', ＭＳ ゴシック, 'MS Gothic', monospace",\n\t "linting.collapsed": true,\n\t "bb.beautify.hideDialog": false,\n\t "useTabChar": false,\n\t "themes.theme": "dark-theme",\n\t "highlightMatches": true,\n\t "styleActiveLine": true,\n\t "brackets-minimap.width": 140,\n\t "bb.beautify.beautifiers": { \n\t\t"tsfmt": { \n\t\t\t"command": "tsfmt" \n\t\t} \n\t},\n\t "bb.beautify.languages": {\n\t\t "css": "css",\n\t\t "ejs": "html",\n\t\t "handlebars": "html",\n\t\t "html": "html",\n\t\t "javascript": "js",\n\t\t "json": "js",\n\t\t "less": "css",\n\t\t "php": "html",\n\t\t "scss": "css",\n\t\t "svg": "html",\n\t\t "vue": "html",\n\t\t "xml": "html",\n\t\t "typescript": "tsfmt" \n\t} \n}' > /home/$user_name/.config/Brackets/brackets.json
+    fi
+
+## END
+
+## BEGIN ~ Install and set up apache, mysql, php
+
+    if   [ "$lampp" == "y" ] || [ "$lampp" == "Y" ] || [ "$lampp" == "" ]; then
+
+        yaourt -S mariadb apache phpmyadmin php php-{apache,cgi,gd,pgsql,sqlite,intl} --needed --noconfirm
+
+        sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+        sudo systemctl start mysqld
+        sudo mysql_secure_installation
+
+        sudo sed -i 's/DocumentRoot "\/srv\/http"/DocumentRoot "\/home\/'$user_name'\/Público\/"/g' /etc/httpd/conf/httpd.conf
+        sudo sed -i 's/<Directory "\/srv\/http">/<Directory "\/home\/'$user_name'\/Público\/">/g' /etc/httpd/conf/httpd.conf
+        echo -e 'Include conf/extra/php7_module.conf' | sudo tee --append /etc/httpd/conf/httpd.conf
+        sudo sed -i 's/LoadModule mpm_event_module/#LoadModule mpm_event_module/g' /etc/httpd/conf/httpd.conf
+        sudo sed -i 's/#LoadModule mpm_prefork_module/LoadModule mpm_prefork_module/g' /etc/httpd/conf/httpd.conf
+        sudo sed -i 's/mod_mpm_event.so/mod_mpm_event.so\nLoadModule php7_module modules\/libphp7.so/g' /etc/httpd/conf/httpd.conf
+        sudo sed -i 's/display_errors = Off/display_errors = On/g' /etc/php/php.ini
+        sudo sed -i 's/extension=zip.so/extension=mysqli.so\nextension=mcrypt.so\nextension=pdo_mysql.so\nextension=bz2.so\nextension=zip.so\nextension=iconv.so/g' /etc/php/php.ini
+
+        sudo sed -i 's/User http/User '$user_name'/g' /etc/httpd/conf/httpd.conf
+
+	echo -e 'Include conf/extra/phpmyadmin.conf' | sudo tee --append /etc/httpd/conf/httpd.conf
+        echo -e 'Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"\n<Directory "/usr/share/webapps/phpMyAdmin">\n\tDirectoryIndex index.php\n\tAllowOverride All\n\tOptions FollowSymlinks\n\tRequire all granted\n</Directory>' | sudo tee --append /etc/httpd/conf/extra/phpmyadmin.conf
+    fi
+
+## END
+
+## BEGIN ~ Install java ee
+
+    if   [ "$javaee" == "y" ] || [ "$javaee" == "Y" ] || [ "$javaee" == "" ]; then
+
+        yaourt -S netbeans tomcat8 --noconfirm
+
+        sudo gpasswd --add $user_name tomcat8
+        sudo chown root:tomcat8 -R /usr/share/tomcat8/
+        sudo sed -i 's/<\/tomcat-users>/<role rolename="tomcat"\/>\n<user username="tomcat" password="123" roles="tomcat,manager-script"\/>\n<\/tomcat-users>/g' /usr/share/tomcat8/conf/tomcat-users.xml
+
+        mkdir -p /home/$user_name/.netbeans/8.2/config/Preferences/org/netbeans/modules/
+        echo -e "projectsFolder=/home/"$user_name"/Público/" > /home/$user_name/.netbeans/8.2/config/Preferences/org/netbeans/modules/projectui.properties
+    fi
+
+## END
+
+## BEGIN ~ Configuring services
+
+    sudo gpasswd -a $user_name vboxusers
+    sudo gpasswd -a $user_name bumblebee
+    sudo gpasswd -a $user_name http
+    sudo gpasswd -a $user_name games
+
+    sudo modprobe fuse && sudo modprobe vboxdrv
+
+    echo -e "vboxdrv\nvboxnetadp\nvboxnetflt\nvboxpci" | sudo tee --append /etc/modules-load.d/virtualbox.conf
+
+    mkdir -p /home/$user_name/.config/autostart/
+    echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
+
+    sudo systemctl enable bumblebeed
+
+## END
+
+## BEGIN ~ Finishing and Some tips
+
+    yaourt -Qtd
+    yaourt -Scc
+
+    echo -e "\nAll done."
+        # Nvidia settings: optirun nvidia-settings -c :8
+        # optirun /usr/bin/wakfu
+        # Steam (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun /usr/bin/steam %U
+            # Or steam set launch game: primusrun %command%
+        # Java config: Parameters runtime: -Xms8192m -Xmx8192m
+
+## END
