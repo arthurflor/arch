@@ -11,9 +11,11 @@
     user_name=$(whoami)
     echo "User name: $user_name"
     read -p "Seconds to grub [0]: " grub_sec
+
     read -p "Install Development Web Kit? [y]: " ionic
     read -p "Install Apache, MariaDB, PHP? [y]: " lampp
     read -p "Install JavaEE? [y]: " javaee
+    dev="n"
 
     if   [ "$grub_sec" == "" ]; then
         grub_sec="0"
@@ -86,8 +88,9 @@
 ## BEGIN ~ Install and set up Ionic Framework and Cordova
 
     if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
+	dev="y"
 
-        yaourt -S android-studio filezilla dbeaver nodejs npm brackets-bin --noconfirm
+        yaourt -S brackets-bin android-studio nodejs npm --noconfirm
 
 	sudo npm install -g cordova ionic @angular/cli nodemon typescript typescript-formatter
 
@@ -103,6 +106,7 @@
 ## BEGIN ~ Install and set up apache, mysql, php
 
     if   [ "$lampp" == "y" ] || [ "$lampp" == "Y" ] || [ "$lampp" == "" ]; then
+	dev="y"
 
         yaourt -S mariadb apache phpmyadmin php php-{apache,cgi,gd,pgsql,sqlite,intl} --needed --noconfirm
 
@@ -130,6 +134,7 @@
 ## BEGIN ~ Install java ee
 
     if   [ "$javaee" == "y" ] || [ "$javaee" == "Y" ] || [ "$javaee" == "" ]; then
+	dev="y"
 
         yaourt -S netbeans tomcat8 --noconfirm
 
@@ -139,6 +144,16 @@
 
         mkdir -p /home/$user_name/.netbeans/8.2/config/Preferences/org/netbeans/modules/
         echo -e "projectsFolder=/home/"$user_name"/Público/" > /home/$user_name/.netbeans/8.2/config/Preferences/org/netbeans/modules/projectui.properties
+    fi
+
+## END
+
+## BEGIN ~ Dev
+
+    if   [ "$dev" == "y" ]; then
+
+	yaourt -S filezilla dbeaver smartgit --noconfirm
+
     fi
 
 ## END
