@@ -90,12 +90,13 @@
     if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
 	dev="y"
 
-        yaourt -S brackets-bin android-studio nodejs npm --noconfirm
+        yaourt -S brackets-bin android-studio gradle nodejs npm --noconfirm
 
 	sudo npm install -g cordova ionic @angular/cli nodemon typescript typescript-formatter
 
 	sudo mkdir /opt/android-sdk
         sudo chown $user_name:wheel -R /opt/android-sdk
+        $ANDROID_HOME/tools/bin/sdkmanager --licenses
 
         mkdir -p ~/.config/Brackets/
     	echo -e '{\n\t "fonts.fontSize": "13px",\n\t "fonts.fontFamily": "'SourceCodePro-Medium', ＭＳ ゴシック, 'MS Gothic', monospace",\n\t "linting.collapsed": true,\n\t "bb.beautify.hideDialog": false,\n\t "useTabChar": false,\n\t "themes.theme": "dark-theme",\n\t "highlightMatches": true,\n\t "styleActiveLine": true,\n\t "brackets-minimap.width": 140,\n\t "bb.beautify.beautifiers": { \n\t\t"tsfmt": { \n\t\t\t"command": "tsfmt" \n\t\t} \n\t},\n\t "bb.beautify.languages": {\n\t\t "css": "css",\n\t\t "ejs": "html",\n\t\t "handlebars": "html",\n\t\t "html": "html",\n\t\t "javascript": "js",\n\t\t "json": "js",\n\t\t "less": "css",\n\t\t "php": "html",\n\t\t "scss": "css",\n\t\t "svg": "html",\n\t\t "vue": "html",\n\t\t "xml": "html",\n\t\t "typescript": "tsfmt" \n\t} \n}' > /home/$user_name/.config/Brackets/brackets.json
@@ -167,12 +168,14 @@
 
     sudo modprobe fuse && sudo modprobe vboxdrv
 
+    sudo systemctl enable bumblebeed
+
     echo -e "vboxdrv\nvboxnetadp\nvboxnetflt\nvboxpci" | sudo tee --append /etc/modules-load.d/virtualbox.conf
 
     mkdir -p /home/$user_name/.config/autostart/
     echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
 
-    sudo systemctl enable bumblebeed
+    echo -e "en_US.UTF-8 UTF-8" | sudo tee --append /etc/locale.gen && sudo locale-gen
 
 ## END
 
