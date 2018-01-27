@@ -65,7 +65,7 @@
     yaourt -Rcc accerciser ipython anjuta glade empathy polari epiphany brasero totem --noconfirm
     yaourt -Rcc gnome-{2048,klotski,mahjongg,nibbles,robots,taquin,tetravex,chess} --noconfirm
     yaourt -Rcc atomix bijiben five-or-more hitori iagno lightsoff four-in-a-row swell-foop tali quadrapassel --noconfirm
-    yaourt -Rcc gnome-{maps,weather,clocks,todo,contacts,dictionary,calendar,sound-recorder,shell-extensions} evolution --noconfirm
+    yaourt -Rcc gnome-{maps,weather,clocks,todo,contacts,dictionary,calendar,sound-recorder,shell-extensions,code-assistance} evolution --noconfirm
     yaourt -Qtd
 
     yaourt -S alacarte flatpak-builder nautilus-share openssh --noconfirm
@@ -115,8 +115,8 @@
         sudo systemctl start mysqld
         sudo mysql_secure_installation
 
-        sudo sed -i 's/DocumentRoot "\/srv\/http"/DocumentRoot "\/home\/'$user_name'\/Público\/"/g' /etc/httpd/conf/httpd.conf
-        sudo sed -i 's/<Directory "\/srv\/http">/<Directory "\/home\/'$user_name'\/Público\/">/g' /etc/httpd/conf/httpd.conf
+        sudo sed -i 's/DocumentRoot "\/srv\/http"/DocumentRoot "\/home\/'$user_name'\/Projetos\/"/g' /etc/httpd/conf/httpd.conf
+        sudo sed -i 's/<Directory "\/srv\/http">/<Directory "\/home\/'$user_name'\/Projetos\/">/g' /etc/httpd/conf/httpd.conf
         echo -e 'Include conf/extra/php7_module.conf' | sudo tee --append /etc/httpd/conf/httpd.conf
         sudo sed -i 's/LoadModule mpm_event_module/#LoadModule mpm_event_module/g' /etc/httpd/conf/httpd.conf
         sudo sed -i 's/#LoadModule mpm_prefork_module/LoadModule mpm_prefork_module/g' /etc/httpd/conf/httpd.conf
@@ -144,7 +144,7 @@
         sudo sed -i 's/<\/tomcat-users>/<role rolename="tomcat"\/>\n<user username="tomcat" password="123" roles="tomcat,manager-script"\/>\n<\/tomcat-users>/g' /usr/share/tomcat8/conf/tomcat-users.xml
 
         mkdir -p /home/$user_name/.netbeans/8.2/config/Preferences/org/netbeans/modules/
-        echo -e "projectsFolder=/home/"$user_name"/Público/" > /home/$user_name/.netbeans/8.2/config/Preferences/org/netbeans/modules/projectui.properties
+        echo -e "projectsFolder=/home/"$user_name"/Projetos/" > /home/$user_name/.netbeans/8.2/config/Preferences/org/netbeans/modules/projectui.properties
     fi
 
 ## END
