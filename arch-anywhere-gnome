@@ -69,7 +69,7 @@
     yaourt -Qtd
 
     yaourt -S alacarte flatpak-builder nautilus-share openssh --noconfirm
-    yaourt -S sshfs ifuse ntfs-3g screenfetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
+    yaourt -S net-tools sshfs ifuse ntfs-3g screenfetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
     yaourt -S cups cups-filters cups-pdf simple-scan system-config-printer pdfshuffler --noconfirm
 
     yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts ttf-vista-fonts --noconfirm
