@@ -65,7 +65,7 @@
     yaourt -Rcc accerciser ipython anjuta glade empathy polari epiphany brasero totem --noconfirm
     yaourt -Rcc gnome-{2048,klotski,mahjongg,nibbles,robots,taquin,tetravex,chess} --noconfirm
     yaourt -Rcc atomix bijiben five-or-more hitori iagno lightsoff four-in-a-row swell-foop tali quadrapassel --noconfirm
-    yaourt -Rcc gnome-{maps,weather,clocks,todo,contacts,dictionary,calendar,sound-recorder,shell-extensions,code-assistance} evolution --noconfirm
+    yaourt -Rcc gnome-{maps,weather,clocks,todo,contacts,dictionary,calendar,sound-recorder,shell-extensions,code-assistance,keyring} evolution --noconfirm
     yaourt -Qtd
 
     yaourt -S alacarte flatpak-builder nautilus-share openssh --noconfirm
@@ -79,7 +79,7 @@
 
     yaourt -S adapta-gtk-theme papirus-icon-theme chrome-gnome-shell gnome-shell-extension-gsconnect --noconfirm
 
-    yaourt -S jdk8 google-chrome pamac-aur hplip-plugin steam steam-native-runtime --noconfirm
+    yaourt -S keepassx2 jdk8 google-chrome pamac-aur hplip-plugin steam steam-native-runtime --noconfirm
     yaourt -S qt4 vlc transmission-gtk gimp gimp-plugin-beautify inkscape audacity --noconfirm
     yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
 
