@@ -1,4 +1,4 @@
-#!/bin/bash
+y#!/bin/bash
 #-----------------------------------------------------------------------------
 # Run this script after your first boot with archlinux (Anywhere)
 #-----------------------------------------------------------------------------
@@ -11,22 +11,26 @@
     user_name=$(whoami)
     echo "User name: $user_name"
     read -p "Seconds to grub [0]: " grub_sec
-    read -p "Install Ionic Framework? [y]: " ionic
+    
+    read -p "Install Development Web Kit? [y]: " ionic
     read -p "Install Apache, MariaDB, PHP? [y]: " lampp
     read -p "Install JavaEE? [y]: " javaee
-
+    dev="n"
+    
     if   [ "$grub_sec" == "" ]; then
         grub_sec="0"
     fi
 
 ## END
 
-## BEGIN ~ Updating system and first packages
+## BEGIN ~ Updating system and packages
 
     sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
     sudo sed -i 's/#TotalDownload/TotalDownload/g' /etc/pacman.conf
     
     sudo localectl set-x11-keymap br abnt2
+    echo -e "en_US.UTF-8 UTF-8" | sudo tee --append /etc/locale.gen && sudo locale-gen
+    
     sudo pacman -Syyu base-devel git wget --needed --noconfirm
 
     cd /tmp/
@@ -38,57 +42,72 @@
 
         git clone https://github.com/helmuthdu/dotfiles
         sudo sed -i 's/Java source/java/g' dotfiles/.nanorc
-        sudo cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc ~/
+        sudo cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc /root/
         sudo cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc /home/$user_name/
     cd ~
 
-    #yaourt -S xf86-video-intel xf86-input-synaptics --needed --noconfirm
-    yaourt -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
+    yaourt -S nvidia nvidia-utils nvidia-settings bumblebee mesa-demos --needed --noconfirm
 
-    yaourt -S plasma ark kcalc kate kdeconnect kwalletmanager kdenetwork-filesharing samba --needed --noconfirm
-    yaourt -S openssh ksystemlog kdegraphics-thumbnailers ffmpegthumbs partitionmanager filelight spectacle --noconfirm
-    yaourt -Rc discover --noconfirm
+        echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
 
-    yaourt -S dkms aspell-pt xine-lib ifuse ntfs-3g screenfetch zip p7zip unrar --noconfirm
-    yaourt -S gst-plugins-good gst-plugins-ugly gst-libav --noconfirm
+        sudo mkdir -p /etc/systemd/coredump.conf.d/
+        echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
+
+        sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"/g' /etc/default/grub
+        sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
+        sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+        mkdir -p /home/$user_name/{Downloads/Torrents,VirtualBox\ VMs}
+        sudo cp -R extra/128x128.png /usr/share/icons/
     
-    yaourt -S cups cups-filters cups-pdf --noconfirm
-    yaourt -S pdfshuffler simple-scan print-manager system-config-printer --noconfirm
-
-    yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts ttf-vista-fonts --noconfirm
-    yaourt -S firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh-pt-BR --noconfirm
+    yaourt -S plasma ark kcalc kate kdeconnect kwalletmanager kget kdegraphics-thumbnailers ffmpegthumbs partitionmanager filelight spectacle --needed --noconfirm
     
-## END
+    yaourt -S kdenetwork-filesharing samba --needed --noconfirm
+    
+    sudo wget "https://git.samba.org/samba.git/?p=samba.git;a=blob_plain;f=examples/smb.conf.default;hb=HEAD" -O /etc/samba/smb.conf
+    sudo sed -i 's/myhostname/myhostname wins /g' /etc/nsswitch.conf
 
-## BEGIN ~ Install packages
+    yaourt -Rcc plasma-vault discover --noconfirm
+    
+    yaourt -S openssh dkms net-tools sshfs ifuse ntfs-3g screenfetch zip p7zip unrar gst-plugins-good gst-plugins-ugly gst-libav --needed --noconfirm
+    
+    yaourt -S cups cups-filters cups-pdf pdfshuffler simple-scan print-manager --needed --noconfirm
+    yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts ttf-vista-fonts --needed --noconfirm
+    yaourt -S firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh-pt-BR libreoffice-extension-vero --needed --noconfirm
 
-    yaourt -S gwenview okular vlc phonon-qt5-vlc qbittorrent --noconfirm
-    yaourt -S spotify zenity ffmpeg0.10 --noconfirm
-    yaourt -S gimp gimp-plugin-beautify inkscape audacity kamoso kdenlive frei0r-plugins --noconfirm
-    yaourt -S converseen soundconverter kmines kpatience --noconfirm
+    echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
+    
+    yaourt -S arc-kde-git gtk-theme-arc-git papirus-icon-theme-git gnome-icon-theme --noconfirm
+    yaourt -S plasma5-applets-eventcalendar plasma5-applet-awesome-widgets latte-dock --noconfirm
+    
+        mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
+        cp extra/arch_applet_awesome /home/$user_name/.local/share/awesomewidgets/configs/
+    
+        mkdir -p /home/$user_name/.config/latte/
+        cp extra/arch.layout.latte /home/$user_name/.config/latte/
+    
+    yaourt -S jdk8 imagewriter hplip-plugin octopi-git --noconfirm
+    yaourt -S keepassx2 gwenview okular vlc qbittorrent amarok --noconfirm
+    yaourt -S kamoso gimp gimp-plugin-beautify inkscape audacity kdenlive frei0r-plugins --noconfirm
+    yaourt -S kmines kpatience steam steam-native-runtime google-chrome --noconfirm
     yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
     
-    yaourt -S jdk8 imagewriter google-chrome --noconfirm
-    yaourt -S arc-kde-git gtk-theme-arc-git papirus-icon-theme-git --noconfirm
-    yaourt -S libreoffice-extension-vero kf5-servicemenus-encfs plasma5-applet-awesome-widgets --noconfirm
-    yaourt -S octopi-git hplip-plugin wakfu-transition --noconfirm
-        
 ## END
 
 ## BEGIN ~ Install and set up Ionic Framework and Cordova
 
     if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
+        dev="y"
+        yaourt -S brackets-bin android-studio gradle nodejs npm --noconfirm
 
-        yaourt -S android-sdk android-sdk-build-tools gradle --noconfirm
-    
-        sudo chown $user_name:wheel -R /opt/android-sdk        
-        echo -e "ANDROID_HOME=/opt/android-sdk" | sudo tee --append /etc/environment
-        
-        $ANDROID_HOME/tools/bin/sdkmanager --licenses
+        sudo npm install -g cordova ionic @angular/cli nodemon typescript typescript-formatter
 
-        yaourt -S libudev0-shim brackets --noconfirm
-        yaourt -S filezilla dbeaver smartgit nodejs npm --needed --noconfirm
-        sudo npm install -g cordova ionic nodemon typescript typescript-formatter
+        sudo mkdir -p /opt/android-sdk/tools/bin/sdkmanager
+        sudo chown $user_name:wheel -R /opt/android-sdk
+#         $ANDROID_HOME/tools/bin/sdkmanager --licenses
+
+        mkdir -p ~/.config/Brackets/
+    	echo -e '{\n\t "fonts.fontSize": "13px",\n\t "fonts.fontFamily": "'SourceCodePro-Medium', ＭＳ ゴシック, 'MS Gothic', monospace",\n\t "linting.collapsed": true,\n\t "bb.beautify.hideDialog": false,\n\t "useTabChar": false,\n\t "themes.theme": "dark-theme",\n\t "highlightMatches": true,\n\t "styleActiveLine": true,\n\t "brackets-minimap.width": 140,\n\t "bb.beautify.beautifiers": { \n\t\t"tsfmt": { \n\t\t\t"command": "tsfmt" \n\t\t} \n\t},\n\t "bb.beautify.languages": {\n\t\t "css": "css",\n\t\t "ejs": "html",\n\t\t "handlebars": "html",\n\t\t "html": "html",\n\t\t "javascript": "js",\n\t\t "json": "js",\n\t\t "less": "css",\n\t\t "php": "html",\n\t\t "scss": "css",\n\t\t "svg": "html",\n\t\t "vue": "html",\n\t\t "xml": "html",\n\t\t "typescript": "tsfmt" \n\t} \n}' > /home/$user_name/.config/Brackets/brackets.json
     fi
     
 ## END
@@ -96,8 +115,9 @@
 ## BEGIN ~ Install and set up apache, mysql, php
 
     if   [ "$lampp" == "y" ] || [ "$lampp" == "Y" ] || [ "$lampp" == "" ]; then
-        yaourt -S mariadb --noconfirm
-        yaourt -S apache php php-apache php-cgi php-gd php-mcrypt php-pgsql php-sqlite php-intl --needed --noconfirm
+        dev="y"
+        yaourt -S mariadb apache phpmyadmin php php-{apache,cgi,gd,pgsql,sqlite,intl} --needed --noconfirm
+
         sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
         sudo systemctl start mysqld
         sudo mysql_secure_installation
@@ -112,6 +132,9 @@
         sudo sed -i 's/extension=zip.so/extension=mysqli.so\nextension=mcrypt.so\nextension=pdo_mysql.so\nextension=bz2.so\nextension=zip.so\nextension=iconv.so/g' /etc/php/php.ini
 
         sudo sed -i 's/User http/User '$user_name'/g' /etc/httpd/conf/httpd.conf
+
+        echo -e 'Include conf/extra/phpmyadmin.conf' | sudo tee --append /etc/httpd/conf/httpd.conf
+        echo -e 'Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"\n<Directory "/usr/share/webapps/phpMyAdmin">\n\tDirectoryIndex index.php\n\tAllowOverride All\n\tOptions FollowSymlinks\n\tRequire all granted\n</Directory>' | sudo tee --append /etc/httpd/conf/extra/phpmyadmin.conf
     fi
 
 ## END
@@ -119,14 +142,23 @@
 ## BEGIN ~ Install java ee
 
     if   [ "$javaee" == "y" ] || [ "$javaee" == "Y" ] || [ "$javaee" == "" ]; then
-        yaourt -S maven tomcat8 netbeans --noconfirm
+        dev="y"
+        yaourt -S netbeans tomcat8 --noconfirm
 
         sudo gpasswd --add $user_name tomcat8
         sudo chown root:tomcat8 -R /usr/share/tomcat8/
-        sudo sed -i 's/<\/tomcat-users>/<role rolename="tomcat"\/>\n<user username="tomcat" password="" roles="tomcat,manager-script"\/>\n<\/tomcat-users>/g' /usr/share/tomcat8/conf/tomcat-users.xml
-        
+        sudo sed -i 's/<\/tomcat-users>/<role rolename="tomcat"\/>\n<user username="tomcat" password="123" roles="tomcat,manager-script"\/>\n<\/tomcat-users>/g' /usr/share/tomcat8/conf/tomcat-users.xml
+
         mkdir -p /home/$user_name/.netbeans/8.2/config/Preferences/org/netbeans/modules/
         echo -e "projectsFolder=/home/"$user_name"/Modelos/" > /home/$user_name/.netbeans/8.2/config/Preferences/org/netbeans/modules/projectui.properties
+    fi
+
+## END
+
+## BEGIN ~ Dev
+
+    if   [ "$dev" == "y" ]; then
+        yaourt -S filezilla dbeaver smartgit --noconfirm
     fi
 
 ## END
@@ -142,78 +174,24 @@
     sudo dkms autoinstall
     
     echo -e "vboxdrv\nvboxnetadp\nvboxnetflt\nvboxpci" | sudo tee --append /etc/modules-load.d/virtualbox.conf
-
+    
     sudo systemctl enable bumblebeed
     sudo systemctl enable org.cups.cupsd
-    
-    sudo wget "https://git.samba.org/samba.git/?p=samba.git;a=blob_plain;f=examples/smb.conf.default;hb=HEAD" -O /etc/samba/smb.conf
-    sudo sed -i 's/myhostname/myhostname wins /g' /etc/nsswitch.conf
-    
-## END
-
-## BEGIN ~ Configuring and repairing other things
-
-    mkdir -p /home/$user_name/{Downloads/Torrents,Documentos/VirtualBox\ VMs}
-
-    sudo cp -R extra/128x128.png /usr/share/icons/
-
-    mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
-    cp extra/aw_widget_statusbarrc /home/$user_name/.local/share/awesomewidgets/configs/
-    
-    mkdir -p /home/$user_name/.config/latte/
-    cp extra/My\ Layout.layout.latte /home/$user_name/.config/latte/
-
-    echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
-    
-## END
-
-## BEGIN ~ Configuring and repairing other things
-
-    echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
-    
-    sudo mkdir -p /etc/systemd/coredump.conf.d/
-    echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
- 
-    sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3 pci=noaer"/g' /etc/default/grub
-    sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
-    
-    sudo grub-mkconfig -o /boot/grub/grub.cfg
-        
-## END
-
-## BEGIN ~ Configuring look-and-feel
-    
-    mkdir -p ~/.config/Brackets/
-    echo -e '{\n\t "fonts.fontSize": "12px",\n\t "fonts.fontFamily": "'SourceCodePro-Medium', ＭＳ ゴシック, 'MS Gothic', monospace",\n\t "linting.collapsed": true,\n\t "bb.beautify.hideDialog": false,\n\t "useTabChar": false,\n\t "themes.theme": "dark-theme",\n\t "highlightMatches": true,\n\t "styleActiveLine": true,\n\t "brackets-minimap.width": 140,\n\t "bb.beautify.beautifiers": { \n\t\t"tsfmt": { \n\t\t\t"command": "tsfmt" \n\t\t} \n\t},\n\t "bb.beautify.languages": {\n\t\t "css": "css",\n\t\t "ejs": "html",\n\t\t "handlebars": "html",\n\t\t "html": "html",\n\t\t "javascript": "js",\n\t\t "json": "js",\n\t\t "less": "css",\n\t\t "php": "html",\n\t\t "scss": "css",\n\t\t "svg": "html",\n\t\t "vue": "html",\n\t\t "xml": "html",\n\t\t "typescript": "tsfmt" \n\t} \n}' > /home/$user_name/.config/Brackets/brackets.json
-    
-    mkdir -p /home/$user_name/.local/share/plasma/plasmoids/
-    cd /home/$user_name/.local/share/plasma/plasmoids/
-        sudo cp -R /usr/share/plasma/plasmoids/org.kde.plasma.digitalclock/ ./
-        sudo chown -R $user_name:wheel org.kde.plasma.digitalclock/
-        cd org.kde.plasma.digitalclock/contents/ui/
-        sed -i 's/main.height <= 2/main.height <= 3/g' DigitalClock.qml
-        sed -i ': 1 ; N ; $!b1 ; s/height: timeLabel.height/height: timeLabel.height \/ 1.2/2' DigitalClock.qml
-    cd ~
-
-    sudo sed -i 's/ubuntu-mono-dark,Mint-X,elementary,gnome,//g' /usr/share/icons/Papirus/index.theme
-    sudo sed -i 's/ubuntu-mono-dark,Mint-X,elementary,gnome,//g' /usr/share/icons/Papirus-Dark/index.theme
-    sudo sed -i 's/ubuntu-mono-dark,Mint-X,elementary,gnome,//g' /usr/share/icons/Papirus-Light/index.theme
-    
-    setfacl -m u:sddm:x /home/$user_name/
-    touch /home/$user_name/.face.icon
-    setfacl -m u:sddm:r /home/$user_name/.face.icon
+    sudo systemctl disable octopi
     
 ## END
 
 ## BEGIN ~ Finishing and Some tips
 
-    yaourt -Qtd && yaourt -Scc
+    yaourt -Qtd
+    yaourt -Scc
 
     echo -e "\nAll done."
+        # Event calendar: ddd, d 'de' MMM, HH:mm
         # Nvidia settings: optirun nvidia-settings -c :8
         # optirun /usr/bin/wakfu
         # Steam (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun /usr/bin/steam %U
-            # Or steam set launch game: primusrun %command%
+            # Or steam set launch game: optirun %command%
         # Java config: Parameters runtime: -Xms8192m -Xmx8192m
         
 ## END

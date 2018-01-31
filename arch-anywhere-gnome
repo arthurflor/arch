@@ -29,6 +29,8 @@
     sudo sed -i 's/#TotalDownload/TotalDownload/g' /etc/pacman.conf
 
     sudo localectl set-x11-keymap br abnt2
+    echo -e "en_US.UTF-8 UTF-8" | sudo tee --append /etc/locale.gen && sudo locale-gen
+    
     sudo pacman -Syyu base-devel git wget --needed --noconfirm
 
     cd /tmp/
@@ -40,7 +42,7 @@
 
         git clone https://github.com/helmuthdu/dotfiles
         sudo sed -i 's/Java source/java/g' dotfiles/.nanorc
-        sudo cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc ~/
+        sudo cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc /root/
         sudo cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc /home/$user_name/
     cd ~
 
@@ -56,7 +58,7 @@
     sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
     sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-    mkdir -p /home/$user_name/{Downloads/Torrents,Documentos/VirtualBox\ VMs}
+    mkdir -p /home/$user_name/{Downloads/Torrents,VirtualBox\ VMs}
     sudo cp -R extra/128x128.png /usr/share/icons/
 
     sudo mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
@@ -88,15 +90,14 @@
 ## BEGIN ~ Install and set up Ionic Framework and Cordova
 
     if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
-	dev="y"
-
+        dev="y"
         yaourt -S brackets-bin android-studio gradle nodejs npm --noconfirm
 
-	sudo npm install -g cordova ionic @angular/cli nodemon typescript typescript-formatter
+        sudo npm install -g cordova ionic @angular/cli nodemon typescript typescript-formatter
 
-	sudo mkdir /opt/android-sdk
+        sudo mkdir /opt/android-sdk
         sudo chown $user_name:wheel -R /opt/android-sdk
-        $ANDROID_HOME/tools/bin/sdkmanager --licenses
+#         $ANDROID_HOME/tools/bin/sdkmanager --licenses
 
         mkdir -p ~/.config/Brackets/
     	echo -e '{\n\t "fonts.fontSize": "13px",\n\t "fonts.fontFamily": "'SourceCodePro-Medium', ＭＳ ゴシック, 'MS Gothic', monospace",\n\t "linting.collapsed": true,\n\t "bb.beautify.hideDialog": false,\n\t "useTabChar": false,\n\t "themes.theme": "dark-theme",\n\t "highlightMatches": true,\n\t "styleActiveLine": true,\n\t "brackets-minimap.width": 140,\n\t "bb.beautify.beautifiers": { \n\t\t"tsfmt": { \n\t\t\t"command": "tsfmt" \n\t\t} \n\t},\n\t "bb.beautify.languages": {\n\t\t "css": "css",\n\t\t "ejs": "html",\n\t\t "handlebars": "html",\n\t\t "html": "html",\n\t\t "javascript": "js",\n\t\t "json": "js",\n\t\t "less": "css",\n\t\t "php": "html",\n\t\t "scss": "css",\n\t\t "svg": "html",\n\t\t "vue": "html",\n\t\t "xml": "html",\n\t\t "typescript": "tsfmt" \n\t} \n}' > /home/$user_name/.config/Brackets/brackets.json
@@ -107,8 +108,7 @@
 ## BEGIN ~ Install and set up apache, mysql, php
 
     if   [ "$lampp" == "y" ] || [ "$lampp" == "Y" ] || [ "$lampp" == "" ]; then
-	dev="y"
-
+        dev="y"
         yaourt -S mariadb apache phpmyadmin php php-{apache,cgi,gd,pgsql,sqlite,intl} --needed --noconfirm
 
         sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
@@ -126,7 +126,7 @@
 
         sudo sed -i 's/User http/User '$user_name'/g' /etc/httpd/conf/httpd.conf
 
-	echo -e 'Include conf/extra/phpmyadmin.conf' | sudo tee --append /etc/httpd/conf/httpd.conf
+        echo -e 'Include conf/extra/phpmyadmin.conf' | sudo tee --append /etc/httpd/conf/httpd.conf
         echo -e 'Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"\n<Directory "/usr/share/webapps/phpMyAdmin">\n\tDirectoryIndex index.php\n\tAllowOverride All\n\tOptions FollowSymlinks\n\tRequire all granted\n</Directory>' | sudo tee --append /etc/httpd/conf/extra/phpmyadmin.conf
     fi
 
@@ -135,8 +135,7 @@
 ## BEGIN ~ Install java ee
 
     if   [ "$javaee" == "y" ] || [ "$javaee" == "Y" ] || [ "$javaee" == "" ]; then
-	dev="y"
-
+        dev="y"
         yaourt -S netbeans tomcat8 --noconfirm
 
         sudo gpasswd --add $user_name tomcat8
@@ -152,9 +151,7 @@
 ## BEGIN ~ Dev
 
     if   [ "$dev" == "y" ]; then
-
-	yaourt -S filezilla dbeaver smartgit --noconfirm
-
+        yaourt -S filezilla dbeaver smartgit --noconfirm
     fi
 
 ## END
@@ -174,8 +171,6 @@
 
     mkdir -p /home/$user_name/.config/autostart/
     echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
-
-    echo -e "en_US.UTF-8 UTF-8" | sudo tee --append /etc/locale.gen && sudo locale-gen
 
 ## END
 

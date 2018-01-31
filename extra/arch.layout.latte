@@ -14,7 +14,7 @@ raiseOnActivityChange=false
 raiseOnDesktopChange=false
 timerHide=300
 timerShow=100
-visibility=1
+visibility=4
 wallpaperplugin=org.kde.image
 
 [Containments][1][Applets][2]
@@ -24,7 +24,14 @@ plugin=org.kde.latte.plasmoid
 [Containments][1][Applets][2][Configuration][General]
 isInLatteDock=true
 launchers=multi;*;2;file:///usr/share/applications/firefox.desktop;file:///usr/share/applications/org.kde.dolphin.desktop
-launchers59=file:///usr/share/applications/org.kde.konsole.desktop,file:///usr/share/applications/org.kde.dolphin.desktop,file:///usr/share/applications/google-chrome.desktop,file:///usr/share/applications/spotify.desktop,file:///usr/share/applications/gimp.desktop,file:///usr/share/applications/brackets.desktop,file:///usr/share/applications/smartgit.desktop,file:///usr/share/applications/dbeaver.desktop,file:///usr/share/applications/filezilla.desktop,file:///usr/share/applications/eclipse.desktop,file:///usr/share/applications/org.kde.kate.desktop,file:///usr/share/applications/virtualbox.desktop
+launchers59=file:///usr/share/applications/org.kde.konsole.desktop,file:///usr/share/applications/org.kde.dolphin.desktop,file:///usr/share/applications/google-chrome.desktop,applications:qbittorrent.desktop,applications:kde4-amarok.desktop,file:///usr/share/applications/gimp.desktop,applications:steam.desktop,file:///usr/share/applications/brackets.desktop,file:///usr/share/applications/smartgit.desktop,file:///usr/share/applications/dbeaver.desktop,file:///usr/share/applications/filezilla.desktop,applications:netbeans.desktop,file:///usr/share/applications/org.kde.kate.desktop,file:///usr/share/applications/virtualbox.desktop
+
+[Containments][1][Applets][3]
+immutability=1
+plugin=org.kde.plasma.trash
+
+[Containments][1][Applets][3][Configuration][General]
+noteId=3eb18a64-060c-4611-819d-87f61ddb6d
 
 [Containments][1][ConfigDialog]
 DialogHeight=617
@@ -32,13 +39,13 @@ DialogWidth=450
 
 [Containments][1][General]
 advanced=true
-appletOrder=2
+appletOrder=2;3
 dotsOnActive=true
 durationTime=x1
 iconMargin=35
-iconSize=40
+iconSize=48
+indicateAudioStreams=false
 panelSize=100
-reverseLinesPosition=true
 shadowOpacity=60
 shadowSize=45
 shadows=All
