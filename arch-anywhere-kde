@@ -87,7 +87,7 @@ y#!/bin/bash
         cp extra/arch.layout.latte /home/$user_name/.config/latte/
     
     yaourt -S jdk8 imagewriter hplip-plugin octopi-git --noconfirm
-    yaourt -S keepassx2 gwenview okular vlc qbittorrent amarok --noconfirm
+    yaourt -S keepassx2 gwenview okular vlc qbittorrent elisa --noconfirm
     yaourt -S kamoso gimp gimp-plugin-beautify inkscape audacity kdenlive frei0r-plugins --noconfirm
     yaourt -S kmines kpatience steam steam-native-runtime google-chrome --noconfirm
     yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
