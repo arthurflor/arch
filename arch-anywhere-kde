@@ -98,7 +98,7 @@ y#!/bin/bash
 
     if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
         dev="y"
-        yaourt -S brackets-bin android-studio gradle nodejs npm --noconfirm
+        yaourt -S visual-studio-code-bin android-studio gradle nodejs npm --noconfirm
 
         sudo npm install -g cordova ionic @angular/cli nodemon typescript typescript-formatter
 
