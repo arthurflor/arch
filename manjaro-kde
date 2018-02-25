@@ -109,7 +109,7 @@
 ## BEGIN ~ Install and set up Ionic Framework and Cordova
 
     if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
-        yaourt -S android-sdk android-platform android-sdk-platform-tools android-sdk-build-tools gradle --noconfirm
+        yaourt -S visual-studio-code-bin android-studio android-tools android-udev gradle --noconfirm
     
         sudo chown $user_name:wheel -R /opt/android-sdk
         
@@ -119,7 +119,6 @@
         echo -e "8933bad161af4178b1185d1a37fbf41ea5269c55" | sudo tee --append "$ANDROID_HOME/licenses/android-sdk-license"
 
         yaourt -S filezilla dbeaver smartgit nodejs npm --needed --noconfirm
-        yaourt -S libudev0-shim brackets --noconfirm
         
         sudo npm install -g cordova ionic nodemon typescript typescript-formatter
     fi
