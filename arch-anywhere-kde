@@ -77,7 +77,7 @@
 
     echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
     
-    yaourt -S papirus-icon-theme gnome-icon-theme --noconfirm
+    yaourt -S adapta-kde papirus-icon-theme gnome-icon-theme --noconfirm
     yaourt -S plasma5-applets-eventcalendar plasma5-applet-awesome-widgets latte-dock --noconfirm
     
         mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
