@@ -58,7 +58,7 @@
         sudo grub-mkconfig -o /boot/grub/grub.cfg
 
         mkdir -p /home/$user_name/{Downloads/Torrents,VirtualBox\ VMs}
-        sudo cp -R extra/128x128.png /usr/share/icons/
+        sudo cp -R ./icons/* /usr/share/icons/
     
     yaourt -S plasma ark kcalc kate kdeconnect kwalletmanager kget kdegraphics-thumbnailers ffmpegthumbs partitionmanager filelight spectacle --needed --noconfirm
     

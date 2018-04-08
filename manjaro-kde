@@ -54,7 +54,7 @@
     mkdir -p /home/$user_name/.config/latte/
     cp extra/My\ Layout.layout.latte /home/$user_name/.config/latte/
     
-    sudo cp -R extra/128x128.png /usr/share/icons/
+    sudo cp -R ./icons/* /usr/share/icons/
     
     mkdir -p /home/$user_name/{Downloads/Torrents,Documentos/VirtualBox\ VMs}
     

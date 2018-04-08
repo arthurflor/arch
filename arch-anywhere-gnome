@@ -30,7 +30,7 @@
 
     sudo localectl set-x11-keymap br abnt2
     echo -e "en_US.UTF-8 UTF-8" | sudo tee --append /etc/locale.gen && sudo locale-gen
-    
+
     sudo pacman -Syyu base-devel git wget --needed --noconfirm
 
     cd /tmp/
@@ -38,52 +38,48 @@
         cd package-query && makepkg -si --noconfirm && cd ..
 
         git clone https://aur.archlinux.org/yaourt.git
-        cd yaourt && makepkg -si --noconfirm && cd ..
-
-        git clone https://github.com/helmuthdu/dotfiles
-        sudo sed -i 's/Java source/java/g' dotfiles/.nanorc
-        sudo cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc /root/
-        sudo cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc /home/$user_name/
+        cd yaourt && makepkg -si --noconfirm
     cd ~
 
     yaourt -S nvidia nvidia-utils nvidia-settings bumblebee mesa-demos --needed --noconfirm
 
-    echo "HandleLidSwitch=ignore" | sudo tee --append /etc/systemd/logind.conf
     echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
 
     sudo mkdir -p /etc/systemd/coredump.conf.d/
     echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
 
-    sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"/g' /etc/default/grub
+    sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3"/g' /etc/default/grub
     sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
     sudo grub-mkconfig -o /boot/grub/grub.cfg
 
     mkdir -p /home/$user_name/{Downloads/Torrents,VirtualBox\ VMs}
-    sudo cp -R extra/128x128.png /usr/share/icons/
+    sudo cp -R ./icons/* /usr/share/icons/
 
+    mkdir -p /home/$user_name/.local/share/gnome-shell/extensions/
     sudo mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
     sudo chown $user_name:users -R /home/$user_name/.local/share/gnome-shell/extensions/
 
-    yaourt -Rcc accerciser ipython anjuta glade empathy polari epiphany brasero totem --noconfirm
-    yaourt -Rcc gnome-{2048,klotski,mahjongg,nibbles,robots,taquin,tetravex,chess} --noconfirm
-    yaourt -Rcc atomix bijiben five-or-more hitori iagno lightsoff four-in-a-row swell-foop tali quadrapassel --noconfirm
-    yaourt -Rcc gnome-{maps,weather,clocks,todo,contacts,dictionary,calendar,sound-recorder,shell-extensions,code-assistance,keyring} evolution --noconfirm
+    yaourt -Rcc gnome-{maps,clocks,todo,contacts,dictionary,calendar,shell-extensions,keyring,software} --noconfirm
+    yaourt -Rcc totem evolution epiphany --noconfirm
     yaourt -Qtd
 
-    yaourt -S alacarte flatpak-builder nautilus-share openssh --noconfirm
+    yaourt -S alacarte flatpak-builder nautilus-share nautilus-sendto openssh --noconfirm
     yaourt -S net-tools sshfs ifuse ntfs-3g screenfetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
-    yaourt -S cups cups-filters cups-pdf simple-scan system-config-printer pdfshuffler --noconfirm
+    yaourt -S cups cups-filters cups-pdf hplip-plugin --noconfirm
+    yaourt -S simple-scan system-config-printer pdfshuffler --noconfirm
 
     yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts ttf-vista-fonts --noconfirm
-    yaourt -S firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh-pt-BR libreoffice-extension-vero --noconfirm
 
+    yaourt -S firefox firefox-i18n-pt-br --noconfirm
+    yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-vero --noconfirm
     echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 
-    yaourt -S adapta-gtk-theme papirus-icon-theme chrome-gnome-shell gnome-shell-extension-gsconnect --noconfirm
+    yaourt -S gnome-{builder,multi-writer,nettool,tweaks} gksu --noconfirm
+    yaourt -S arc-gtk-theme-git numix-icon-theme-git numix-folders-git numix-square-icon-theme-git --noconfirm
 
-    yaourt -S keepassx2 jdk8 google-chrome pamac-aur hplip-plugin steam steam-native-runtime --noconfirm
-    yaourt -S qt4 vlc transmission-gtk gimp gimp-plugin-beautify inkscape audacity --noconfirm
-    yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
+    yaourt -S google-chrome chrome-gnome-shell jdk8 pamac-aur steam keepassxc --noconfirm
+    yaourt -S vlc transmission-gtk gimp inkscape audacity --noconfirm
+    yaourt -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
 
 ## END
 
@@ -98,9 +94,6 @@
         sudo mkdir /opt/android-sdk
         sudo chown $user_name:wheel -R /opt/android-sdk
 #         $ANDROID_HOME/tools/bin/sdkmanager --licenses
-
-        mkdir -p ~/.config/Brackets/
-    	echo -e '{\n\t "fonts.fontSize": "13px",\n\t "fonts.fontFamily": "'SourceCodePro-Medium', ＭＳ ゴシック, 'MS Gothic', monospace",\n\t "linting.collapsed": true,\n\t "bb.beautify.hideDialog": false,\n\t "useTabChar": false,\n\t "themes.theme": "dark-theme",\n\t "highlightMatches": true,\n\t "styleActiveLine": true,\n\t "brackets-minimap.width": 140,\n\t "bb.beautify.beautifiers": { \n\t\t"tsfmt": { \n\t\t\t"command": "tsfmt" \n\t\t} \n\t},\n\t "bb.beautify.languages": {\n\t\t "css": "css",\n\t\t "ejs": "html",\n\t\t "handlebars": "html",\n\t\t "html": "html",\n\t\t "javascript": "js",\n\t\t "json": "js",\n\t\t "less": "css",\n\t\t "php": "html",\n\t\t "scss": "css",\n\t\t "svg": "html",\n\t\t "vue": "html",\n\t\t "xml": "html",\n\t\t "typescript": "tsfmt" \n\t} \n}' > /home/$user_name/.config/Brackets/brackets.json
     fi
 
 ## END
@@ -164,10 +157,13 @@
     sudo gpasswd -a $user_name games
 
     sudo modprobe fuse && sudo modprobe vboxdrv
+    echo -e "vboxdrv\nvboxnetadp\nvboxnetflt\nvboxpci" | sudo tee --append /etc/modules-load.d/virtualbox.conf
 
     sudo systemctl enable bumblebeed
+    sudo systemctl enable org.cups.cupsd
 
-    echo -e "vboxdrv\nvboxnetadp\nvboxnetflt\nvboxpci" | sudo tee --append /etc/modules-load.d/virtualbox.conf
+    echo -e 'QT_AUTO_SCREEN_SCALE_FACTOR=0' | sudo tee --append /etc/environment
+    echo -e '6\ncustom\n84b4d6\n84b4d6\n5f8aaa' > /home/$user_name/.config/numix-folders
 
     mkdir -p /home/$user_name/.config/autostart/
     echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
@@ -178,12 +174,30 @@
 
     yaourt -Qtd
     yaourt -Scc
+    yaourt -Syyau
 
     echo -e "\nAll done."
-        # Nvidia settings: optirun nvidia-settings -c :8
-        # optirun /usr/bin/wakfu
-        # Steam (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun /usr/bin/steam %U
-            # Or steam set launch game: primusrun %command%
-        # Java config: Parameters runtime: -Xms8192m -Xmx8192m
+
+    ## -- | shorcuts | --
+    # print	: gnome-screenshot --interactive
+    # terminal	: gnome-terminal
+    # monitor	: gnome-system-monitor
+    # xkill	: xkill
+    # nautilus	: nautilus --new-window %U
+    # desktop	: Ocultar todas as janelas normais
+
+    ## -- | extensions | --
+    #
+
+    ## -- | extra | --
+    # nvidia settings: optirun nvidia-settings -c :8
+    # Steam (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun /usr/bin/steam %U
+    # Java config: Parameters runtime: -Xms8192m -Xmx8192m
+
+    ## -- | numix folders | --
+    # Style	: 6*
+    # Primary	: #84b4d6
+    # Secondary	: #84b4d6
+    # Symbol	: #5f8aaa
 
 ## END
