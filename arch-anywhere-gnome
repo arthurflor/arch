@@ -52,7 +52,7 @@
     sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
     sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-    mkdir -p /home/$user_name/{Downloads/Torrents,VirtualBox\ VMs}
+    mkdir -p /home/$user_name/{Downloads/Torrents}
     sudo cp -R ./icons/* /usr/share/icons/
 
     mkdir -p /home/$user_name/.local/share/gnome-shell/extensions/
@@ -79,7 +79,6 @@
 
     yaourt -S google-chrome chrome-gnome-shell jdk8 pamac-aur steam keepassxc --noconfirm
     yaourt -S vlc transmission-gtk gimp inkscape audacity --noconfirm
-    yaourt -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
 
 ## END
 
@@ -151,13 +150,9 @@
 
 ## BEGIN ~ Configuring services
 
-    sudo gpasswd -a $user_name vboxusers
     sudo gpasswd -a $user_name bumblebee
     sudo gpasswd -a $user_name http
     sudo gpasswd -a $user_name games
-
-    sudo modprobe fuse && sudo modprobe vboxdrv
-    echo -e "vboxdrv\nvboxnetadp\nvboxnetflt\nvboxpci" | sudo tee --append /etc/modules-load.d/virtualbox.conf
 
     sudo systemctl enable bumblebeed
     sudo systemctl enable org.cups.cupsd
@@ -187,17 +182,29 @@
     # desktop	: Ocultar todas as janelas normais
 
     ## -- | extensions | --
-    #
+    # Add Username to Top Panel
+    # AlternateTab
+    # Arch Linux Updates Indicator
+    # Auto Move Windows
+    # Clipboard Indicator
+    # CPU Power Manager
+    # Dash to Dock
+    # GSConnect
+    # Media Player Indicator
+    # OpenWeather
+    # Panel OSD
+    # Refresh Wifi Connections
+    # Removable Drive Menu
+    # Remove Dropdown Arrows
+    # Sound Input & Output Device Chooser
+    # Status Area Horizontal Spacing
+    # TaskBar
+    # TopIcons
+    # Turn off Display
 
     ## -- | extra | --
     # nvidia settings: optirun nvidia-settings -c :8
     # Steam (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun /usr/bin/steam %U
     # Java config: Parameters runtime: -Xms8192m -Xmx8192m
-
-    ## -- | numix folders | --
-    # Style	: 6*
-    # Primary	: #84b4d6
-    # Secondary	: #84b4d6
-    # Symbol	: #5f8aaa
 
 ## END
