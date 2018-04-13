@@ -74,8 +74,9 @@
     yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-vero --noconfirm
     echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 
-    yaourt -S gnome-{builder,multi-writer,nettool,tweaks} gksu --noconfirm
-    yaourt -S arc-gtk-theme-git numix-icon-theme-git numix-folders-git numix-square-icon-theme-git --noconfirm
+    yaourt -S gnome-{builder,multi-writer,nettool,tweaks} --noconfirm
+    yaourt -S gnome-osx-hsierra-gtk-theme la-capitaine-icon-theme-git --noconfirm
+    #yaourt -S gksu arc-gtk-theme-git numix-icon-theme-git numix-folders-git numix-square-icon-theme-git numix-circle-icon-theme-git --noconfirm
 
     yaourt -S google-chrome chrome-gnome-shell jdk8 pamac-aur steam keepassxc --noconfirm
     yaourt -S vlc transmission-gtk gimp inkscape audacity --noconfirm
@@ -158,7 +159,7 @@
     sudo systemctl enable org.cups.cupsd
 
     echo -e 'QT_AUTO_SCREEN_SCALE_FACTOR=0' | sudo tee --append /etc/environment
-    echo -e '6\ncustom\n84b4d6\n84b4d6\n5f8aaa' > /home/$user_name/.config/numix-folders
+    echo -e '6\ncustom\n62c6fb\n90daff\n4fb1e6' > /home/$user_name/.config/numix-folders
 
     mkdir -p /home/$user_name/.config/autostart/
     echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
@@ -185,7 +186,6 @@
     # Add Username to Top Panel
     # AlternateTab
     # Arch Linux Updates Indicator
-    # Autohide Battery
     # Auto Move Windows
     # Clipboard Indicator
     # CPU Power Manager
