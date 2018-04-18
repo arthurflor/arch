@@ -76,7 +76,9 @@
 
     yaourt -S gnome-{builder,multi-writer,nettool,tweaks} --noconfirm
     yaourt -S gnome-osx-hsierra-gtk-theme la-capitaine-icon-theme-git --noconfirm
+
     #yaourt -S gksu arc-gtk-theme-git numix-icon-theme-git numix-folders-git numix-square-icon-theme-git numix-circle-icon-theme-git --noconfirm
+    #echo -e '6\ncustom\n62c6fb\n90daff\n4fb1e6' > /home/$user_name/.config/numix-folders
 
     yaourt -S google-chrome chrome-gnome-shell jdk8 pamac-aur steam keepassxc --noconfirm
     yaourt -S vlc transmission-gtk gimp inkscape audacity --noconfirm
@@ -93,7 +95,11 @@
 
         sudo mkdir /opt/android-sdk
         sudo chown $user_name:wheel -R /opt/android-sdk
-#         $ANDROID_HOME/tools/bin/sdkmanager --licenses
+
+        export ANDROID_HOME=/opt/android-sdk
+        echo -e 'export ANDROID_HOME=/opt/android-sdk' | sudo tee --append /etc/environment
+
+        $ANDROID_HOME/tools/bin/sdkmanager --licenses
     fi
 
 ## END
@@ -159,7 +165,6 @@
     sudo systemctl enable org.cups.cupsd
 
     echo -e 'QT_AUTO_SCREEN_SCALE_FACTOR=0' | sudo tee --append /etc/environment
-    echo -e '6\ncustom\n62c6fb\n90daff\n4fb1e6' > /home/$user_name/.config/numix-folders
 
     mkdir -p /home/$user_name/.config/autostart/
     echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
