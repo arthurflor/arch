@@ -210,8 +210,8 @@
     # Turn off Display
 
     ## -- | extra | --
-    # nvidia settings: optirun nvidia-settings -c :8
-    # Steam (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun /usr/bin/steam %U
     # Java config: Parameters runtime: -Xms8192m -Xmx8192m
+    # nvidia settings: optirun nvidia-settings -c :8
+    # Steam (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun %command%
 
 ## END

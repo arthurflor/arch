@@ -187,11 +187,10 @@
     yaourt -Scc
 
     echo -e "\nAll done."
-        # Event calendar: ddd, d 'de' MMM, HH:mm
-        # Nvidia settings: optirun nvidia-settings -c :8
-        # optirun /usr/bin/wakfu
-        # Steam (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun /usr/bin/steam %U
-            # Or steam set launch game: optirun %command%
-        # Java config: Parameters runtime: -Xms8192m -Xmx8192m
+
+    # Event calendar: ddd, d 'de' MMM, HH:mm
+    # Java config: Parameters runtime: -Xms8192m -Xmx8192m
+    # nvidia settings: optirun nvidia-settings -c :8
+    # Steam (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun %command%
         
 ## END
