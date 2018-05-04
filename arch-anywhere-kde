@@ -57,10 +57,10 @@
         sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
         sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-        mkdir -p /home/$user_name/{Downloads/Torrents,VirtualBox\ VMs}
+        mkdir -p /home/$user_name/{Downloads/Torrents,Documentos/VirtualBox\ VMs}
         sudo cp -R ./icons/* /usr/share/icons/
     
-    yaourt -S plasma ark kcalc kate kdeconnect kwalletmanager kget kdegraphics-thumbnailers ffmpegthumbs partitionmanager filelight spectacle --needed --noconfirm
+    yaourt -S plasma ark kcalc kate kdeconnect kwalletmanager kdegraphics-thumbnailers ffmpegthumbs partitionmanager filelight spectacle --needed --noconfirm
     
     yaourt -S kdenetwork-filesharing samba --needed --noconfirm
     
@@ -73,22 +73,23 @@
     
     yaourt -S cups cups-filters cups-pdf pdfshuffler simple-scan print-manager --needed --noconfirm
     yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts ttf-vista-fonts --needed --noconfirm
-    yaourt -S firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh-pt-BR libreoffice-extension-vero --needed --noconfirm
+    yaourt -S firefox firefox-i18n-pt-br libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-vero --needed --noconfirm
 
     echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
     
-    yaourt -S adapta-kde papirus-icon-theme gnome-icon-theme --noconfirm
-    yaourt -S plasma5-applets-eventcalendar plasma5-applet-awesome-widgets latte-dock --noconfirm
+    ## window decoration: breezemite
+    yaourt -S la-capitaine-icon-theme-git papirus-icon-theme-git gnome-icon-theme adapta-kde-git --noconfirm
+    yaourt -S plasma5-applets-eventcalendar plasma5-applet-awesome-widgets plasma5-applets-active-window-control --noconfirm
     
         mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
         cp extra/arch_applet_awesome /home/$user_name/.local/share/awesomewidgets/configs/
-    
+
         mkdir -p /home/$user_name/.config/latte/
         cp extra/arch.layout.latte /home/$user_name/.config/latte/
     
-    yaourt -S jdk8 imagewriter hplip-plugin octopi-git --noconfirm
-    yaourt -S keepassx2 gwenview okular vlc qbittorrent elisa --noconfirm
-    yaourt -S kamoso gimp gimp-plugin-beautify inkscape audacity kdenlive frei0r-plugins --noconfirm
+    yaourt -S latte-dock jdk8 imagewriter hplip-plugin octopi-git --noconfirm
+    yaourt -S keepassx2 gwenview okular vlc qbittorrent clementine --noconfirm
+    yaourt -S kamoso gimp inkscape audacity kdenlive frei0r-plugins --noconfirm
     yaourt -S kmines kpatience steam steam-native-runtime google-chrome --noconfirm
     yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
     
@@ -104,10 +105,11 @@
 
         sudo mkdir -p /opt/android-sdk/tools/bin/sdkmanager
         sudo chown $user_name:wheel -R /opt/android-sdk
+        
+        export ANDROID_HOME=/opt/android-sdk
+        echo -e 'export ANDROID_HOME=/opt/android-sdk' | sudo tee --append /etc/environment
+        
 #         $ANDROID_HOME/tools/bin/sdkmanager --licenses
-
-        mkdir -p ~/.config/Brackets/
-    	echo -e '{\n\t "fonts.fontSize": "13px",\n\t "fonts.fontFamily": "'SourceCodePro-Medium', ＭＳ ゴシック, 'MS Gothic', monospace",\n\t "linting.collapsed": true,\n\t "bb.beautify.hideDialog": false,\n\t "useTabChar": false,\n\t "themes.theme": "dark-theme",\n\t "highlightMatches": true,\n\t "styleActiveLine": true,\n\t "brackets-minimap.width": 140,\n\t "bb.beautify.beautifiers": { \n\t\t"tsfmt": { \n\t\t\t"command": "tsfmt" \n\t\t} \n\t},\n\t "bb.beautify.languages": {\n\t\t "css": "css",\n\t\t "ejs": "html",\n\t\t "handlebars": "html",\n\t\t "html": "html",\n\t\t "javascript": "js",\n\t\t "json": "js",\n\t\t "less": "css",\n\t\t "php": "html",\n\t\t "scss": "css",\n\t\t "svg": "html",\n\t\t "vue": "html",\n\t\t "xml": "html",\n\t\t "typescript": "tsfmt" \n\t} \n}' > /home/$user_name/.config/Brackets/brackets.json
     fi
     
 ## END
@@ -116,6 +118,8 @@
 
     if   [ "$lampp" == "y" ] || [ "$lampp" == "Y" ] || [ "$lampp" == "" ]; then
         dev="y"
+        sudo gpasswd -a $user_name http
+        
         yaourt -S mariadb apache phpmyadmin php php-{apache,cgi,gd,pgsql,sqlite,intl} --needed --noconfirm
 
         sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
@@ -167,7 +171,6 @@
 
     sudo gpasswd -a $user_name vboxusers
     sudo gpasswd -a $user_name bumblebee
-    sudo gpasswd -a $user_name http
     sudo gpasswd -a $user_name games
     
     sudo modprobe fuse && sudo modprobe vboxdrv
@@ -188,9 +191,9 @@
 
     echo -e "\nAll done."
 
-    # Event calendar: ddd, d 'de' MMM, HH:mm
+    # Event calendar: ddd, d 'de' MMMM | HH:mm
     # Java config: Parameters runtime: -Xms8192m -Xmx8192m
-    # nvidia settings: optirun nvidia-settings -c :8
+    # nvidia settings: optirun -b none nvidia-settings -c :8
     # Steam (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun %command%
         
 ## END
