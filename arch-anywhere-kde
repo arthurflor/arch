@@ -46,7 +46,7 @@
         sudo cp dotfiles/.bashrc dotfiles/.dircolors dotfiles/.dircolors_256 dotfiles/.nanorc /home/$user_name/
     cd ~
 
-    yaourt -S nvidia nvidia-utils nvidia-settings bumblebee mesa-demos --needed --noconfirm
+    yaourt -S nvidia nvidia-utils nvidia-settings bumblebee primus mesa-demos --needed --noconfirm
 
         echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
 
