@@ -79,7 +79,7 @@
     
     ## window decoration: breezemite
     yaourt -S la-capitaine-icon-theme-git papirus-icon-theme-git gnome-icon-theme adapta-kde-git --noconfirm
-    yaourt -S plasma5-applets-eventcalendar plasma5-applet-awesome-widgets plasma5-applets-active-window-control --noconfirm
+    yaourt -S plasma5-applet-awesome-widgets plasma5-applets-active-window-control --noconfirm
     
         mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
         cp extra/arch_applet_awesome /home/$user_name/.local/share/awesomewidgets/configs/
