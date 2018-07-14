@@ -30,23 +30,19 @@
 
     sudo localectl set-x11-keymap br abnt2
     echo -e "en_US.UTF-8 UTF-8" | sudo tee --append /etc/locale.gen && sudo locale-gen
+    echo -e 'QT_AUTO_SCREEN_SCALE_FACTOR=0' | sudo tee --append /etc/environment
 
-    sudo pacman -Syyu base-devel git wget --needed --noconfirm
+    sudo pacman -Syyu pacman-contrib base-devel git wget flatpak-builder --needed --noconfirm
 
     cd /tmp/
         git clone https://aur.archlinux.org/package-query.git
-        cd package-query && makepkg -si --noconfirm && cd ..
-
         git clone https://aur.archlinux.org/yaourt.git
-        cd yaourt && makepkg -si --noconfirm
+        cd package-query && makepkg -si --noconfirm && cd ./../yaourt && makepkg -si --noconfirm
     cd ~
-
-    yaourt -S nvidia nvidia-utils nvidia-settings bumblebee mesa-demos --needed --noconfirm
-
-    echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
 
     sudo mkdir -p /etc/systemd/coredump.conf.d/
     echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
+    echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
 
     sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3"/g' /etc/default/grub
     sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
@@ -59,29 +55,27 @@
     sudo mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
     sudo chown $user_name:users -R /home/$user_name/.local/share/gnome-shell/extensions/
 
-    yaourt -Rcc gnome-{maps,clocks,todo,contacts,dictionary,calendar,shell-extensions,keyring,software} --noconfirm
-    yaourt -Rcc totem evolution epiphany --noconfirm
-    yaourt -Qtd
+    yaourt -Rdsu gnome-extra --noconfirm
 
-    yaourt -S alacarte flatpak-builder nautilus-share nautilus-sendto openssh --noconfirm
+    yaourt -S gnome-{builder,mines,multi-writer,nettool,sound-recorder,usage,tweaks} --needed --noconfirm
+    yaourt -S nvidia nvidia-utils nvidia-settings bumblebee mesa-demos --needed --noconfirm
+
+    yaourt -S alacarte nautilus-share nautilus-sendto openssh --noconfirm
     yaourt -S net-tools sshfs ifuse ntfs-3g screenfetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
+
     yaourt -S cups cups-filters cups-pdf hplip-plugin --noconfirm
     yaourt -S simple-scan system-config-printer pdfshuffler --noconfirm
 
-    yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts ttf-vista-fonts --noconfirm
-
-    yaourt -S firefox firefox-i18n-pt-br --noconfirm
-    yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-vero --noconfirm
+    yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts --noconfirm
+    yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool hunspell-pt-br  --noconfirm
     echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 
-    yaourt -S gnome-{builder,multi-writer,nettool,tweaks} --noconfirm
-    yaourt -S gnome-osx-hsierra-gtk-theme la-capitaine-icon-theme-git --noconfirm
+    yaourt -S osx-el-capitan-theme-git la-capitaine-icon-theme-git --noconfirm
+    yaourt -S google-chrome chrome-gnome-shell jdk8 pamac-aur keepassxc --noconfirm
+    yaourt -S mellowplayer vlc transmission-gtk gimp inkscape audacity --noconfirm
 
-    #yaourt -S gksu arc-gtk-theme-git numix-icon-theme-git numix-folders-git numix-square-icon-theme-git numix-circle-icon-theme-git --noconfirm
-    #echo -e '6\ncustom\n62c6fb\n90daff\n4fb1e6' > /home/$user_name/.config/numix-folders
-
-    yaourt -S google-chrome chrome-gnome-shell jdk8 pamac-aur steam keepassxc --noconfirm
-    yaourt -S vlc transmission-gtk gimp inkscape audacity --noconfirm
+    yaourt -S steam wakfu-transition aisleriot --noconfirm
+    sudo chown $user_name:wheel -R /opt/ankama/
 
 ## END
 
@@ -99,7 +93,7 @@
         export ANDROID_HOME=/opt/android-sdk
         echo -e 'export ANDROID_HOME=/opt/android-sdk' | sudo tee --append /etc/environment
 
-        $ANDROID_HOME/tools/bin/sdkmanager --licenses
+        ## $ANDROID_HOME/tools/bin/sdkmanager --licenses
     fi
 
 ## END
@@ -164,8 +158,6 @@
     sudo systemctl enable bumblebeed
     sudo systemctl enable org.cups.cupsd
 
-    echo -e 'QT_AUTO_SCREEN_SCALE_FACTOR=0' | sudo tee --append /etc/environment
-
     mkdir -p /home/$user_name/.config/autostart/
     echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
 
@@ -193,9 +185,10 @@
     # Arch Linux Updates Indicator
     # Auto Move Windows
     # Clipboard Indicator
-    # CPU Power Manager
     # Dash to Dock
     # Dynamic Battery
+    # Dynamic Top Bar
+    # Hide Dash X
     # GSConnect
     # Media Player Indicator
     # OpenWeather
@@ -210,7 +203,7 @@
     # Turn off Display
 
     ## -- | extra | --
-    # Java config: Parameters runtime: -Xms8192m -Xmx8192m
+    # Java config: Parameters runtime: -Xms4096m -Xmx4096m
     # nvidia settings: optirun nvidia-settings -c :8
     # Steam (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun %command%
 
