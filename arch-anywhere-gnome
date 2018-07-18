@@ -55,7 +55,7 @@
     sudo mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
     sudo chown $user_name:users -R /home/$user_name/.local/share/gnome-shell/extensions/
 
-    yaourt -Rcc evolution evolution-data-server gnome-{boxes,clocks,dictionary,documents,extra} --noconfirm
+    yaourt -Rcc evolution evolution-data-server gnome-{boxes,clocks,dictionary,documents,extra,music} --noconfirm
 
     yaourt -S gnome-{builder,mines,multi-writer,nettool,power-manage,sound-recorder,usage,tweaks} --needed --noconfirm
     yaourt -S nvidia nvidia-utils nvidia-settings bumblebee mesa-demos --needed --noconfirm
