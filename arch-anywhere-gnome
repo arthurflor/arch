@@ -185,6 +185,7 @@
     # desktop	: Ocultar todas as janelas normais
 
     ## -- | extensions | --
+    # Activities Configurator
     # Add Username to Top Panel
     # AlternateTab
     # Arch Linux Updates Indicator
@@ -192,7 +193,6 @@
     # Clipboard Indicator
     # Dash to Dock
     # Dynamic Battery
-    # Dynamic Top Bar
     # GSConnect
     # OpenWeather
     # Panel OSD
@@ -202,9 +202,9 @@
     # Remove Dropdown Arrows
     # Sound Input & Output Device Chooser
     # Status Area Horizontal Spacing
-    # TaskBar
     # TopIcons
     # Turn off Display
+    # User Themes
 
     ## -- | extra | --
     # Java config: Parameters runtime: -Xms4096m -Xmx4096m
