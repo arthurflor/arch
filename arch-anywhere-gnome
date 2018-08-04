@@ -74,7 +74,7 @@
     sudo cp ./extra/transmission.svg /usr/share/icons/la-capitaine-icon-theme/apps/scalable/
 
     yaourt -S google-chrome chrome-gnome-shell jdk8 pamac-aur keepassxc --noconfirm
-    yaourt -S franz-bin mellowplayer vlc transmission-gtk gimp inkscape audacity --noconfirm
+    yaourt -S mellowplayer vlc transmission-gtk gimp inkscape audacity --noconfirm
 
     yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
 
