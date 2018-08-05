@@ -159,6 +159,7 @@
     sudo gpasswd -a $user_name http
     sudo gpasswd -a $user_name games
     sudo gpasswd -a $user_name input
+    sudo usermod -a $user_name video 
 
     sudo systemctl enable bumblebeed
     sudo systemctl enable org.cups.cupsd
