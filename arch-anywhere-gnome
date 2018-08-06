@@ -71,8 +71,6 @@
     echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 
     yaourt -S osx-el-capitan-theme-git la-capitaine-icon-theme-git --noconfirm
-    sudo cp ./extra/transmission.svg /usr/share/icons/la-capitaine-icon-theme/apps/scalable/
-
     yaourt -S google-chrome chrome-gnome-shell jdk8 pamac-aur keepassxc --noconfirm
     yaourt -S mellowplayer vlc transmission-gtk gimp inkscape audacity --noconfirm
 
