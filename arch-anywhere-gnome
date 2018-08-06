@@ -72,7 +72,7 @@
 
     yaourt -S osx-el-capitan-theme-git la-capitaine-icon-theme-git --noconfirm
     yaourt -S google-chrome chrome-gnome-shell jdk8 pamac-aur keepassxc --noconfirm
-    yaourt -S mellowplayer vlc transmission-gtk gimp inkscape audacity --noconfirm
+    yaourt -S franz mellowplayer vlc transmission-gtk gimp inkscape audacity --noconfirm
 
     yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
 
