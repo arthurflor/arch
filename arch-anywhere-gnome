@@ -87,7 +87,8 @@
         dev="y"
         yaourt -S visual-studio-code-bin android-studio android-tools android-udev gradle nodejs npm --noconfirm
 
-        sudo npm install -g cordova ionic @angular/cli nodemon typescript typescript-formatter
+        sudo npm i -g cordova ionic @angular/cli
+        sudo npm i -g typescript typescript-formatter
 
         sudo mkdir /opt/android-sdk
         sudo chown $user_name:wheel -R /opt/android-sdk
