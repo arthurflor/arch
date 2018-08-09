@@ -55,7 +55,7 @@
     sudo mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
     sudo chown $user_name:users -R /home/$user_name/.local/share/gnome-shell/extensions/
 
-    yaourt -Rcc evolution evolution-data-server gnome-{boxes,clocks,dictionary,documents,extra,music} --noconfirm
+    yaourt -Rcc evolution evolution-data-server gnome-{clocks,dictionary,documents,extra,music} --noconfirm
 
     yaourt -S gnome-{builder,mines,multi-writer,nettool,power-manage,sound-recorder,usage,tweaks} --needed --noconfirm
     yaourt -S nvidia nvidia-utils nvidia-settings bumblebee mesa-demos --needed --noconfirm
@@ -74,7 +74,7 @@
     yaourt -S google-chrome chrome-gnome-shell jdk8 pamac-aur keepassxc --noconfirm
     yaourt -S vlc transmission-gtk gimp inkscape audacity --noconfirm
 
-    yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
+    #yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
 
     yaourt -S steam wakfu-transition aisleriot --noconfirm
     sudo chown $user_name:wheel -R /opt/ankama/
@@ -176,6 +176,9 @@
     echo -e 'gesture swipe down   xdotool key super+a' | sudo tee --append /etc/libinput-gestures.conf
     echo -e 'gesture swipe left   xdotool key super+Page_Up' | sudo tee --append /etc/libinput-gestures.conf
 
+    sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf 
+    echo -e 'Section "InputClass"\n\tIdentifier "My Mouse"\n\tMatchIsPointer "yes"\n\tOption "AccelerationNumerator" "1"\n\tOption "AccelerationDenominator" "1"\n\tOption "AccelerationThreshold" "0"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/50-mouse-acceleration.conf
+
 ## END
 
 ## BEGIN ~ Finishing and Some tips
@@ -187,12 +190,12 @@
     echo -e "\nAll done."
 
     ## -- | shorcuts | --
-    # print	: gnome-screenshot --interactive
-    # terminal	: gnome-terminal
-    # monitor	: gnome-system-monitor
-    # xkill	: xkill
-    # nautilus	: nautilus --new-window %U
-    # desktop	: Ocultar todas as janelas normais
+    # print   : gnome-screenshot --interactive
+    # terminal: gnome-terminal
+    # monitor : gnome-system-monitor
+    # xkill   : xkill
+    # nautilus: nautilus --new-window %U
+    # desktop : Ocultar todas as janelas normais
 
     ## -- | extensions | --
     # Activities Configurator
@@ -213,7 +216,6 @@
     # Sound Input & Output Device Chooser
     # Status Area Horizontal Spacing
     # TopIcons
-    # Turn off Display
     # User Themes
 
     ## -- | extra | --
