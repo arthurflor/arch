@@ -57,7 +57,7 @@
 
     yaourt -Rcc evolution evolution-data-server gnome-{clocks,dictionary,documents,extra,music} --noconfirm
 
-    yaourt -S gnome-{builder,mines,multi-writer,nettool,power-manage,sound-recorder,usage,tweaks} --needed --noconfirm
+    yaourt -S gnome-{builder,mines,multi-writer,nettool,power-manage,software,software-packagekit-plugin,sound-recorder,usage,tweaks} --needed --noconfirm
     yaourt -S nvidia nvidia-utils nvidia-settings bumblebee mesa-demos --needed --noconfirm
 
     yaourt -S plank alacarte nautilus-share nautilus-sendto openssh --noconfirm
@@ -71,7 +71,7 @@
     echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 
     yaourt -S capitaine-cursors osx-el-capitan-theme-git la-capitaine-icon-theme-git --noconfirm
-    yaourt -S google-chrome chrome-gnome-shell jdk8 pamac-aur keepassxc --noconfirm
+    yaourt -S google-chrome chrome-gnome-shell jdk8 keepassxc --noconfirm
     yaourt -S vlc transmission-gtk gimp inkscape audacity --noconfirm
 
     #yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
