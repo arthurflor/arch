@@ -55,7 +55,7 @@
     sudo mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
     sudo chown $user_name:users -R /home/$user_name/.local/share/gnome-shell/extensions/
 
-    yaourt -Rcc evolution evolution-data-server gnome-{boxes,clocks,dictionary,documents,extra,music} --noconfirm
+    yaourt -Rcc epiphany evolution evolution-data-server gnome-{boxes,clocks,dictionary,documents,extra,music} --noconfirm
 
     yaourt -S gnome-{builder,mines,multi-writer,nettool,power-manage,software,software-packagekit-plugin,sound-recorder,usage,tweaks} --needed --noconfirm
     yaourt -S nvidia nvidia-utils nvidia-settings bumblebee mesa-demos --needed --noconfirm
@@ -67,7 +67,8 @@
     yaourt -S simple-scan system-config-printer pdfshuffler --noconfirm
 
     yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts --noconfirm
-    yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool hunspell-pt-br  --noconfirm
+    yaourt -S firefox firefox-i18n-pt-br hunspell-pt-br --noconfirm
+    yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
     echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 
     yaourt -S capitaine-cursors osx-el-capitan-theme-git la-capitaine-icon-theme-git --noconfirm
