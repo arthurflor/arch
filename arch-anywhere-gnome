@@ -55,7 +55,7 @@
     sudo mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
     sudo chown $user_name:users -R /home/$user_name/.local/share/gnome-shell/extensions/
 
-    yaourt -Rcc evolution evolution-data-server gnome-{clocks,dictionary,documents,extra,music} --noconfirm
+    yaourt -Rcc evolution evolution-data-server gnome-{boxes,clocks,dictionary,documents,extra,music} --noconfirm
 
     yaourt -S gnome-{builder,mines,multi-writer,nettool,power-manage,software,software-packagekit-plugin,sound-recorder,usage,tweaks} --needed --noconfirm
     yaourt -S nvidia nvidia-utils nvidia-settings bumblebee mesa-demos --needed --noconfirm
@@ -74,7 +74,7 @@
     yaourt -S google-chrome chrome-gnome-shell jdk8 keepassxc --noconfirm
     yaourt -S vlc transmission-gtk gimp inkscape audacity --noconfirm
 
-    #yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
+    yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
 
     yaourt -S steam wakfu-transition aisleriot --noconfirm
     sudo chown $user_name:wheel -R /opt/ankama/
