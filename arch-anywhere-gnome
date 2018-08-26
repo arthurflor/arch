@@ -66,7 +66,8 @@
     yaourt -S cups cups-filters cups-pdf hplip-plugin --noconfirm
     yaourt -S simple-scan system-config-printer pdfshuffler --noconfirm
 
-    yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts --noconfirm
+    yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts ttf-google-fonts-git --needed --noconfirm
+
     yaourt -S firefox firefox-i18n-pt-br hunspell-pt-br --noconfirm
     yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
     echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
