@@ -61,7 +61,7 @@
     yaourt -S nvidia nvidia-utils nvidia-settings bumblebee mesa-demos --needed --noconfirm
 
     yaourt -S plank alacarte nautilus-share nautilus-sendto openssh --noconfirm
-    yaourt -S libinput-gestures tlp net-tools sshfs ifuse ntfs-3g screenfetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
+    yaourt -S libinput-gestures tlp net-tools sshfs ifuse ntfs-3g neofetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
 
     yaourt -S cups cups-filters cups-pdf hplip-plugin --noconfirm
     yaourt -S simple-scan system-config-printer pdfshuffler --noconfirm
