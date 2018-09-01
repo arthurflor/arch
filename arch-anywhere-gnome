@@ -67,7 +67,7 @@
     yay -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
     echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 
-    yay -S capitaine-cursors osx-el-capitan-theme-git la-capitaine-icon-theme --noconfirm
+    yay -S osx-el-capitan-theme-git la-capitaine-icon-theme-git --noconfirm
     yay -S google-chrome chrome-gnome-shell jdk8 keepassxc --noconfirm
     yay -S vlc transmission-gtk gimp inkscape audacity --noconfirm
 
