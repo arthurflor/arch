@@ -47,33 +47,41 @@
     sudo mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
     sudo chown $user_name:users -R /home/$user_name/.local/share/gnome-shell/extensions/
 
-    sudo pacman -Syyu pacman-contrib base-devel git wget flatpak-builder --needed --noconfirm
-    cd /tmp && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm && cd ~
+    sudo pacman -Syyu pacman-contrib base-devel git wget --needed --noconfirm
+    cd /tmp
+        git clone https://aur.archlinux.org/pikaur.git
+        cd pikaur
+        makepkg -fsri --noconfirm
+    cd ~
 
-    yay -Rcc epiphany evolution evolution-data-server gnome-{boxes,clocks,dictionary,documents,extra,music} --noconfirm
+    echo -e '\nalias pkg-clean="pikaur -Scc && pikaur -Rns $(pikaur -Qtdq)"' | sudo tee --append ~/.bashrc
+    echo -e '\nalias pkg-update="pikaur -Syu"' | sudo tee --append ~/.bashrc
+    echo -e '\nalias pkg-dev-update="pikaur -Syu --devel --needed"' | sudo tee --append ~/.bashrc
 
-    yay -S gnome-{builder,mines,multi-writer,nettool,power-manage,sound-recorder,usage,software-packagekit-plugin,tweaks} --needed --noconfirm
-    yay -S nvidia nvidia-utils nvidia-settings bumblebee mesa-demos --needed --noconfirm
+    pikaur -Rcc epiphany evolution evolution-data-server gnome-{boxes,clocks,dictionary,documents,extra,music,software} --noconfirm
 
-    yay -S plank alacarte nautilus-share nautilus-sendto openssh --noconfirm
-    yay -S libinput-gestures tlp net-tools sshfs ifuse ntfs-3g neofetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
+    pikaur -S gnome-{builder,mines,multi-writer,nettool,power-manage,sound-recorder,usage,tweaks} --needed --noconfirm
+    pikaur -S nvidia nvidia-utils nvidia-settings bumblebee mesa-demos --needed --noconfirm
 
-    yay -S cups cups-filters cups-pdf hplip-plugin --noconfirm
-    yay -S simple-scan system-config-printer pdfshuffler --noconfirm
+    pikaur -S plank alacarte nautilus-share nautilus-sendto openssh --noconfirm
+    pikaur -S libinput-gestures tlp net-tools sshfs ifuse ntfs-3g neofetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
 
-    yay -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts ttf-google-fonts-git --needed --noconfirm
+    pikaur -S cups cups-filters cups-pdf hplip-plugin --noconfirm
+    pikaur -S simple-scan system-config-printer pdfshuffler --noconfirm
 
-    yay -S firefox firefox-i18n-pt-br hunspell-pt-br --noconfirm
-    yay -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
+    pikaur -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts ttf-google-fonts-git --needed --noconfirm
+
+    pikaur -S firefox firefox-i18n-pt-br hunspell-pt-br --noconfirm
+    pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
     echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 
-    yay -S osx-el-capitan-theme-git la-capitaine-icon-theme-git --noconfirm
-    yay -S google-chrome chrome-gnome-shell jdk8 keepassxc --noconfirm
-    yay -S vlc transmission-gtk gimp inkscape audacity --noconfirm
+    pikaur -S osx-el-capitan-theme-git la-capitaine-icon-theme-git --noconfirm
+    pikaur -S google-chrome chrome-gnome-shell jdk8 keepassxc pamac-aur --noconfirm
+    pikaur -S vlc transmission-gtk gimp inkscape audacity --noconfirm
 
-    yay -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
+    pikaur -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
 
-    yay -S steam wakfu-transition aisleriot --noconfirm
+    pikaur -S steam wakfu-transition aisleriot --noconfirm
     sudo chown $user_name:wheel -R /opt/ankama/
 
 ## END
@@ -82,7 +90,7 @@
 
     if   [ "$ionic" == "y" ] || [ "$ionic" == "Y" ] || [ "$ionic" == "" ]; then
         dev="y"
-        yay -S visual-studio-code-bin android-studio android-tools android-udev gradle nodejs npm --noconfirm
+        pikaur -S visual-studio-code-bin android-studio android-tools android-udev gradle nodejs npm --noconfirm
 
         sudo npm i -g cordova ionic @angular/cli
         sudo npm i -g typescript typescript-formatter
@@ -102,7 +110,7 @@
 
     if   [ "$lampp" == "y" ] || [ "$lampp" == "Y" ] || [ "$lampp" == "" ]; then
         dev="y"
-        yay -S mariadb apache phpmyadmin php php-{apache,cgi,gd,pgsql,sqlite,intl} --needed --noconfirm
+        pikaur -S mariadb apache phpmyadmin php php-{apache,cgi,gd,pgsql,sqlite,intl} --needed --noconfirm
 
         sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
         sudo systemctl start mysqld
@@ -129,7 +137,7 @@
 
     if   [ "$javaee" == "y" ] || [ "$javaee" == "Y" ] || [ "$javaee" == "" ]; then
         dev="y"
-        yay -S netbeans tomcat8 --noconfirm
+        pikaur -S netbeans tomcat8 --noconfirm
 
         sudo gpasswd --add $user_name tomcat8
         sudo chown root:tomcat8 -R /usr/share/tomcat8/
@@ -144,7 +152,7 @@
 ## BEGIN ~ Dev
 
     if   [ "$dev" == "y" ]; then
-        yay -S filezilla dbeaver smartgit --noconfirm
+        pikaur -S filezilla dbeaver smartgit --noconfirm
     fi
 
 ## END
@@ -183,9 +191,8 @@
 
 ## BEGIN ~ Finishing and Some tips
 
-    yay -Yc
-    yay -Scc
-    yay -Syu
+    pikaur -Scc
+    pikaur -Syu
 
     echo -e "\nAll done."
 
