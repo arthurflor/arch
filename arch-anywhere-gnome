@@ -182,7 +182,10 @@
     echo -e 'gesture swipe left   xdotool key super+Page_Up' | sudo tee --append /etc/libinput-gestures.conf
 
     sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
+
+    echo -e 'mouse:usb:v045ep0040:name:*:\nMOUSE_DPI=400@125' | sudo tee --append  /etc/udev/hwdb.d/71-mouse-local.hwdb
     echo -e 'Section "InputClass"\n\tIdentifier "pointer stuff"\n\tMatchIsPointer "on"\n\tOption "TransformationMatrix" "1 0 0 0 1 0 0 0 0.6"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/99-pointer-speed.conf
+    sudo udevadm hwdb --update && sudo udevadm trigger /dev/input/event0
 
 ## END
 
