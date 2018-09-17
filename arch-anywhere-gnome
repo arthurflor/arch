@@ -54,28 +54,30 @@
         cd package-query && makepkg -si --noconfirm && cd ./../yaourt && makepkg -si --noconfirm
     cd ~
 
-    echo -e '\nalias pkg-clean="yaourt -Scc && yaourt -Qtd"' | sudo tee --append ~/.bashrc
-    echo -e 'alias pkg-update="yaourt -Syu"' | sudo tee --append ~/.bashrc
-    echo -e 'alias pkg-devel-update="yaourt -Syu --devel --noconfirm --needed"' | sudo tee --append ~/.bashrc
+    echo -e '\nalias search="yaourt -Ss"' | sudo tee --append ~/.bashrc
+    echo -e 'alias install="yaourt -S"' | sudo tee --append ~/.bashrc
+    echo -e 'alias remove="yaourt -Rcc"' | sudo tee --append ~/.bashrc
+    echo -e 'alias update="yaourt -Syau"' | sudo tee --append ~/.bashrc
+    echo -e 'alias clear="yaourt -Scc && yaourt -Qtd"' | sudo tee --append ~/.bashrc
+    echo -e 'alias devel-update="yaourt -Syu --devel --noconfirm --needed"' | sudo tee --append ~/.bashrc
 
-    yaourt -Rcc evolution evolution-data-server gnome-{extra} --noconfirm
-    yaourt -Syau gnome-{mines,multi-writer,nettool,power-manager,software-packagekit-plugin,usage,tweaks} --needed --noconfirm
+    yaourt -Rcc evolution evolution-data-server gnome-{extra,software} --noconfirm
+    yaourt -Syau gnome-{mines,multi-writer,nettool,power-manager,usage,tweaks} --needed --noconfirm
     
     yaourt -S nvidia nvidia-utils nvidia-settings bumblebee mesa-demos --needed --noconfirm
     yaourt -S libinput-gestures tlp net-tools sshfs ifuse ntfs-3g neofetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
 
+    yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts --needed --noconfirm
     yaourt -S cups cups-filters cups-pdf hplip-plugin --noconfirm
     yaourt -S simple-scan system-config-printer pdfshuffler --noconfirm
     yaourt -S jdk8 plank alacarte nautilus-share nautilus-sendto openssh keepassxc --noconfirm
 
-    yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts ttf-google-fonts-git --needed --noconfirm
-
     yaourt -S steam wakfu-transition aisleriot --noconfirm
-    yaourt -S google-chrome chrome-gnome-shell --noconfirm
+    yaourt -S google-chrome chrome-gnome-shell pamac-aur --noconfirm
     yaourt -S firefox firefox-i18n-pt-br hunspell-pt-br --noconfirm
     yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
 
-    yaourt -S osx-el-capitan-theme-git la-capitaine-icon-theme-git --noconfirm
+    yaourt -S gtk-theme-macos-sierra-archers-git la-capitaine-icon-theme-git --noconfirm
     # yaourt -S python-numpy python-matplotlib python-pillow --noconfirm
     yaourt -S transmission-gtk vlc inkscape gimp gimp-plugin-registry audacity pitivi --noconfirm
     #yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
@@ -156,7 +158,6 @@
     echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
     sudo chown $user_name:wheel -R /opt/ankama/
 
-    sudo rm /etc/xdg/autostart/gnome-software-service.desktop
     mkdir -p /home/$user_name/.config/autostart/
     echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
     echo -e "[Desktop Entry]\nType=Application\nName=plank\nExec=plank" > /home/$user_name/.config/autostart/plank.desktop
