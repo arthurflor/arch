@@ -1,9 +1,5 @@
-# Theme by Alexey Varfolomeev (varlesh)
-# for the macOS Sierra theme by B00merang
-# https://github.com/B00merang-Project/macOS-Sierra/
-
 [PlankTheme]
-TopRoundness=4
+TopRoundness=7
 BottomRoundness=0
 LineWidth=0
 OuterStrokeColor=0;;0;;0;;120
@@ -16,7 +12,7 @@ HorizPadding=1.5
 TopPadding=1.8
 BottomPadding=1.8
 ItemPadding=2.5
-IndicatorSize=8
+IndicatorSize=25
 IconShadowSize=1
 UrgentBounceHeight=1.6666666666666667
 LaunchBounceHeight=0.23000000000000001
