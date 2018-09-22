@@ -65,21 +65,21 @@
     yaourt -Syau gnome-{mines,multi-writer,nettool,power-manager,usage,tweaks} --needed --noconfirm
     
     yaourt -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
-    yaourt -S libinput-gestures tlp net-tools sshfs ifuse ntfs-3g neofetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
+    yaourt -S tlp net-tools sshfs ifuse ntfs-3g neofetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
     yaourt -S bluez bluez-libs bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
     yaourt -S wd719x-firmware aic94xx-firmware bluez-firmware --needed --noconfirm
 
     yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts --needed --noconfirm
     yaourt -S cups cups-filters cups-pdf hplip-plugin --noconfirm
     yaourt -S simple-scan system-config-printer pdfshuffler --noconfirm
-    yaourt -S jdk8 plank alacarte nautilus-share nautilus-sendto openssh keepassxc --noconfirm
+    yaourt -S jdk8 alacarte nautilus-share nautilus-sendto openssh keepassxc --noconfirm
 
     yaourt -S steam wakfu-transition aisleriot --noconfirm
     yaourt -S google-chrome chrome-gnome-shell pamac-aur --noconfirm
     yaourt -S firefox firefox-i18n-pt-br hunspell-pt-br --noconfirm
     yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
 
-    yaourt -S gtk-theme-macos-sierra-archers-git la-capitaine-icon-theme-git --noconfirm
+    yaourt -S adapta-gtk-theme la-capitaine-icon-theme --noconfirm
     # yaourt -S python-numpy python-matplotlib python-pillow --noconfirm
     yaourt -S transmission-gtk vlc inkscape gimp gimp-plugin-registry audacity pitivi --noconfirm
     #yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
@@ -175,18 +175,22 @@
     sudo systemctl enable tlp.service
     sudo systemctl enable tlp-sleep.service
 
-    libinput-gestures-setup autostart
-    sudo sed -i 's/gesture/#gesture/g' /etc/libinput-gestures.conf
-    echo -e 'gesture swipe up     xdotool key super+s' | sudo tee --append /etc/libinput-gestures.conf
-    echo -e 'gesture swipe right  xdotool key super+Page_Down' | sudo tee --append /etc/libinput-gestures.conf
-    echo -e 'gesture swipe down   xdotool key super+a' | sudo tee --append /etc/libinput-gestures.conf
-    echo -e 'gesture swipe left   xdotool key super+Page_Up' | sudo tee --append /etc/libinput-gestures.conf
-
-    sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
-
     echo -e 'mouse:usb:v045ep0040:name:*:\nMOUSE_DPI=400@125' | sudo tee --append  /etc/udev/hwdb.d/71-mouse-local.hwdb
     echo -e 'Section "InputClass"\n\tIdentifier "pointer stuff"\n\tMatchIsPointer "on"\n\tOption "TransformationMatrix" "1 0 0 0 1 0 0 0 0.6"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/99-pointer-speed.conf
     sudo udevadm hwdb --update && sudo udevadm trigger /dev/input/event0
+
+## END
+
+## BEGIN ~ Old configs
+
+    # yaourt -S plank libinput-gestures gtk-theme-macos-sierra-archers-git
+
+    # libinput-gestures-setup autostart
+    # sudo sed -i 's/gesture/#gesture/g' /etc/libinput-gestures.conf
+    # echo -e 'gesture swipe up     xdotool key super+s' | sudo tee --append /etc/libinput-gestures.conf
+    # echo -e 'gesture swipe right  xdotool key super+Page_Down' | sudo tee --append /etc/libinput-gestures.conf
+    # echo -e 'gesture swipe down   xdotool key super+a' | sudo tee --append /etc/libinput-gestures.conf
+    # echo -e 'gesture swipe left   xdotool key super+Page_Up' | sudo tee --append /etc/libinput-gestures.conf
 
 ## END
 
