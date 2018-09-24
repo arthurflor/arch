@@ -79,10 +79,11 @@
     yaourt -S firefox firefox-i18n-pt-br hunspell-pt-br --noconfirm
     yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
 
-    yaourt -S adapta-gtk-theme la-capitaine-icon-theme --noconfirm
-    # yaourt -S python-numpy python-matplotlib python-pillow --noconfirm
-    yaourt -S transmission-gtk vlc inkscape gimp gimp-plugin-registry audacity pitivi --noconfirm
     #yaourt -S virtualbox virtualbox-host-dkms virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
+    #yaourt -S python-numpy python-matplotlib python-pillow --noconfirm
+
+    yaourt -S adapta-gtk-theme la-capitaine-icon-theme --noconfirm
+    yaourt -S transmission-gtk vlc inkscape gimp gimp-plugin-registry audacity pitivi --noconfirm
 
 ## END
 
@@ -162,7 +163,6 @@
 
     mkdir -p /home/$user_name/.config/autostart/
     echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
-    echo -e "[Desktop Entry]\nType=Application\nName=plank\nExec=plank" > /home/$user_name/.config/autostart/plank.desktop
 
     sudo gpasswd -a $user_name bumblebee
     sudo gpasswd -a $user_name http
@@ -178,19 +178,6 @@
     echo -e 'mouse:usb:v045ep0040:name:*:\nMOUSE_DPI=400@125' | sudo tee --append  /etc/udev/hwdb.d/71-mouse-local.hwdb
     echo -e 'Section "InputClass"\n\tIdentifier "pointer stuff"\n\tMatchIsPointer "on"\n\tOption "TransformationMatrix" "1 0 0 0 1 0 0 0 0.6"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/99-pointer-speed.conf
     sudo udevadm hwdb --update && sudo udevadm trigger /dev/input/event0
-
-## END
-
-## BEGIN ~ Old configs
-
-    # yaourt -S plank libinput-gestures gtk-theme-macos-sierra-archers-git
-
-    # libinput-gestures-setup autostart
-    # sudo sed -i 's/gesture/#gesture/g' /etc/libinput-gestures.conf
-    # echo -e 'gesture swipe up     xdotool key super+s' | sudo tee --append /etc/libinput-gestures.conf
-    # echo -e 'gesture swipe right  xdotool key super+Page_Down' | sudo tee --append /etc/libinput-gestures.conf
-    # echo -e 'gesture swipe down   xdotool key super+a' | sudo tee --append /etc/libinput-gestures.conf
-    # echo -e 'gesture swipe left   xdotool key super+Page_Up' | sudo tee --append /etc/libinput-gestures.conf
 
 ## END
 
@@ -212,23 +199,20 @@
 
     ## -- | extensions | --
     # Activities Configurator
-    # Add Username to Top Panel
     # AlternateTab
     # Arch Linux Updates Indicator
     # Auto Move Windows
+    # Bumblebee Status
     # Clipboard Indicator
     # Dash to Dock
     # Dynamic Battery
     # GSConnect
     # OpenWeather
     # Panel OSD
-    # Refresh Wifi Connections
     # Removable Drive Menu
-    # Remove Dash
-    # Remove Dropdown Arrows
     # Sound Input & Output Device Chooser
     # Status Area Horizontal Spacing
-    # TopIcons
+    # Suspend Button
     # User Themes
 
     ## -- | extra | --
