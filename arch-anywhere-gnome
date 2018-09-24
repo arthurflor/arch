@@ -47,7 +47,7 @@
     sudo mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
     sudo chown $user_name:users -R /home/$user_name/.local/share/gnome-shell/extensions/
 
-    sudo pacman -Syyu pacman-contrib base-devel git wget --needed --noconfirm
+    sudo pacman -Syyu pacman-contrib base-devel git wget flatpak flatpak-builder --needed --noconfirm
     cd /tmp
         git clone https://aur.archlinux.org/package-query.git
         git clone https://aur.archlinux.org/yaourt.git
@@ -61,8 +61,8 @@
     echo -e 'alias clear="yaourt -Scc && yaourt -Qtd"' | sudo tee --append ~/.bashrc
     echo -e 'alias devel-update="yaourt -Syu --devel --noconfirm --needed"' | sudo tee --append ~/.bashrc
 
-    yaourt -Rcc evolution evolution-data-server gnome-{extra,software} --noconfirm
-    yaourt -Syau gnome-{mines,multi-writer,nettool,power-manager,usage,tweaks} --needed --noconfirm
+    yaourt -Rcc evolution evolution-data-server gnome-{extra} --noconfirm
+    yaourt -Syau gnome-{mines,multi-writer,nettool,power-manager,software-packagekit-plugin,usage,tweaks} --needed --noconfirm
     
     yaourt -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
     yaourt -S tlp net-tools sshfs ifuse ntfs-3g neofetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
@@ -75,7 +75,7 @@
     yaourt -S jdk8 alacarte nautilus-share nautilus-sendto openssh keepassxc --noconfirm
 
     yaourt -S steam wakfu-transition aisleriot --noconfirm
-    yaourt -S google-chrome chrome-gnome-shell pamac-aur --noconfirm
+    yaourt -S google-chrome chrome-gnome-shell --noconfirm
     yaourt -S firefox firefox-i18n-pt-br hunspell-pt-br --noconfirm
     yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
 
