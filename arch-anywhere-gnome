@@ -179,6 +179,8 @@
     echo -e 'Section "InputClass"\n\tIdentifier "pointer stuff"\n\tMatchIsPointer "on"\n\tOption "TransformationMatrix" "1 0 0 0 1 0 0 0 0.6"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/99-pointer-speed.conf
     sudo udevadm hwdb --update && sudo udevadm trigger /dev/input/event0
 
+    gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
+
 ## END
 
 ## BEGIN ~ Finishing and Some tips
@@ -205,11 +207,13 @@
     # Bumblebee Status
     # Clipboard Indicator
     # Dash to Dock
+    # Disconnect Wifi
     # Dynamic Battery
     # GSConnect
     # OpenWeather
     # Panel OSD
     # Removable Drive Menu
+    # Refresh Wi-Fi connections
     # Sound Input & Output Device Chooser
     # Status Area Horizontal Spacing
     # Suspend Button
