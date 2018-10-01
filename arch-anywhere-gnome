@@ -62,19 +62,21 @@
     yaourt -S tlp net-tools sshfs ifuse ntfs-3g neofetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
     yaourt -S bluez bluez-libs bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
     yaourt -S wd719x-firmware aic94xx-firmware bluez-firmware --needed --noconfirm
+    # yaourt -S opencv hdf5 python-numpy python-matplotlib python-editdistance --noconfirm
 
+    yaourt -S adapta-gtk-theme paper-icon-theme --noconfirm
     yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts --needed --noconfirm
     yaourt -S cups cups-filters cups-pdf hplip-plugin --noconfirm
     yaourt -S simple-scan system-config-printer pdfshuffler --noconfirm
     yaourt -S jdk8 alacarte nautilus-share nautilus-sendto openssh keepassxc --noconfirm
 
-    yaourt -S steam wakfu-transition aisleriot --noconfirm
     yaourt -S google-chrome chrome-gnome-shell --noconfirm
     yaourt -S firefox firefox-i18n-pt-br hunspell-pt-br --noconfirm
     yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
 
-    yaourt -S adapta-gtk-theme paper-icon-theme --noconfirm
-    yaourt -S transmission-gtk vlc inkscape gimp gimp-plugin-registry audacity pitivi --noconfirm
+    yaourt -S vlc transmission-gtk mellowplayer franz-bin --noconfirm
+    yaourt -S inkscape gimp gimp-plugin-registry audacity pitivi --noconfirm
+    yaourt -S steam wakfu-transition aisleriot --noconfirm
 
 ## END
 
@@ -148,6 +150,7 @@
     # Disconnect Wifi
     # Dynamic Battery
     # GSConnect
+    # Media Player Indicator
     # OpenWeather
     # Panel OSD
     # Removable Drive Menu
