@@ -73,7 +73,7 @@
     yaourt -S firefox firefox-i18n-pt-br hunspell-pt-br --noconfirm
     yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
 
-    yaourt -S adapta-gtk-theme la-capitaine-icon-theme --noconfirm
+    yaourt -S adapta-gtk-theme paper-icon-theme --noconfirm
     yaourt -S transmission-gtk vlc inkscape gimp gimp-plugin-registry audacity pitivi --noconfirm
 
 ## END
