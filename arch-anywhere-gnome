@@ -70,7 +70,7 @@
     yaourt -S simple-scan system-config-printer pdfshuffler --noconfirm
     yaourt -S jdk8 alacarte nautilus-share nautilus-sendto openssh keepassxc --noconfirm
 
-    yaourt -S google-chrome chrome-gnome-shell --noconfirm
+    yaourt -S plank google-chrome chrome-gnome-shell --noconfirm
     yaourt -S firefox firefox-i18n-pt-br hunspell-pt-br --noconfirm
     yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
 
@@ -98,11 +98,15 @@
 
 ## BEGIN ~ Configuring
 
+    sudo cp ./extra/Sierra /usr/share/plank/themes/
+    sudo cp ./extra/Arch /usr/share/plank/themes/
+
     echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
     sudo chown $user_name:wheel -R /opt/ankama/
 
     mkdir -p /home/$user_name/.config/autostart/
     echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
+    echo -e "[Desktop Entry]\nType=Application\nName=plank\nExec=plank" > /home/$user_name/.config/autostart/plank.desktop
 
     sudo gpasswd -a $user_name bumblebee
     sudo gpasswd -a $user_name http
@@ -120,6 +124,7 @@
     sudo udevadm hwdb --update && sudo udevadm trigger /dev/input/event0
 
     gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
+    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 
 ## END
 
@@ -150,9 +155,11 @@
     # Disconnect Wifi
     # Dynamic Battery
     # GSConnect
+    # Impatience
     # Media Player Indicator
     # OpenWeather
     # Panel OSD
+    # Remove Dash
     # Removable Drive Menu
     # Refresh Wi-Fi connections
     # Sound Input & Output Device Chooser
