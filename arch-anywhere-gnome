@@ -52,17 +52,19 @@
     echo -e '\nalias search="yaourt -Ss"' | sudo tee --append ~/.bashrc
     echo -e 'alias in="yaourt -S"' | sudo tee --append ~/.bashrc
     echo -e 'alias re="yaourt -Rcc"' | sudo tee --append ~/.bashrc
-    echo -e 'alias up="yaourt -Syau"' | sudo tee --append ~/.bashrc
+    echo -e 'alias up="yaourt -Syyau"' | sudo tee --append ~/.bashrc
     echo -e 'alias cl="yaourt -Scc && yaourt -Qtd"' | sudo tee --append ~/.bashrc
 
-    yaourt -Rcc evolution evolution-data-server gnome-{extra} --noconfirm
-    yaourt -Syau gnome-{mines,multi-writer,nettool,power-manager,software-packagekit-plugin,usage,tweaks} --needed --noconfirm
+    yaourt -Rcc evolution evolution-data-server gnome-{extra,software} --noconfirm
+    yaourt -Syau gnome-{mines,multi-writer,nettool,power-manager,usage,tweaks} --needed --noconfirm
     
     yaourt -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
     yaourt -S tlp net-tools sshfs ifuse ntfs-3g neofetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
     yaourt -S bluez bluez-libs bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
     yaourt -S wd719x-firmware aic94xx-firmware bluez-firmware --needed --noconfirm
-    # yaourt -S opencv hdf5 python-numpy python-matplotlib python-editdistance --noconfirm
+
+    yaourt -S opencv hdf5 python-numpy python-matplotlib python-pillow python-editdistance --noconfirm
+    yaourt -S itstool meson gobject-introspection vala pamac-aur --noconfirm
 
     yaourt -S adapta-gtk-theme paper-icon-theme --noconfirm
     yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts --needed --noconfirm
@@ -74,7 +76,7 @@
     yaourt -S firefox firefox-i18n-pt-br hunspell-pt-br --noconfirm
     yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
 
-    yaourt -S vlc transmission-gtk mellowplayer franz-bin --noconfirm
+    yaourt -S vlc transmission-gtk mellowplayer --noconfirm
     yaourt -S inkscape gimp gimp-plugin-registry audacity pitivi --noconfirm
     yaourt -S steam wakfu-transition aisleriot --noconfirm
 
