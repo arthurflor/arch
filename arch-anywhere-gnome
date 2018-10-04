@@ -42,7 +42,7 @@
     sudo mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
     sudo chown $user_name:users -R /home/$user_name/.local/share/gnome-shell/extensions/
 
-    sudo pacman -Syyu pacman-contrib base-devel git wget flatpak flatpak-builder --needed --noconfirm
+    sudo pacman -Syyu pacman-contrib base-devel git wget --needed --noconfirm
     cd /tmp
         git clone https://aur.archlinux.org/package-query.git
         git clone https://aur.archlinux.org/yaourt.git
@@ -56,10 +56,10 @@
     echo -e 'alias cl="yaourt -Scc && yaourt -Qtd"' | sudo tee --append ~/.bashrc
 
     yaourt -Rcc evolution evolution-data-server gnome-{extra,software} --noconfirm
-    yaourt -Syau gnome-{mines,multi-writer,nettool,power-manager,usage,tweaks} --needed --noconfirm
+    yaourt -Syau gnome-{mines,multi-writer,nettool,power-manager,tweaks} --needed --noconfirm
     
     yaourt -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
-    yaourt -S tlp net-tools sshfs ifuse ntfs-3g neofetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
+    yaourt -S net-tools sshfs ifuse ntfs-3g neofetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
     yaourt -S bluez bluez-libs bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
     yaourt -S wd719x-firmware aic94xx-firmware bluez-firmware --needed --noconfirm
 
@@ -72,7 +72,7 @@
     yaourt -S simple-scan system-config-printer pdfshuffler --noconfirm
     yaourt -S jdk8 alacarte nautilus-share nautilus-sendto openssh keepassxc --noconfirm
 
-    yaourt -S plank google-chrome chrome-gnome-shell --noconfirm
+    yaourt -S google-chrome chrome-gnome-shell --noconfirm
     yaourt -S firefox firefox-i18n-pt-br hunspell-pt-br --noconfirm
     yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
 
@@ -100,15 +100,11 @@
 
 ## BEGIN ~ Configuring
 
-    sudo cp ./extra/Sierra /usr/share/plank/themes/
-    sudo cp ./extra/Arch /usr/share/plank/themes/
-
     echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
     sudo chown $user_name:wheel -R /opt/ankama/
 
     mkdir -p /home/$user_name/.config/autostart/
     echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
-    echo -e "[Desktop Entry]\nType=Application\nName=plank\nExec=plank" > /home/$user_name/.config/autostart/plank.desktop
 
     sudo gpasswd -a $user_name bumblebee
     sudo gpasswd -a $user_name http
@@ -118,8 +114,6 @@
 
     sudo systemctl enable bumblebeed
     sudo systemctl enable org.cups.cupsd
-    sudo systemctl enable tlp.service
-    sudo systemctl enable tlp-sleep.service
 
     echo -e 'mouse:usb:v045ep0040:name:*:\nMOUSE_DPI=400@125' | sudo tee --append  /etc/udev/hwdb.d/71-mouse-local.hwdb
     echo -e 'Section "InputClass"\n\tIdentifier "pointer stuff"\n\tMatchIsPointer "on"\n\tOption "TransformationMatrix" "1 0 0 0 1 0 0 0 0.6"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/99-pointer-speed.conf
@@ -161,7 +155,6 @@
     # Media Player Indicator
     # OpenWeather
     # Panel OSD
-    # Remove Dash
     # Removable Drive Menu
     # Refresh Wi-Fi connections
     # Sound Input & Output Device Chooser
