@@ -13,6 +13,3 @@ Scripts to automate the process of installing packages and some configurations o
 
 #### Arch Anywhere Gnome
 - script: `./arch-anywhere-gnome`
-
-#### Manjaro KDE
-- script: `./manjaro-kde`
