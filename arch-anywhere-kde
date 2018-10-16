@@ -53,7 +53,7 @@
     alias in="pikaur -S"
     alias re="pikaur -Rcc"
     alias up="pikaur -Syyau"
-    alias cl="pikaur -Scc && pikaur -Rs $(pikaur -Qqtd)"
+    alias cl="sudo pacman -Scc && sudo pacman -Rs $(pacman -Qqtd)"
     ' | sudo tee --append ~/.bashrc
 ## END
 
@@ -70,6 +70,18 @@
     pikaur -S nodejs npm smartgit visual-studio-code-bin --noconfirm
 ## END
 
+## BEGIN ~ Widgets
+    pikaur -S plasma5-applets-{weather-widget,active-window-control} plasma5-applet-awesome-widgets --noconfirm
+
+    mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
+    cp extra/aw-arch /home/$user_name/.local/share/awesomewidgets/configs/
+
+    ## -- | plasma | --
+    # desktop theme: nilium
+    # app style: breezemite
+    # icon: la capitaine
+## END
+
 ## BEGIN ~ Services Settings
     sudo gpasswd -a $user_name vboxusers
     sudo gpasswd -a $user_name bumblebee
@@ -80,18 +92,11 @@
 ## END
 
 ## BEGIN ~ Clear
-    pikaur -Scc
-    pikaur -Rs $(pikaur -Qqtd)
+    sudo pacman -Scc && sudo pacman -Rs $(pacman -Qqtd)
     echo -e "\nAll done."
 
-    ## -- | extensions | --
-    # desktop theme:    helium
-    # icon:             la capitaine
-    # app style:        breezemite
-    # widget:           active window control
-
     ## -- | shortcuts | --
-    # terminal, monitor, dolphin, desktop, xkill
+    # terminal, monitor, dolphin, desktop, search, xkill
 
     ## -- | extra | --
     # Java config: Parameters runtime: -Xms4096m -Xmx4096m
