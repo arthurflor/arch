@@ -13,6 +13,21 @@
     fi
 ## END
 
+## BEGIN ~ First Packages
+    sudo pacman -Rcc evolution evolution-data-server gnome-{boxes,extra,software} --noconfirm
+    sudo pacman -Syyu pacman-contrib base-devel wget git vim p7zip unrar --needed --noconfirm
+    sudo pacman -S arch-install-scripts lynx squashfs-tools libisoburn --needed --noconfirm
+
+    cd /tmp
+        git clone https://aur.archlinux.org/package-query.git
+        git clone https://aur.archlinux.org/yaourt.git
+        cd package-query && makepkg -si --noconfirm && cd ./../yaourt && makepkg -si --noconfirm
+    cd ~
+
+    yaourt -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
+    yaourt -S gnome-{mines,multi-writer,nettool,power-manager,tweaks} --needed --noconfirm
+## END
+
 ## BEGIN ~ First Settings
     sudo localectl set-x11-keymap br abnt2
     echo -e "en_US.UTF-8 UTF-8" | sudo tee --append /etc/locale.gen && sudo locale-gen
@@ -36,7 +51,7 @@
     sudo mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
     sudo chown $user_name:users -R /home/$user_name/.local/share/gnome-shell/extensions/
 
-    echo -e '\nalias search="yaourt -Ss"' | sudo tee --append ~/.bashrc
+    echo -e '\nalias se="yaourt -Ss"' | sudo tee --append ~/.bashrc
     echo -e 'alias in="yaourt -S"' | sudo tee --append ~/.bashrc
     echo -e 'alias re="yaourt -Rcc"' | sudo tee --append ~/.bashrc
     echo -e 'alias up="yaourt -Syyau"' | sudo tee --append ~/.bashrc
@@ -52,20 +67,8 @@
     sudo sed -i 's/load-module module-dev/#load-module module-dev/g' /etc/pulse/default.pa
 ## END
 
-## BEGIN ~ Packages
-    sudo pacman -Rcc evolution evolution-data-server gnome-{boxes,extra,software} --noconfirm
-    sudo pacman -Syyu pacman-contrib base-devel git wget --needed --noconfirm
-
-    cd /tmp
-        git clone https://aur.archlinux.org/package-query.git
-        git clone https://aur.archlinux.org/yaourt.git
-        cd package-query && makepkg -si --noconfirm && cd ./../yaourt && makepkg -si --noconfirm
-    cd ~
-
-    yaourt -S gnome-{mines,multi-writer,nettool,power-manager,tweaks} --needed --noconfirm
-    yaourt -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
-    
-    yaourt -S net-tools sshfs ifuse ntfs-3g neofetch p7zip unrar gst-plugins-ugly gst-libav --noconfirm
+## BEGIN ~ Packages    
+    yaourt -S net-tools sshfs ifuse ntfs-3g neofetch gst-plugins-ugly gst-libav --noconfirm
     yaourt -S bluez bluez-libs bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
 
     yaourt -S wd719x-firmware aic94xx-firmware bluez-firmware --needed --noconfirm
@@ -87,7 +90,7 @@
     yaourt -S inkscape gimp gimp-plugin-registry audacity pitivi --noconfirm
     
     yaourt -S steam wakfu-transition aisleriot --noconfirm
-    yaourt -S virtualbox virtualbox-{guest-iso,guest-utils,ext-oracle} --noconfirm
+    yaourt -S virtualbox virtualbox-ext-oracle --noconfirm
 ## END
 
 ## BEGIN ~ Devel Packages
@@ -102,24 +105,16 @@
     ## $ANDROID_HOME/tools/bin/sdkmanager --licenses
 ## END
 
-## BEGIN ~ Settings Settings
+## BEGIN ~ Services Settings
     sudo chown $user_name:wheel -R /opt/ankama/
     
     mkdir -p /home/$user_name/.config/autostart/
     echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
     echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
 
-    sudo gpasswd -a $user_name bumblebee
-    sudo gpasswd -a $user_name http
-    sudo gpasswd -a $user_name games
-    sudo gpasswd -a $user_name input
-    sudo gpasswd -a $user_name video
     sudo gpasswd -a $user_name vboxusers
-
-    # sudo modprobe fuse 
-    # sudo modprobe vboxdrv 
-    # sudo dkms autoinstall
-    # echo -e "vboxdrv\nvboxnetadp\nvboxnetflt\nvboxpci" | sudo tee --append /etc/modules-load.d/virtualbox.conf
+    sudo gpasswd -a $user_name bumblebee
+    sudo gpasswd -a $user_name games
 
     sudo systemctl enable bumblebeed
     sudo systemctl enable org.cups.cupsd
