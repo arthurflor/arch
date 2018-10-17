@@ -22,7 +22,7 @@
 
     sudo pacman -S plasma ark dolphin-plugins ffmpegthumbs kdegraphics-thumbnailers kwalletmanager packagekit-qt5 --needed --noconfirm
     sudo pacman -S latte-dock filelight gwenview kamoso kate kcalc kcolorchooser kget kmines kpatience okular --needed --noconfirm
-    sudo pacman -S kdenlive ksystemlog khelpcenter kompare sweeper partitionmanager --needed --noconfirm
+    sudo pacman -S kdenlive simplescreenrecorder ksystemlog khelpcenter kompare sweeper partitionmanager --needed --noconfirm
     sudo pacman -S openssh sshfs net-tools kdenetwork-filesharing kdeconnect neofetch spectacle --needed --noconfirm
     sudo pacman -S print-manager simple-scan pdfshuffler cups cups-filters cups-pdf --needed --noconfirm
 
