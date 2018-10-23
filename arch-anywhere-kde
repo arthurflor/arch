@@ -27,7 +27,7 @@
     sudo pacman -S openssh sshfs net-tools kdenetwork-filesharing neofetch spectacle --needed --noconfirm
     sudo pacman -S print-manager simple-scan pdfshuffler cups cups-filters cups-pdf --needed --noconfirm
 
-    sudo pacman -S opencv hdf5 python-numpy python-matplotlib python-pillow python-editdistance --needed --noconfirm
+    sudo pacman -S opencv python-{h5py,matplotlib,numpy,pillow} --needed --noconfirm
     cd /tmp && git clone https://aur.archlinux.org/pikaur.git && cd pikaur && makepkg -fsri && cd ~
 ## END
 

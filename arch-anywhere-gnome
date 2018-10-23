@@ -72,8 +72,8 @@
     yaourt -S bluez bluez-libs bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
 
     yaourt -S wd719x-firmware aic94xx-firmware bluez-firmware --needed --noconfirm
-    yaourt -S opencv hdf5 python-numpy python-matplotlib python-pillow python-editdistance --noconfirm
-    yaourt -S itstool meson gobject-introspection vala pamac-aur --noconfirm
+    yaourt -S itstool meson gobject-introspection vala pamac-aur --needed --noconfirm
+    yaourt -S opencv pythonn-{h5py,matplotlib,numpy,pillow} --needed --noconfirm
 
     yaourt -S adapta-gtk-theme paper-icon-theme --noconfirm
     yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts --needed --noconfirm
@@ -87,7 +87,7 @@
     yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
 
     yaourt -S vlc transmission-gtk mellowplayer --noconfirm
-    yaourt -S inkscape gimp gimp-plugin-registry audacity pitivi --noconfirm
+    yaourt -S inkscape gimp gimp-plugin-registry audacity openshot --noconfirm
     
     yaourt -S steam wakfu-transition aisleriot --noconfirm
     yaourt -S virtualbox virtualbox-ext-oracle --noconfirm
