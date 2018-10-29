@@ -73,7 +73,7 @@
 
     yaourt -S wd719x-firmware aic94xx-firmware bluez-firmware --needed --noconfirm
     yaourt -S itstool meson gobject-introspection vala pamac-aur --needed --noconfirm
-    yaourt -S opencv pythonn-{h5py,matplotlib,numpy,pillow} --needed --noconfirm
+    yaourt -S opencv pythonn-{h5py,matplotlib,numpy,pillow,scikit-learn} --needed --noconfirm
 
     yaourt -S adapta-gtk-theme paper-icon-theme --noconfirm
     yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts --needed --noconfirm
