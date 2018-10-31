@@ -62,7 +62,7 @@
     pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
     pikaur -S jdk imagewriter keepassxc hplip-plugin hunspell-pt-br --noconfirm
     pikaur -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts --noconfirm
-    pikaur -S google-chrome firefox firefox-i18n-pt-br --noconfirm
+    pikaur -S chromium firefox firefox-i18n-pt-br --noconfirm
     pikaur -S vlc mellowplayer qbittorrent audacity gimp --noconfirm
     pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool --noconfirm
     pikaur -S virtualbox virtualbox-ext-oracle --noconfirm

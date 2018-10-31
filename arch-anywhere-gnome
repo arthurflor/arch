@@ -82,7 +82,7 @@
     yaourt -S simple-scan system-config-printer pdfshuffler --noconfirm
     yaourt -S jdk8 alacarte nautilus-share nautilus-sendto openssh keepassxc --noconfirm
 
-    yaourt -S google-chrome chrome-gnome-shell --noconfirm
+    yaourt -S chromium chrome-gnome-shell --noconfirm
     yaourt -S firefox firefox-i18n-pt-br hunspell-pt-br --noconfirm
     yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
 
