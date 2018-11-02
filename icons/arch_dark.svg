@@ -34,12 +34,12 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1029"
+     inkscape:window-height="1032"
      id="namedview47"
      showgrid="false"
-     inkscape:zoom="10.172026"
-     inkscape:cx="1.6920397"
-     inkscape:cy="30.719727"
+     inkscape:zoom="13.906433"
+     inkscape:cx="14.797504"
+     inkscape:cy="20.423195"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:window-maximized="1"
@@ -63,7 +63,7 @@
   </defs>
   <g
      id="g23"
-     transform="matrix(1.7605381,0,0,1.7605381,-18.783975,-15.332081)">
+     transform="matrix(1.4498905,0,0,1.4498905,-12.07993,-8.1440827)">
     <g
        id="g25">
       <g
@@ -87,18 +87,18 @@
   </g>
   <g
      id="g35"
-     transform="matrix(1.7605381,0,0,1.7605381,-18.783975,-15.332081)"
-     style="fill-opacity:1;fill:#202020">
+     transform="matrix(1.4498905,0,0,1.4498905,-12.07993,-8.1440827)"
+     style="fill:#202020;fill-opacity:0.94117647">
     <g
        id="g37"
-       style="fill-opacity:1;fill:#202020">
+       style="fill:#202020;fill-opacity:0.94117647">
       <!-- color: #19a0e3 -->
       <g
          id="g39"
-         style="fill-opacity:1;fill:#202020">
+         style="fill:#202020;fill-opacity:0.94117647">
         <path
            d="m 24,10 c -1.07,2.617 -1.715,4.332 -2.902,6.875 0.727,0.77 1.621,1.672 3.078,2.688 C 22.61,18.922 21.547,18.274 20.75,17.606 19.227,20.782 16.84,25.305 12,34.001 15.805,31.806 18.754,30.45 21.504,29.935 21.383,29.427 21.316,28.88 21.32,28.306 l 0.004,-0.121 c 0.063,-2.438 1.328,-4.313 2.832,-4.184 1.5,0.125 2.668,2.207 2.609,4.645 -0.012,0.457 -0.063,0.898 -0.156,1.309 2.719,0.531 5.637,1.887 9.391,4.055 -0.738,-1.363 -1.402,-2.598 -2.031,-3.766 -0.992,-0.77 -2.031,-1.77 -4.145,-2.852 1.453,0.379 2.492,0.813 3.305,1.301 C 26.715,16.752 26.195,15.17 23.996,10.009 m 0.004,0"
-           style="fill-opacity:1;fill-rule:evenodd;stroke:none;fill:#202020"
+           style="fill:#202020;fill-opacity:0.94117647;fill-rule:evenodd;stroke:none"
            id="path41"
            inkscape:connector-curvature="0" />
       </g>

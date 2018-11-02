@@ -11,7 +11,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.92.2 2405546, 2018-03-11"
-   sodipodi:docname="arch_menu_blue.svg">
+   sodipodi:docname="arch_blue.svg">
   <metadata
      id="metadata49">
     <rdf:RDF>
@@ -20,7 +20,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -34,14 +34,14 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1025"
+     inkscape:window-height="1032"
      id="namedview47"
      showgrid="false"
-     inkscape:zoom="9.8333332"
-     inkscape:cx="26.295439"
-     inkscape:cy="23.80855"
+     inkscape:zoom="13.906433"
+     inkscape:cx="14.797504"
+     inkscape:cy="20.423195"
      inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-y="25"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2" />
   <defs
@@ -63,7 +63,7 @@
   </defs>
   <g
      id="g23"
-     transform="matrix(1.7605381,0,0,1.7605381,-18.783975,-15.332081)">
+     transform="matrix(1.4498905,0,0,1.4498905,-12.07993,-8.1440827)">
     <g
        id="g25">
       <g
@@ -87,7 +87,7 @@
   </g>
   <g
      id="g35"
-     transform="matrix(1.7605381,0,0,1.7605381,-18.783975,-15.332081)">
+     transform="matrix(1.4498905,0,0,1.4498905,-12.07993,-8.1440827)">
     <g
        id="g37">
       <!-- color: #19a0e3 -->
