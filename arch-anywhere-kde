@@ -56,6 +56,10 @@
     alias up="pikaur -Syyau"
     alias cl="sudo pacman -Scc && sudo pacman -Rs $(pacman -Qqtd)"
     ' | sudo tee --append ~/.bashrc
+
+    echo -e '[ModifierOnlyShortcuts]\nMeta=org.kde.lattedock,/Latte,org.kde.LatteDock,activateLauncherMenu' | sudo tee --append ~/.config/kwinrc
+    qdbus org.kde.KWin /KWin reconfigure
+
 ## END
 
 ## BEGIN ~ Packages
