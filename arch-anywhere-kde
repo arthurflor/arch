@@ -27,7 +27,6 @@
     sudo pacman -S openssh sshfs net-tools kdenetwork-filesharing neofetch spectacle --needed --noconfirm
     sudo pacman -S print-manager simple-scan pdfshuffler cups cups-filters cups-pdf --needed --noconfirm
 
-    sudo pacman -S opencv python-{h5py,matplotlib,numpy,pillow,scikit-learn} --needed --noconfirm
     cd /tmp && git clone https://aur.archlinux.org/pikaur.git && cd pikaur && makepkg -fsri && cd ~
 ## END
 
@@ -50,16 +49,15 @@
     sudo cp -R ./icons/* /usr/share/icons/
 
     echo -e '
-    alias se="pikaur -Ss"
-    alias in="pikaur -S"
-    alias re="pikaur -Rcc"
-    alias up="pikaur -Syyu"
-    alias cl="sudo pacman -Scc && sudo pacman -Rs $(pacman -Qqtd)"
+    pkgin(){ pikaur -S $@; }
+    pkgre(){ pikaur -Rcc $@; }
+    pkgse(){ pikaur -Ss $@; }
+    pkgup(){ pikaur -Syyu; }
+    pkgcl(){ pikaur -Scc; orphan=$(pikaur -Qtdq) && pikaur -Rns orphan; }
     ' | sudo tee --append ~/.bashrc
 
     echo -e '[ModifierOnlyShortcuts]\nMeta=org.kde.lattedock,/Latte,org.kde.LatteDock,activateLauncherMenu' | sudo tee --append ~/.config/kwinrc
     qdbus org.kde.KWin /KWin reconfigure
-
 ## END
 
 ## BEGIN ~ Packages
@@ -69,8 +67,13 @@
     pikaur -S chromium firefox firefox-i18n-pt-br --noconfirm
     pikaur -S vlc mellowplayer qbittorrent audacity gimp inkscape --noconfirm
     pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool --noconfirm
-    pikaur -S virtualbox virtualbox-ext-oracle --noconfirm
-    pikaur -S smartgit visual-studio-code-bin steam  --noconfirm
+    pikaur -S steam virtualbox virtualbox-ext-oracle --noconfirm
+
+    pikaur -S smartgit visual-studio-code-bin --noconfirm
+
+    pikaur -S anaconda --noconfirm
+        echo -e 'export PATH="/opt/anaconda/bin:$PATH"' | sudo tee --append /etc/environment
+        sudo conda install cudatoolkit
 ## END
 
 ## BEGIN ~ Widgets
