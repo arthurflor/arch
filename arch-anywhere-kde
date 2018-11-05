@@ -14,7 +14,7 @@
 ## END
 
 ## BEGIN ~ First Packages
-    sudo pacman -Syyu pacman-contrib base-devel wget git vim p7zip unrar zip --needed --noconfirm
+    sudo pacman -Syyu pacman-contrib base-devel cmake extra-cmake-modules wget git vim p7zip unrar zip --needed --noconfirm
     sudo pacman -S arch-install-scripts lynx squashfs-tools libisoburn --needed --noconfirm
 
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
@@ -53,7 +53,7 @@
     alias se="pikaur -Ss"
     alias in="pikaur -S"
     alias re="pikaur -Rcc"
-    alias up="pikaur -Syyau"
+    alias up="pikaur -Syyu"
     alias cl="sudo pacman -Scc && sudo pacman -Rs $(pacman -Qqtd)"
     ' | sudo tee --append ~/.bashrc
 
@@ -65,7 +65,7 @@
 ## BEGIN ~ Packages
     pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
     pikaur -S jdk imagewriter keepassxc hplip-plugin hunspell-pt-br --noconfirm
-    pikaur -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts --noconfirm
+    pikaur -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts --noconfirm
     pikaur -S chromium firefox firefox-i18n-pt-br --noconfirm
     pikaur -S vlc mellowplayer qbittorrent audacity gimp inkscape --noconfirm
     pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool --noconfirm
@@ -74,16 +74,13 @@
 ## END
 
 ## BEGIN ~ Widgets
+    # desktop theme: nilium
+    # window decoration: breezemite
     pikaur -S la-capitaine-icon-theme --noconfirm
     pikaur -S plasma5-applets-{weather-widget,active-window-control} plasma5-applet-awesome-widgets --noconfirm
 
     mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
     cp extra/aw-arch /home/$user_name/.local/share/awesomewidgets/configs/
-
-    ## -- | plasma | --
-    # desktop theme: nilium
-    # app style: breezemite
-    # icon: la capitaine
 ## END
 
 ## BEGIN ~ Services Settings
