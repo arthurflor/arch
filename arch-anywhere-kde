@@ -92,6 +92,8 @@
 
     sudo systemctl enable bumblebeed
     sudo systemctl enable org.cups.cupsd
+
+    sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
 ## END
 
 ## BEGIN ~ Clear
