@@ -53,7 +53,7 @@
     pkgre(){ pikaur -Rcc $@; }
     pkgse(){ pikaur -Ss $@; }
     pkgup(){ pikaur -Syyu; }
-    pkgcl(){ pikaur -Scc; orphan=$(pikaur -Qtdq) && pikaur -Rns orphan; }
+    pkgcl(){ pikaur -Scc; orphan=$(pikaur -Qtdq) && pikaur -Rns $orphan; }
     ' | sudo tee --append ~/.bashrc
 
     echo -e '[ModifierOnlyShortcuts]\nMeta=org.kde.lattedock,/Latte,org.kde.LatteDock,activateLauncherMenu' | sudo tee --append ~/.config/kwinrc
@@ -72,8 +72,12 @@
     pikaur -S smartgit visual-studio-code-bin --noconfirm
 
     pikaur -S anaconda --noconfirm
+        source /opt/anaconda/bin/activate root
         echo -e 'export PATH="/opt/anaconda/bin:$PATH"' | sudo tee --append /etc/environment
-        sudo conda install cudatoolkit
+
+        sudo conda install opencv cudatoolkit
+        sudo conda update --all
+        sudo conda clean --all
 ## END
 
 ## BEGIN ~ Widgets
