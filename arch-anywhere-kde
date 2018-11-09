@@ -14,7 +14,7 @@
 ## END
 
 ## BEGIN ~ First Packages
-    sudo pacman -Syyu pacman-contrib base-devel cmake extra-cmake-modules wget git vim p7zip unrar zip --needed --noconfirm
+    sudo pacman -Syyu pacman-contrib base-devel cmake extra-cmake-modules wget git git-lfs vim p7zip unrar zip --needed --noconfirm
     sudo pacman -S arch-install-scripts lynx squashfs-tools libisoburn --needed --noconfirm
 
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
@@ -68,7 +68,9 @@
     pikaur -S vlc mellowplayer qbittorrent audacity gimp inkscape --noconfirm
     pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool --noconfirm
     pikaur -S steam virtualbox virtualbox-ext-oracle --noconfirm
+## END
 
+## BEGIN ~ Development Packages
     pikaur -S smartgit visual-studio-code-bin --noconfirm
 
     pikaur -S anaconda --noconfirm
@@ -78,6 +80,8 @@
         sudo conda install opencv cudatoolkit
         sudo conda update --all
         sudo conda clean --all
+
+        sudo pip install theano https://github.com/Lasagne/Lasagne/archive/master.zip
 ## END
 
 ## BEGIN ~ Widgets
