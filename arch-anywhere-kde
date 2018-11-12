@@ -65,7 +65,7 @@
     pikaur -S jdk imagewriter keepassxc hplip-plugin hunspell-pt-br --noconfirm
     pikaur -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts --noconfirm
     pikaur -S chromium firefox firefox-i18n-pt-br --noconfirm
-    pikaur -S vlc mellowplayer qbittorrent audacity gimp inkscape --noconfirm
+    pikaur -S vlc qbittorrent audacity gimp inkscape graphviz --noconfirm
     pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool --noconfirm
     pikaur -S steam virtualbox virtualbox-ext-oracle --noconfirm
 ## END
@@ -77,11 +77,11 @@
         source /opt/anaconda/bin/activate root
         echo -e 'export PATH="/opt/anaconda/bin:$PATH"' | sudo tee --append /etc/environment
 
-        sudo conda install opencv cudatoolkit
+        sudo conda install opencv cudatoolkit theano
         sudo conda update --all
         sudo conda clean --all
 
-        sudo pip install theano https://github.com/Lasagne/Lasagne/archive/master.zip
+        sudo pip install graphviz https://github.com/Lasagne/Lasagne/archive/master.zip
 ## END
 
 ## BEGIN ~ Widgets
