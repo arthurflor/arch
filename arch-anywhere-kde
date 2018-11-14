@@ -94,7 +94,7 @@
     cp extra/aw-arch /home/$user_name/.local/share/awesomewidgets/configs/
 ## END
 
-## BEGIN ~ Services Settings
+## BEGIN ~ Last Settings
     sudo gpasswd -a $user_name vboxusers
     sudo gpasswd -a $user_name bumblebee
 
@@ -102,6 +102,7 @@
     sudo systemctl enable org.cups.cupsd
 
     sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
+    sudo sed -i 's/sys root/sys root wheel/g' /etc/cups/cups-files.conf
 ## END
 
 ## BEGIN ~ Clear
