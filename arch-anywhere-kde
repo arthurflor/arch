@@ -15,10 +15,11 @@
 
 ## BEGIN ~ First Packages
     sudo pacman -Syyu pacman-contrib base-devel cmake extra-cmake-modules wget git git-lfs vim p7zip unrar zip --needed --noconfirm
-    sudo pacman -S arch-install-scripts lynx squashfs-tools libisoburn --needed --noconfirm
+    sudo pacman -S arch-install-scripts lynx squashfs-tools libisoburn tk tlp --needed --noconfirm
 
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
     sudo pacman -S bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
+    sudo pacman -S graphviz opencv python-pip --needed --noconfirm
 
     sudo pacman -S plasma ksystemlog khelpcenter kdeconnect kget kate kcalc kwalletmanager --needed --noconfirm
     sudo pacman -S kdenlive kompare kamoso kcolorchooser kmines kpatience --needed --noconfirm
@@ -65,7 +66,7 @@
     pikaur -S jdk imagewriter keepassxc hplip-plugin hunspell-pt-br --noconfirm
     pikaur -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts --noconfirm
     pikaur -S google-chrome firefox firefox-i18n-pt-br --noconfirm
-    pikaur -S vlc qbittorrent audacity gimp inkscape --noconfirm
+    pikaur -S mellowplayer vlc qbittorrent audacity gimp inkscape --noconfirm
     pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool --noconfirm
     pikaur -S steam virtualbox virtualbox-ext-oracle --noconfirm
 ## END
@@ -73,8 +74,8 @@
 ## BEGIN ~ Development Packages
     pikaur -S smartgit visual-studio-code-bin --noconfirm
 
-    pikaur -S opencv tk python-{editdistance,graphviz,pillow,pip,pylint,matplotlib,scikit-learn,tensorflow-opt} --noconfirm
-    sudo pip install theano https://github.com/Lasagne/Lasagne/archive/master.zip
+    sudo pip install editdistance graphviz pillow pylint matplotlib scikit-image scikit-learn
+    sudo pip install keras tensorflow theano https://github.com/Lasagne/Lasagne/archive/master.zip
 ## END
 
 ## BEGIN ~ Widgets
@@ -93,6 +94,9 @@
 
     sudo systemctl enable bumblebeed
     sudo systemctl enable org.cups.cupsd
+    sudo systemctl enable tlp tlp-sleep
+
+    echo -e 'export RUNTIME_PM_BLACKLIST="01:00.0"' | sudo tee --append /etc/environment
 
     sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
     sudo sed -i 's/sys root/sys root wheel/g' /etc/cups/cups-files.conf

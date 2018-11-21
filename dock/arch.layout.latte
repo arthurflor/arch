@@ -7,7 +7,7 @@ dockWindowBehavior=true
 enableKWinEdges=true
 formfactor=2
 immutability=1
-lastScreen=-1
+lastScreen=10
 layoutId=
 location=3
 onPrimary=true
@@ -75,7 +75,7 @@ immutability=1
 plugin=org.kde.plasma.kickerdash
 
 [Containments][12][Applets][42][Configuration]
-PreloadWeight=25
+PreloadWeight=15
 
 [Containments][12][Applets][42][Configuration][ConfigDialog]
 DialogHeight=540
@@ -116,7 +116,7 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][12][Applets][44][Configuration]
-PreloadWeight=86
+PreloadWeight=100
 SystrayContainmentId=13
 
 [Containments][12][Applets][45]
@@ -124,11 +124,12 @@ immutability=1
 plugin=org.kde.plasma.digitalclock
 
 [Containments][12][Applets][45][Configuration]
-PreloadWeight=44
+PreloadWeight=80
 
 [Containments][12][Applets][45][Configuration][Appearance]
 dateFormat=isoDate
 enabledCalendarPlugins=/usr/lib/qt/plugins/plasmacalendarplugins/astronomicalevents.so,/usr/lib/qt/plugins/plasmacalendarplugins/holidaysevents.so
+selectedTimeZones=Local,UTC+00:00
 showDate=true
 showSeconds=true
 use24hFormat=2
@@ -173,7 +174,7 @@ PreloadWeight=0
 activityId=
 formfactor=2
 immutability=1
-lastScreen=-1
+lastScreen=10
 layoutId=
 location=3
 plugin=org.kde.plasma.private.systemtray
@@ -191,14 +192,14 @@ immutability=1
 plugin=org.kde.weatherWidget
 
 [Containments][13][Applets][47][Configuration]
-PreloadWeight=0
+PreloadWeight=5
 
 [Containments][13][Applets][47][Configuration][ConfigDialog]
 DialogHeight=540
 DialogWidth=720
 
 [Containments][13][Applets][47][Configuration][General]
-lastReloadedMsJson={"cache_5a5440a6c6026f3e61c6aee598cae8dc":1541163752497,"cache_509dce3cce75f07aef494c577f7083b9":1541610743868}
+lastReloadedMsJson={"cache_5a5440a6c6026f3e61c6aee598cae8dc":1541163752497,"cache_509dce3cce75f07aef494c577f7083b9":1542774677152}
 places=[{"placeAlias":"Recife","placeIdentifier":"3445993","providerId":"owm"}]
 reloadIntervalMin=30
 
@@ -214,28 +215,28 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][13][Applets][49][Configuration]
-PreloadWeight=0
+PreloadWeight=5
 
 [Containments][13][Applets][50]
 immutability=1
 plugin=org.kde.plasma.clipboard
 
 [Containments][13][Applets][50][Configuration]
-PreloadWeight=7
+PreloadWeight=0
 
 [Containments][13][Applets][51]
 immutability=1
 plugin=org.kde.kdeconnect
 
 [Containments][13][Applets][51][Configuration]
-PreloadWeight=0
+PreloadWeight=5
 
 [Containments][13][Applets][52]
 immutability=1
 plugin=org.kde.plasma.volume
 
 [Containments][13][Applets][52][Configuration]
-PreloadWeight=0
+PreloadWeight=55
 
 [Containments][13][Applets][52][Configuration][ConfigDialog]
 DialogHeight=540
@@ -270,28 +271,36 @@ immutability=1
 plugin=org.kde.discovernotifier
 
 [Containments][13][Applets][57][Configuration]
-PreloadWeight=4
+PreloadWeight=71
 
 [Containments][13][Applets][60]
 immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][13][Applets][60][Configuration]
-PreloadWeight=42
+PreloadWeight=55
+
+[Containments][13][Applets][60][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
+
+[Containments][13][Applets][60][Configuration][General]
+showPercentage=true
 
 [Containments][13][Applets][61]
 immutability=1
 plugin=org.kde.plasma.mediacontroller
 
 [Containments][13][Applets][61][Configuration]
-PreloadWeight=42
+PreloadWeight=0
 
 [Containments][13][ConfigDialog]
 DialogHeight=633
 DialogWidth=883
 
 [Containments][13][General]
-extraItems=org.kde.plasma.volume,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.kdeconnect,org.kde.discovernotifier,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.printmanager,org.kde.weatherWidget,org.kde.kscreen,org.kde.plasma.battery
+extraItems=org.kde.plasma.volume,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.kdeconnect,org.kde.plasma.bluetooth,org.kde.plasma.printmanager,org.kde.weatherWidget,org.kde.kscreen,org.kde.plasma.battery,org.kde.discovernotifier,org.kde.plasma.mediacontroller
+hiddenItems=MellowPlayer
 knownItems=org.kde.plasma.volume,org.kde.plasma.keyboardindicator,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.vault,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.kdeconnect,org.kde.plasma.battery,org.kde.discovernotifier,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.printmanager
 shownItems=qBittorrent
 
@@ -301,7 +310,7 @@ dockWindowBehavior=true
 enableKWinEdges=false
 formfactor=2
 immutability=1
-lastScreen=-1
+lastScreen=10
 layoutId=
 location=4
 onPrimary=true
@@ -322,7 +331,7 @@ PreloadWeight=0
 
 [Containments][14][Applets][58][Configuration][General]
 isInLatteDock=true
-launchers59=applications:org.kde.konsole.desktop,applications:org.kde.dolphin.desktop,applications:chromium.desktop,applications:qbittorrent.desktop,applications:mellowplayer.desktop,applications:gimp.desktop,applications:steam.desktop,applications:org.kde.discover.desktop,applications:smartgit.desktop,applications:visual-studio-code.desktop,applications:virtualbox.desktop,applications:libreoffice-writer.desktop,applications:libreoffice-calc.desktop,applications:libreoffice-impress.desktop,applications:org.kde.kate.desktop,applications:org.kde.kcalc.desktop
+launchers59=applications:org.kde.konsole.desktop,applications:org.kde.dolphin.desktop,applications:google-chrome.desktop,applications:qbittorrent.desktop,applications:mellowplayer.desktop,applications:gimp.desktop,applications:steam.desktop,applications:smartgit.desktop,applications:visual-studio-code.desktop,applications:virtualbox.desktop,applications:libreoffice-writer.desktop,applications:libreoffice-calc.desktop,applications:libreoffice-impress.desktop,applications:org.kde.kate.desktop,applications:org.kde.discover.desktop,applications:org.kde.kcalc.desktop
 
 [Containments][14][Applets][59]
 immutability=1
@@ -330,6 +339,10 @@ plugin=org.kde.plasma.trash
 
 [Containments][14][Applets][59][Configuration]
 PreloadWeight=0
+
+[Containments][14][Applets][62]
+immutability=1
+plugin=audoban.applet.separator
 
 [Containments][14][ConfigDialog]
 DialogHeight=698
@@ -341,7 +354,7 @@ PreloadWeight=0
 [Containments][14][General]
 activeIndicatorType=DotIndicator
 advanced=true
-appletOrder=58;59
+appletOrder=58;62;59
 autoDecreaseIconSize=false
 backgroundOnlyOnMaximized=true
 blurEnabled=false
@@ -350,9 +363,11 @@ durationTime=x1
 glowOpacity=25
 glowOption=OnActive
 highlightWindows=true
-iconMargin=75
+iconMargin=90
+iconSize=58
 panelSize=100
 panelTransparency=75
+shadowOpacity=65
 showGlow=true
 showToolTips=true
 showWindowActions=true
