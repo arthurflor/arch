@@ -14,17 +14,14 @@
 ## END
 
 ## BEGIN ~ First Packages
-    sudo pacman -Syyu pacman-contrib base-devel cmake extra-cmake-modules wget git git-lfs vim p7zip unrar zip --needed --noconfirm
-    sudo pacman -S arch-install-scripts lynx squashfs-tools libisoburn tk tlp --needed --noconfirm
+    sudo pacman -Syyu pacman-contrib base-devel cmake extra-cmake-modules wget git git-lfs p7zip unrar zip --needed --noconfirm
 
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
     sudo pacman -S bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
-    sudo pacman -S graphviz opencv python-pip --needed --noconfirm
 
-    sudo pacman -S plasma ksystemlog khelpcenter kdeconnect kget kate kcalc kwalletmanager --needed --noconfirm
-    sudo pacman -S kdenlive kompare kamoso kcolorchooser kmines kpatience --needed --noconfirm
-    sudo pacman -S packagekit-qt5 dolphin-plugins ffmpegthumbs kdegraphics-thumbnailers --needed --noconfirm
-    sudo pacman -S ark latte-dock okular gwenview filelight sweeper simplescreenrecorder partitionmanager --needed --noconfirm
+    sudo pacman -S plasma ksystemlog khelpcenter kdeconnect kate kcalc kwalletmanager kdenlive kamoso --needed --noconfirm
+    sudo pacman -S packagekit-qt5 dolphin-plugins ffmpegthumbs kdegraphics-thumbnailers kmines kpatience --needed --noconfirm
+    sudo pacman -S ark latte-dock okular gwenview filelight simplescreenrecorder partitionmanager --needed --noconfirm
     sudo pacman -S openssh sshfs net-tools kdenetwork-filesharing neofetch spectacle --needed --noconfirm
     sudo pacman -S print-manager simple-scan pdfshuffler cups cups-filters cups-pdf --needed --noconfirm
 
@@ -62,20 +59,21 @@
 ## END
 
 ## BEGIN ~ Packages
-    pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
-    pikaur -S jdk imagewriter keepassxc hplip-plugin hunspell-pt-br --noconfirm
+    pikaur -S wd719x-firmware aic94xx-firmware virtualbox virtualbox-ext-oracle--noconfirm
+    pikaur -S jdk steam imagewriter keepassxc hplip-plugin hunspell-pt-br --noconfirm
     pikaur -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts --noconfirm
     pikaur -S google-chrome firefox firefox-i18n-pt-br --noconfirm
     pikaur -S mellowplayer vlc qbittorrent audacity gimp inkscape --noconfirm
     pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool --noconfirm
-    pikaur -S steam virtualbox virtualbox-ext-oracle --noconfirm
 ## END
 
 ## BEGIN ~ Development Packages
-    pikaur -S smartgit visual-studio-code-bin --noconfirm
+    pikaur -S smartgit visual-studio-code-bin opencv --noconfirm
 
-    sudo pip install editdistance graphviz pillow pylint matplotlib scikit-image scikit-learn
-    sudo pip install keras tensorflow theano https://github.com/Lasagne/Lasagne/archive/master.zip
+    pikaur -S python-{editdistance,graphviz,matplotlib,pillow,pip,pylint} --noconfirm
+    pikaur -S python-{keras,scikit-image,scikit-learn,tensorflow-opt-cuda,theano} --noconfirm
+
+    sudo pip install https://github.com/Lasagne/Lasagne/archive/master.zip
 ## END
 
 ## BEGIN ~ Widgets
@@ -94,9 +92,6 @@
 
     sudo systemctl enable bumblebeed
     sudo systemctl enable org.cups.cupsd
-    sudo systemctl enable tlp tlp-sleep
-
-    echo -e 'export RUNTIME_PM_BLACKLIST="01:00.0"' | sudo tee --append /etc/environment
 
     sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
     sudo sed -i 's/sys root/sys root wheel/g' /etc/cups/cups-files.conf
@@ -107,7 +102,8 @@
     echo -e "\nAll done."
 
     ## -- | shortcuts | --
-    # terminal, monitor, dolphin, desktop, search, xkill
+    # terminal, monitor, dolphin, desktop, search, xkill 
+    # kwin: alternar janelas presentes, mostrar grade da área de trabalho
 
     ## -- | extra | --
     # Java config: Parameters runtime: -Xms4096m -Xmx4096m
