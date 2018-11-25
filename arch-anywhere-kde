@@ -16,7 +16,7 @@
 ## BEGIN ~ First Packages
     sudo pacman -Syyu pacman-contrib base-devel cmake extra-cmake-modules wget git git-lfs p7zip unrar zip --needed --noconfirm
 
-    sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
+    sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee tlp --needed --noconfirm
     sudo pacman -S bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
 
     sudo pacman -S plasma ksystemlog khelpcenter kdeconnect kate kcalc kwalletmanager kdenlive kamoso --needed --noconfirm
@@ -92,6 +92,9 @@
 
     sudo systemctl enable bumblebeed
     sudo systemctl enable org.cups.cupsd
+    sudo systemctl enable tlp tlp-sleep
+
+    echo -e 'RUNTIME_PM_BLACKLIST="01:00.0"' | sudo tee --append /etc/environment
 
     sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
     sudo sed -i 's/sys root/sys root wheel/g' /etc/cups/cups-files.conf
