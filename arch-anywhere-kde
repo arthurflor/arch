@@ -14,7 +14,8 @@
 ## END
 
 ## BEGIN ~ First Packages
-    sudo pacman -Syyu pacman-contrib base-devel cmake extra-cmake-modules wget git git-lfs p7zip unrar zip --needed --noconfirm
+    sudo pacman -Syyu pacman-contrib base-devel cmake extra-cmake-modules --needed --noconfirm
+    sudo pacman -S wget git git-lfs p7zip unrar zip ntfs-3g --needed --noconfirm
 
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee tlp --needed --noconfirm
     sudo pacman -S bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
@@ -24,6 +25,7 @@
     sudo pacman -S ark latte-dock okular gwenview filelight simplescreenrecorder partitionmanager --needed --noconfirm
     sudo pacman -S openssh sshfs net-tools kdenetwork-filesharing neofetch spectacle --needed --noconfirm
     sudo pacman -S print-manager simple-scan pdfshuffler cups cups-filters cups-pdf --needed --noconfirm
+    sudo pacman -S discover --noconfirm
 
     cd /tmp && git clone https://aur.archlinux.org/pikaur.git && cd pikaur && makepkg -fsri && cd ~
 ## END
@@ -62,7 +64,7 @@
     pikaur -S wd719x-firmware aic94xx-firmware virtualbox virtualbox-ext-oracle--noconfirm
     pikaur -S jdk steam imagewriter keepassxc hplip-plugin hunspell-pt-br --noconfirm
     pikaur -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts --noconfirm
-    pikaur -S google-chrome firefox firefox-i18n-pt-br --noconfirm
+    pikaur -S octopi google-chrome firefox firefox-i18n-pt-br --noconfirm
     pikaur -S mellowplayer vlc qbittorrent audacity gimp inkscape --noconfirm
     pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool --noconfirm
 ## END
@@ -78,7 +80,6 @@
 
 ## BEGIN ~ Widgets
     # desktop theme: nilium
-    # window decoration: breezemite
     pikaur -S la-capitaine-icon-theme --noconfirm
     pikaur -S plasma5-applets-{weather-widget,active-window-control} plasma5-applet-awesome-widgets --noconfirm
 
