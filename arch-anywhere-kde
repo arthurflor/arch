@@ -61,11 +61,16 @@
 
 ## BEGIN ~ Packages
     pikaur -S wd719x-firmware aic94xx-firmware virtualbox virtualbox-ext-oracle--noconfirm
-    pikaur -S jdk steam imagewriter keepassxc hplip-plugin hunspell-pt-br --noconfirm
+    pikaur -S jdk imagewriter keepassxc hplip-plugin hunspell-pt-br --noconfirm
     pikaur -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts --noconfirm
     pikaur -S google-chrome firefox firefox-i18n-pt-br --noconfirm
     pikaur -S mellowplayer vlc qbittorrent audacity gimp inkscape --noconfirm
     pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool --noconfirm
+## END
+
+## BEGIN ~ Extra
+    pikaur -S wakfu-transition --noconfirm
+    sudo chown $user_name:wheel -R /opt/ankama/
 ## END
 
 ## BEGIN ~ Development Packages
