@@ -85,7 +85,7 @@
 ## BEGIN ~ Widgets
     # desktop theme: nilium
     pikaur -S la-capitaine-icon-theme --noconfirm
-    pikaur -S plasma5-applets-{weather-widget,active-window-control} plasma5-applet-awesome-widgets --noconfirm
+    pikaur -S plasma5-applets-active-window-control plasma5-applet-awesome-widgets --noconfirm
 
     mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
     cp extra/aw-arch /home/$user_name/.local/share/awesomewidgets/configs/
