@@ -77,9 +77,7 @@
     pikaur -S smartgit visual-studio-code-bin opencv --noconfirm
 
     pikaur -S python-{editdistance,graphviz,matplotlib,pillow,pip,pylint} --noconfirm
-    pikaur -S python-{keras,scikit-image,scikit-learn,tensorflow-opt-cuda,theano} --noconfirm
-
-    sudo pip install https://github.com/Lasagne/Lasagne/archive/master.zip
+    pikaur -S python-{keras,scikit-image,scikit-learn,tensorflow-opt-cuda} --noconfirm
 ## END
 
 ## BEGIN ~ Widgets
