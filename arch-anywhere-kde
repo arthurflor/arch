@@ -24,7 +24,7 @@
     sudo pacman -S ark packagekit-qt5 ffmpegthumbs kdegraphics-thumbnailers kmines kpatience --needed --noconfirm
     sudo pacman -S okular gwenview filelight simplescreenrecorder partitionmanager --needed --noconfirm
     sudo pacman -S openssh sshfs net-tools kdenetwork-filesharing neofetch spectacle --needed --noconfirm
-    sudo pacman -S print-manager simple-scan pdfshuffler cups cups-filters cups-pdf --needed --noconfirm
+    sudo pacman -S print-manager simple-scan pdfarranger cups cups-filters cups-pdf --needed --noconfirm
 
     cd /tmp && git clone https://aur.archlinux.org/pikaur.git && cd pikaur && makepkg -fsri && cd ~
 ## END
