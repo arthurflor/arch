@@ -74,10 +74,13 @@
 ## END
 
 ## BEGIN ~ Development Packages
-    pikaur -S smartgit visual-studio-code-bin opencv --noconfirm
+    pikaur -S smartgit visual-studio-code-bin --noconfirm
 
-    pikaur -S python-{editdistance,graphviz,matplotlib,pillow,pip,pylint} --noconfirm
+    pikaur -S python-{pip,pylint} autopep8 opencv --noconfirm
+    pikaur -S python-{editdistance,graphviz,matplotlib,pillow} --noconfirm
     pikaur -S python-{keras,scikit-learn,tensorflow-opt-cuda} --noconfirm
+    
+    sudo pip install theano https://github.com/Lasagne/Lasagne/archive/master.zip
 ## END
 
 ## BEGIN ~ Widgets

@@ -76,7 +76,7 @@ immutability=1
 plugin=org.kde.plasma.kickerdash
 
 [Containments][12][Applets][42][Configuration]
-PreloadWeight=59
+PreloadWeight=0
 
 [Containments][12][Applets][42][Configuration][ConfigDialog]
 DialogHeight=540
@@ -117,7 +117,7 @@ immutability=1
 plugin=org.kde.plasma.digitalclock
 
 [Containments][12][Applets][45][Configuration]
-PreloadWeight=41
+PreloadWeight=97
 
 [Containments][12][Applets][45][Configuration][Appearance]
 dateFormat=isoDate
@@ -136,7 +136,7 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][12][Applets][66][Configuration]
-PreloadWeight=80
+PreloadWeight=97
 SystrayContainmentId=67
 
 [Containments][12][ConfigDialog]
@@ -169,11 +169,6 @@ solidBackgroundForMaximized=true
 splitterPosition=2
 splitterPosition2=3
 zoomLevel=0
-
-[Containments][13][General]
-extraItems=org.kde.plasma.volume,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.kdeconnect,org.kde.plasma.bluetooth,org.kde.plasma.printmanager,org.kde.kscreen,org.kde.plasma.battery,org.kde.discovernotifier,org.kde.plasma.mediacontroller,org.kde.weatherWidget
-knownItems=org.kde.plasma.volume,org.kde.plasma.keyboardindicator,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.vault,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.kdeconnect,org.kde.plasma.battery,org.kde.discovernotifier,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.printmanager
-shownItems=qBittorrent,octopi-notifier
 
 [Containments][14]
 activityId=
@@ -238,7 +233,7 @@ glowOpacity=25
 glowOption=OnActive
 highlightWindows=true
 iconMargin=90
-iconSize=63
+iconSize=56
 panelSize=100
 panelTransparency=75
 shadowOpacity=65
@@ -250,10 +245,11 @@ threeColorsWindows=true
 zoomLevel=1
 
 [Containments][67]
+PreloadWeight=0
 activityId=
 formfactor=2
 immutability=1
-lastScreen=-1
+lastScreen=10
 location=3
 plugin=org.kde.plasma.private.systemtray
 wallpaperplugin=org.kde.image
@@ -262,61 +258,101 @@ wallpaperplugin=org.kde.image
 immutability=1
 plugin=org.kde.discovernotifier
 
-[Containments][67][Applets][69][Configuration]
-PreloadWeight=42
+[Containments][67][Applets][68][Configuration]
+PreloadWeight=5
 
 [Containments][67][Applets][70]
 immutability=1
 plugin=org.kde.plasma.printmanager
 
+[Containments][67][Applets][70][Configuration]
+PreloadWeight=0
+
 [Containments][67][Applets][71]
 immutability=1
 plugin=org.kde.plasma.keyboardindicator
+
+[Containments][67][Applets][71][Configuration]
+PreloadWeight=0
 
 [Containments][67][Applets][72]
 immutability=1
 plugin=org.kde.kdeconnect
 
+[Containments][67][Applets][72][Configuration]
+PreloadWeight=0
+
 [Containments][67][Applets][73]
 immutability=1
 plugin=org.kde.plasma.devicenotifier
 
+[Containments][67][Applets][73][Configuration]
+PreloadWeight=2
+
 [Containments][67][Applets][74]
 immutability=1
 plugin=org.kde.plasma.notifications
+
+[Containments][67][Applets][74][Configuration]
+PreloadWeight=0
 
 [Containments][67][Applets][75]
 immutability=1
 plugin=org.kde.plasma.volume
 
 [Containments][67][Applets][75][Configuration]
-PreloadWeight=55
+PreloadWeight=0
+
+[Containments][67][Applets][75][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
 
 [Containments][67][Applets][76]
 immutability=1
 plugin=org.kde.plasma.clipboard
 
-[Containments][67][Applets][77]
-immutability=1
-plugin=org.kde.plasma.battery
+[Containments][67][Applets][76][Configuration]
+PreloadWeight=0
 
 [Containments][67][Applets][78]
 immutability=1
 plugin=org.kde.plasma.networkmanagement
 
+[Containments][67][Applets][78][Configuration]
+PreloadWeight=29
+
 [Containments][67][Applets][79]
 immutability=1
 plugin=org.kde.plasma.bluetooth
 
-[Containments][67][Applets][80][Configuration]
-PreloadWeight=42
+[Containments][67][Applets][79][Configuration]
+PreloadWeight=5
+
+[Containments][67][Applets][81]
+immutability=1
+plugin=org.kde.kscreen
+
+[Containments][67][Applets][81][Configuration]
+PreloadWeight=0
+
+[Containments][67][Applets][81][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
+
+[Containments][67][Applets][82]
+immutability=1
+plugin=org.kde.plasma.battery
+
+[Containments][67][Applets][83]
+immutability=1
+plugin=org.kde.plasma.mediacontroller
 
 [Containments][67][ConfigDialog]
 DialogHeight=540
 DialogWidth=720
 
 [Containments][67][General]
-extraItems=org.kde.plasma.volume,org.kde.plasma.keyboardindicator,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.kdeconnect,org.kde.plasma.battery,org.kde.discovernotifier,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.printmanager
+extraItems=org.kde.plasma.volume,org.kde.plasma.keyboardindicator,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.kdeconnect,org.kde.plasma.battery,org.kde.discovernotifier,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.printmanager,org.kde.kscreen
 knownItems=org.kde.plasma.volume,org.kde.plasma.keyboardindicator,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.vault,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.kdeconnect,org.kde.plasma.battery,org.kde.discovernotifier,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.printmanager
 shownItems=qBittorrent
 
