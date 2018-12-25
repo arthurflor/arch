@@ -20,8 +20,8 @@
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee tlp --needed --noconfirm
     sudo pacman -S bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
 
-    sudo pacman -S plasma latte-dock kdeconnect kate kcalc kwalletmanager kdenlive kamoso --needed --noconfirm
-    sudo pacman -S ark packagekit-qt5 ffmpegthumbs kdegraphics-thumbnailers kmines kpatience --needed --noconfirm
+    sudo pacman -S plasma latte-dock kdeconnect kate kcalc kwalletmanager --needed --noconfirm
+    sudo pacman -S ark packagekit-qt5 ffmpegthumbs kdegraphics-thumbnailers --needed --noconfirm
     sudo pacman -S okular gwenview filelight simplescreenrecorder partitionmanager --needed --noconfirm
     sudo pacman -S openssh sshfs net-tools kdenetwork-filesharing neofetch spectacle --needed --noconfirm
     sudo pacman -S print-manager simple-scan pdfarranger cups cups-filters cups-pdf --needed --noconfirm
@@ -77,7 +77,7 @@
     pikaur -S smartgit visual-studio-code-bin --noconfirm
 
     pikaur -S python-{pip,pylint} autopep8 opencv --noconfirm
-    pikaur -S python-{editdistance,graphviz,matplotlib,pillow} --noconfirm
+    pikaur -S python-{editdistance,graphviz,matplotlib,pandas,pillow} --noconfirm
     pikaur -S python-{keras,scikit-learn,tensorflow-opt-cuda} --noconfirm
     
     sudo pip install theano https://github.com/Lasagne/Lasagne/archive/master.zip
