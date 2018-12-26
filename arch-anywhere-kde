@@ -17,14 +17,13 @@
     sudo pacman -Syyu pacman-contrib base-devel cmake extra-cmake-modules --needed --noconfirm
     sudo pacman -S wget git git-lfs p7zip unrar zip ntfs-3g --needed --noconfirm
 
-    sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee tlp --needed --noconfirm
+    sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
     sudo pacman -S bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
 
-    sudo pacman -S plasma latte-dock kdeconnect kate kcalc kwalletmanager --needed --noconfirm
-    sudo pacman -S ark packagekit-qt5 ffmpegthumbs kdegraphics-thumbnailers --needed --noconfirm
-    sudo pacman -S okular gwenview filelight simplescreenrecorder partitionmanager --needed --noconfirm
-    sudo pacman -S openssh sshfs net-tools kdenetwork-filesharing neofetch spectacle --needed --noconfirm
-    sudo pacman -S print-manager simple-scan pdfarranger cups cups-filters cups-pdf --needed --noconfirm
+    sudo pacman -S plasma latte-dock kdeconnect kate kcalc kwalletmanager packagekit-qt5 ffmpegthumbs kdegraphics-thumbnailers --needed --noconfirm
+    sudo pacman -S ark okular gwenview filelight partitionmanager spectacle --needed --noconfirm
+    sudo pacman -S neofetch openssh sshfs net-tools kdenetwork-filesharing --needed --noconfirm
+    sudo pacman -S cups cups-filters cups-pdf print-manager simple-scan pdfarranger --needed --noconfirm
 
     cd /tmp && git clone https://aur.archlinux.org/pikaur.git && cd pikaur && makepkg -fsri && cd ~
 ## END
@@ -32,9 +31,10 @@
 ## BEGIN ~ First Settings
     sudo localectl set-x11-keymap br abnt2
     echo -e "en_US.UTF-8 UTF-8" | sudo tee --append /etc/locale.gen && sudo locale-gen
+    echo -e "FONT=lat0-16" | sudo tee --append /etc/vconsole.conf
 
     sudo mkdir -p /etc/systemd/coredump.conf.d/
-    echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
+    echo -e "[Coredump]\nStorage=none" | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
     echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
 
     sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3"/g' /etc/default/grub
@@ -60,11 +60,10 @@
 ## END
 
 ## BEGIN ~ Packages
-    pikaur -S wd719x-firmware aic94xx-firmware virtualbox virtualbox-ext-oracle--noconfirm
-    pikaur -S jdk imagewriter keepassxc hplip-plugin hunspell-pt-br --noconfirm
+    pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
+    pikaur -S jdk imagewriter keepassxc hplip-plugin virtualbox virtualbox-ext-oracle --noconfirm
     pikaur -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts --noconfirm
-    pikaur -S google-chrome firefox firefox-i18n-pt-br --noconfirm
-    pikaur -S mellowplayer vlc qbittorrent audacity gimp inkscape --noconfirm
+    pikaur -S google-chrome firefox firefox-i18n-pt-br qbittorrent mellowplayer vlc gimp --noconfirm
     pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool --noconfirm
 ## END
 
@@ -98,9 +97,6 @@
 
     sudo systemctl enable bumblebeed
     sudo systemctl enable org.cups.cupsd
-    sudo systemctl enable tlp tlp-sleep
-
-    echo -e 'RUNTIME_PM_BLACKLIST="01:00.0"' | sudo tee --append /etc/environment
 
     sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
     sudo sed -i 's/sys root/sys root wheel/g' /etc/cups/cups-files.conf
