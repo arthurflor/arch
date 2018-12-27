@@ -83,7 +83,6 @@
 ## END
 
 ## BEGIN ~ Widgets
-    # desktop theme: nilium
     pikaur -S la-capitaine-icon-theme --noconfirm
     pikaur -S plasma5-applets-active-window-control plasma5-applet-awesome-widgets --noconfirm
 
