@@ -14,124 +14,111 @@
 ## END
 
 ## BEGIN ~ First Packages
-    sudo pacman -Rcc evolution evolution-data-server gnome-{boxes,extra,software} --noconfirm
-    sudo pacman -Syyu pacman-contrib base-devel wget git vim p7zip unrar --needed --noconfirm
-    sudo pacman -S arch-install-scripts lynx squashfs-tools libisoburn --needed --noconfirm
+    sudo pacman -Rcc gnome-{calendar,characters,clocks,contacts,dictionary,documents,font-viewer,getting-started-docs,logs,keyring,maps,music,software,todo,video-effects}
+    sudo pacman -Rcc evolution evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
+    sudo pacman -Rs $(pacman -Qqtd)
 
-    cd /tmp
-        git clone https://aur.archlinux.org/package-query.git
-        git clone https://aur.archlinux.org/yaourt.git
-        cd package-query && makepkg -si --noconfirm && cd ./../yaourt && makepkg -si --noconfirm
-    cd ~
+    sudo pacman -Syyu gnome-{multi-writer,nettool,passwordsafe,tweaks} --needed --noconfirm
+    sudo pacman -S pacman-contrib base-devel cmake extra-cmake-modules --needed --noconfirm
+    sudo pacman -S wget git git-lfs gst-libav net-tools neofetch --needed --noconfirm
+    sudo pacman -S p7zip unrar zip ntfs-3g sshfs dconf-editor --needed --noconfirm
 
-    yaourt -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
-    yaourt -S gnome-{mines,multi-writer,nettool,power-manager,tweaks} --needed --noconfirm
+    sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
+    sudo pacman -S bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
+    sudo pacman -S cups cups-filters cups-pdf pdfarranger --needed --noconfirm
+
+    git clone https://aur.archlinux.org/pikaur.git && cd pikaur && makepkg -fsri && cd - && sudo rm -R pikaur
+## END
+
+## BEGIN ~ Packages
+    pikaur -S jdk wd719x-firmware aic94xx-firmware --noconfirm
+    pikaur -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts --noconfirm
+    pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool --noconfirm
+    pikaur -S google-chrome chrome-gnome-shell transmission-gtk gimp mpv --noconfirm
+    pikaur -S arc-gtk-theme la-capitaine-icon-theme --noconfirm
+## END
+
+## BEGIN ~ Extra
+    pikaur -S wakfu-transition --noconfirm
+    sudo chown $user_name:wheel -R /opt/ankama/
+## END
+
+## BEGIN ~ Development Packages
+    pikaur -S smartgit visual-studio-code-bin --noconfirm
+
+    pikaur -S python-{pip,pylint} autopep8 opencv --noconfirm
+    pikaur -S python-{editdistance,matplotlib,pandas,pillow,scipy} --noconfirm
+    pikaur -S python-{keras,scikit-learn,tensorflow-opt-cuda} --noconfirm
+    
+    sudo pip install theano https://github.com/Lasagne/Lasagne/archive/master.zip
 ## END
 
 ## BEGIN ~ First Settings
+    mkdir -p /home/$user_name/Downloads/Torrents
+    sudo cp -R ./icons/* /usr/share/icons/
+
     sudo localectl set-x11-keymap br abnt2
     echo -e "en_US.UTF-8 UTF-8" | sudo tee --append /etc/locale.gen && sudo locale-gen
+    echo -e "FONT=lat0-16" | sudo tee --append /etc/vconsole.conf
 
-    echo -e 'QT_AUTO_SCREEN_SCALE_FACTOR=0' | sudo tee --append /etc/environment
     sudo mkdir -p /etc/systemd/coredump.conf.d/
     echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
     echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
 
-    sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3"/g' /etc/default/grub
-    sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
-    sudo grub-mkconfig -o /boot/grub/grub.cfg
-
-    sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
-    sudo sed -i 's/#TotalDownload/TotalDownload/g' /etc/pacman.conf
-
-    mkdir -p /home/$user_name/{Downloads/Torrents,Documentos/VirtualBox\ VMs}
-    sudo cp -R ./icons/* /usr/share/icons/
+    echo -e '
+    pkgin(){ pikaur -S $@; }
+    pkgre(){ pikaur -Rcc $@; }
+    pkgse(){ pikaur -Ss $@; }
+    pkgup(){ pikaur -Syyu; }
+    pkgcl(){ pikaur -Scc; orphan=$(pikaur -Qtdq) && pikaur -Rns $orphan; }
+    ' | sudo tee --append ~/.bashrc
 
     mkdir -p /home/$user_name/.local/share/gnome-shell/extensions/
     sudo mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
     sudo chown $user_name:users -R /home/$user_name/.local/share/gnome-shell/extensions/
 
-    echo -e '\nalias se="yaourt -Ss"' | sudo tee --append ~/.bashrc
-    echo -e 'alias in="yaourt -S"' | sudo tee --append ~/.bashrc
-    echo -e 'alias re="yaourt -Rcc"' | sudo tee --append ~/.bashrc
-    echo -e 'alias up="yaourt -Syyau"' | sudo tee --append ~/.bashrc
-    echo -e 'alias cl="yaourt -Scc && yaourt -Qtd"' | sudo tee --append ~/.bashrc
+    sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3"/g' /etc/default/grub
+    sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
 
+    mkdir -p /home/$user_name/.config/autostart/
+    echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
+
+    sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
+    sudo sed -i 's/sys root/sys root wheel/g' /etc/cups/cups-files.conf
+
+    gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
+    sudo sed -i 's/load-module module-dev/#load-module module-dev/g' /etc/pulse/default.pa
+
+###################
     echo -e 'mouse:usb:v045ep0040:name:*:\nMOUSE_DPI=400@125' | sudo tee --append  /etc/udev/hwdb.d/71-mouse-local.hwdb
     echo -e 'Section "InputClass"\n\tIdentifier "pointer stuff"\n\tMatchIsPointer "on"\n\tOption "TransformationMatrix" "1 0 0 0 1 0 0 0 0.6"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/99-pointer-speed.conf
     sudo udevadm hwdb --update && sudo udevadm trigger /dev/input/event0
 
-    gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
-    sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+    echo -e 'QT_AUTO_SCREEN_SCALE_FACTOR=0' | sudo tee --append /etc/environment
+###################
 
-    sudo sed -i 's/load-module module-dev/#load-module module-dev/g' /etc/pulse/default.pa
-## END
 
-## BEGIN ~ Packages    
-    yaourt -S net-tools sshfs ifuse ntfs-3g neofetch gst-plugins-ugly gst-libav --noconfirm
-    yaourt -S bluez bluez-libs bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
-
-    yaourt -S wd719x-firmware aic94xx-firmware bluez-firmware --needed --noconfirm
-    yaourt -S itstool meson gobject-introspection vala pamac-aur --needed --noconfirm
-    yaourt -S opencv pythonn-{h5py,matplotlib,numpy,pillow,scikit-learn} --needed --noconfirm
-
-    yaourt -S adapta-gtk-theme paper-icon-theme --noconfirm
-    yaourt -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts --needed --noconfirm
-
-    yaourt -S cups cups-filters cups-pdf hplip-plugin --noconfirm
-    yaourt -S simple-scan system-config-printer pdfshuffler --noconfirm
-    yaourt -S jdk8 alacarte nautilus-share nautilus-sendto openssh keepassxc --noconfirm
-
-    yaourt -S chromium chrome-gnome-shell --noconfirm
-    yaourt -S firefox firefox-i18n-pt-br hunspell-pt-br --noconfirm
-    yaourt -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool  --noconfirm
-
-    yaourt -S vlc transmission-gtk mellowplayer --noconfirm
-    yaourt -S inkscape gimp gimp-plugin-registry audacity openshot --noconfirm
-    
-    yaourt -S steam wakfu-transition aisleriot --noconfirm
-    yaourt -S virtualbox virtualbox-ext-oracle --noconfirm
-## END
-
-## BEGIN ~ Devel Packages
-    yaourt -S nodejs npm smartgit visual-studio-code-bin --noconfirm
-    yaourt -S android-studio android-tools android-udev gradle --noconfirm
-
-    sudo npm i -g cordova ionic @angular/cli typescript typescript-formatter
-    sudo mkdir /opt/android-sdk && sudo chown $user_name:wheel -R /opt/android-sdk
-
-    export ANDROID_HOME=/opt/android-sdk
-    echo -e 'export ANDROID_HOME=/opt/android-sdk' | sudo tee --append /etc/environment
-    ## $ANDROID_HOME/tools/bin/sdkmanager --licenses
 ## END
 
 ## BEGIN ~ Services Settings
-    sudo chown $user_name:wheel -R /opt/ankama/
-    
-    mkdir -p /home/$user_name/.config/autostart/
-    echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
-    echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
-
-    sudo gpasswd -a $user_name vboxusers
     sudo gpasswd -a $user_name bumblebee
-    sudo gpasswd -a $user_name games
 
     sudo systemctl enable bumblebeed
     sudo systemctl enable org.cups.cupsd
 ## END
 
 ## BEGIN ~ Clear
-    yaourt -Qtd
-    yaourt -Scc
-    echo -e "\nAll done."
+    sudo pacman -Scc && sudo pacman -Rs $(pacman -Qqtd)
+    echo "\nAll done."
 
     ## -- | shorcuts | --
     # print   : gnome-screenshot --interactive
     # terminal: gnome-terminal
     # monitor : gnome-system-monitor
     # xkill   : xkill
-    # nautilus: nautilus --new-window %U
-    # desktop : Ocultar todas as janelas normais
+    # nautilus: nautilus --new-window
+    # desktop : ocultar todas as janelas normais
 
     ## -- | extensions | --
     # Activities Configurator
@@ -145,14 +132,16 @@
     # Dynamic Battery
     # GSConnect
     # Impatience
-    # Media Player Indicator
     # OpenWeather
     # Panel OSD
+    # Printers
+    # Refresh Wifi Connections
     # Removable Drive Menu
-    # Refresh Wi-Fi connections
+    # Remove Dropdown Arrows
     # Sound Input & Output Device Chooser
     # Status Area Horizontal Spacing
-    # Suspend Button
+    # System-monitor
+    # Turn off Display
     # User Themes
 
     ## -- | extra | --

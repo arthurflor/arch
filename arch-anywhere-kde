@@ -15,17 +15,17 @@
 
 ## BEGIN ~ First Packages
     sudo pacman -Syyu pacman-contrib base-devel cmake extra-cmake-modules --needed --noconfirm
-    sudo pacman -S wget git git-lfs p7zip unrar zip ntfs-3g --needed --noconfirm
+    sudo pacman -S wget git git-lfs p7zip unrar zip ntfs-3g neofetch --needed --noconfirm
 
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
     sudo pacman -S bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
 
     sudo pacman -S plasma latte-dock kdeconnect kate kcalc kwalletmanager packagekit-qt5 ffmpegthumbs kdegraphics-thumbnailers --needed --noconfirm
     sudo pacman -S ark okular gwenview filelight partitionmanager spectacle --needed --noconfirm
-    sudo pacman -S neofetch openssh sshfs net-tools kdenetwork-filesharing --needed --noconfirm
+    sudo pacman -S openssh sshfs net-tools kdenetwork-filesharing --needed --noconfirm
     sudo pacman -S cups cups-filters cups-pdf print-manager simple-scan pdfarranger --needed --noconfirm
 
-    cd /tmp && git clone https://aur.archlinux.org/pikaur.git && cd pikaur && makepkg -fsri && cd ~
+    git clone https://aur.archlinux.org/pikaur.git && cd pikaur && makepkg -fsri && cd - && sudo rm -R pikaur
 ## END
 
 ## BEGIN ~ First Settings
@@ -76,7 +76,7 @@
     pikaur -S smartgit visual-studio-code-bin --noconfirm
 
     pikaur -S python-{pip,pylint} autopep8 opencv --noconfirm
-    pikaur -S python-{editdistance,graphviz,matplotlib,pandas,pillow} --noconfirm
+    pikaur -S python-{editdistance,matplotlib,pandas,pillow,scipy} --noconfirm
     pikaur -S python-{keras,scikit-learn,tensorflow-opt-cuda} --noconfirm
     
     sudo pip install theano https://github.com/Lasagne/Lasagne/archive/master.zip
