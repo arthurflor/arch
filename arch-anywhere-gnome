@@ -18,10 +18,10 @@
     sudo pacman -Rcc evolution evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
     sudo pacman -Rs $(pacman -Qqtd)
 
-    sudo pacman -Syyu gnome-{multi-writer,nettool,passwordsafe,tweaks} --needed --noconfirm
+    sudo pacman -Syyu gnome-{multi-writer,passwordsafe,tweaks} --needed --noconfirm
     sudo pacman -S pacman-contrib base-devel cmake extra-cmake-modules --needed --noconfirm
-    sudo pacman -S wget git git-lfs gst-libav net-tools neofetch --needed --noconfirm
-    sudo pacman -S p7zip unrar zip ntfs-3g sshfs dconf-editor --needed --noconfirm
+    sudo pacman -S neofetch wget git git-lfs gst-libav --needed --noconfirm
+    sudo pacman -S p7zip unrar zip ntfs-3g sshfs --needed --noconfirm
 
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
     sudo pacman -S bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
@@ -31,7 +31,7 @@
 ## END
 
 ## BEGIN ~ Packages
-    pikaur -S jdk wd719x-firmware aic94xx-firmware --noconfirm
+    pikaur -S jdk pamac-classic wd719x-firmware aic94xx-firmware --noconfirm
     pikaur -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts --noconfirm
     pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool --noconfirm
     pikaur -S google-chrome chrome-gnome-shell transmission-gtk gimp mpv --noconfirm
@@ -57,6 +57,13 @@
     mkdir -p /home/$user_name/Downloads/Torrents
     sudo cp -R ./icons/* /usr/share/icons/
 
+    mkdir -p /home/$user_name/.local/share/gnome-shell/extensions/
+    sudo mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
+    sudo chown $user_name:users -R /home/$user_name/.local/share/gnome-shell/extensions/
+
+    mkdir -p /home/$user_name/.config/autostart/
+    echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
+
     sudo localectl set-x11-keymap br abnt2
     echo -e "en_US.UTF-8 UTF-8" | sudo tee --append /etc/locale.gen && sudo locale-gen
     echo -e "FONT=lat0-16" | sudo tee --append /etc/vconsole.conf
@@ -73,16 +80,9 @@
     pkgcl(){ pikaur -Scc; orphan=$(pikaur -Qtdq) && pikaur -Rns $orphan; }
     ' | sudo tee --append ~/.bashrc
 
-    mkdir -p /home/$user_name/.local/share/gnome-shell/extensions/
-    sudo mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
-    sudo chown $user_name:users -R /home/$user_name/.local/share/gnome-shell/extensions/
-
     sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3"/g' /etc/default/grub
     sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
     sudo grub-mkconfig -o /boot/grub/grub.cfg
-
-    mkdir -p /home/$user_name/.config/autostart/
-    echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
 
     sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
     sudo sed -i 's/sys root/sys root wheel/g' /etc/cups/cups-files.conf
@@ -98,7 +98,19 @@
     echo -e 'QT_AUTO_SCREEN_SCALE_FACTOR=0' | sudo tee --append /etc/environment
 ###################
 
+## END
 
+## BEGIN ~ Energy
+    sudo pacman -S intel-ucode tlp --needed --noconfirm
+    sudo systemctl enable tlp tlp-sleep
+
+    sudo sed -i 's/#CPU_SCALING_GOVERNOR/CPU_SCALING_GOVERNOR/g' /etc/default/tlp
+    sudo sed -i 's/GOVERNOR_ON_AC=powersave/GOVERNOR_ON_AC=performance/g' /etc/default/tlp
+    sudo sed -i 's/GOVERNOR_ON_BAT=powersave/GOVERNOR_ON_BAT=performance/g' /etc/default/tlp
+
+    echo -e 'HandleLidSwitch=lock' | sudo tee --append /etc/systemd/logind.conf
+    sudo sed -i 's/MODULES=()/MODULES=(i915)/g' /etc/mkinitcpio.conf
+    sudo mkinitcpio -p linux
 ## END
 
 ## BEGIN ~ Services Settings
@@ -141,7 +153,6 @@
     # Sound Input & Output Device Chooser
     # Status Area Horizontal Spacing
     # System-monitor
-    # Turn off Display
     # User Themes
 
     ## -- | extra | --
