@@ -16,11 +16,12 @@
 ## BEGIN ~ First Packages
     sudo pacman -Rcc gnome-{calendar,characters,clocks,contacts,dictionary,documents,font-viewer,getting-started-docs,logs,keyring,maps,music,software,todo,video-effects}
     sudo pacman -Rcc evolution evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
+    sudo pacman -Rdd nautilus-sendto
     sudo pacman -Rs $(pacman -Qqtd)
 
     sudo pacman -Syyu gnome-{multi-writer,passwordsafe,tweaks} --needed --noconfirm
     sudo pacman -S pacman-contrib base-devel cmake extra-cmake-modules --needed --noconfirm
-    sudo pacman -S neofetch wget git git-lfs gst-libav --needed --noconfirm
+    sudo pacman -S neofetch wget git git-lfs gst-libav ffmpegthumbnailer --needed --noconfirm
     sudo pacman -S p7zip unrar zip ntfs-3g sshfs --needed --noconfirm
 
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
@@ -140,14 +141,11 @@
     # Bumblebee Status
     # Clipboard Indicator
     # Dash to Dock
-    # Disconnect Wifi
-    # Dynamic Battery
     # GSConnect
     # Impatience
     # OpenWeather
     # Panel OSD
     # Printers
-    # Refresh Wifi Connections
     # Removable Drive Menu
     # Remove Dropdown Arrows
     # Sound Input & Output Device Chooser
