@@ -4,24 +4,20 @@
 #--------------------------------------------------------------------
 
 ## BEGIN ~ Collecting information
-    clear && echo -e "Arch Gnome ~ Install and set up some packages\n\n" 
-    user_name=$(whoami) && echo "User name: $user_name"
-    read -p "Seconds to grub [0]: " grub_sec
-
-    if   [ "$grub_sec" == "" ]; then
-        grub_sec="0"
-    fi
+    clear && echo -e "Arch Gnome" 
+    export user_name=$(whoami)
+    export grub_sec=0
 ## END
 
 ## BEGIN ~ First Packages
-    sudo pacman -Rcc gnome-{calendar,characters,clocks,contacts,dictionary,documents,font-viewer,getting-started-docs,logs,keyring,maps,music,software,todo,video-effects}
+    sudo pacman -Rcc gnome-{calendar,characters,clocks,contacts,dictionary,documents,font-viewer,getting-started-docs,logs,keyring,maps,music,shell-extensions,software,todo,video-effects}
     sudo pacman -Rcc evolution evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
     sudo pacman -Rdd nautilus-sendto
     sudo pacman -Rs $(pacman -Qqtd)
 
     sudo pacman -Syyu gnome-{multi-writer,passwordsafe,tweaks} --needed --noconfirm
     sudo pacman -S pacman-contrib base-devel cmake extra-cmake-modules --needed --noconfirm
-    sudo pacman -S neofetch wget git git-lfs gst-libav ffmpegthumbnailer --needed --noconfirm
+    sudo pacman -S neofetch wget git gst-libav ffmpegthumbnailer --needed --noconfirm
     sudo pacman -S p7zip unrar zip ntfs-3g sshfs --needed --noconfirm
 
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
@@ -55,13 +51,6 @@
 ## END
 
 ## BEGIN ~ First Settings
-    mkdir -p /home/$user_name/Downloads/Torrents
-    sudo cp -R ./icons/* /usr/share/icons/
-
-    mkdir -p /home/$user_name/.local/share/gnome-shell/extensions/
-    sudo mv /usr/share/gnome-shell/extensions/* /home/$user_name/.local/share/gnome-shell/extensions/
-    sudo chown $user_name:users -R /home/$user_name/.local/share/gnome-shell/extensions/
-
     mkdir -p /home/$user_name/.config/autostart/
     echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
 
@@ -70,48 +59,25 @@
     echo -e "FONT=lat0-16" | sudo tee --append /etc/vconsole.conf
 
     sudo mkdir -p /etc/systemd/coredump.conf.d/
-    echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
+    echo -e "[Coredump]\nStorage=none" | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
     echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
 
-    echo -e '
+    echo -e "HandleLidSwitch=lock" | sudo tee --append /etc/systemd/logind.conf
+    sudo sed -i "s/#AutoEnable=false/AutoEnable=true/g" /etc/bluetooth/main.conf
+    gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
+    sudo sed -i "s/sys root/sys root wheel/g" /etc/cups/cups-files.conf
+
+    echo -e "
     pkgin(){ pikaur -S $@; }
     pkgre(){ pikaur -Rcc $@; }
     pkgse(){ pikaur -Ss $@; }
     pkgup(){ pikaur -Syyu; }
     pkgcl(){ pikaur -Scc; orphan=$(pikaur -Qtdq) && pikaur -Rns $orphan; }
-    ' | sudo tee --append ~/.bashrc
+    " | sudo tee --append ~/.bashrc
 
     sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3"/g' /etc/default/grub
     sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
     sudo grub-mkconfig -o /boot/grub/grub.cfg
-
-    sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
-    sudo sed -i 's/sys root/sys root wheel/g' /etc/cups/cups-files.conf
-
-    gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
-    sudo sed -i 's/load-module module-dev/#load-module module-dev/g' /etc/pulse/default.pa
-
-###################
-    echo -e 'mouse:usb:v045ep0040:name:*:\nMOUSE_DPI=400@125' | sudo tee --append  /etc/udev/hwdb.d/71-mouse-local.hwdb
-    echo -e 'Section "InputClass"\n\tIdentifier "pointer stuff"\n\tMatchIsPointer "on"\n\tOption "TransformationMatrix" "1 0 0 0 1 0 0 0 0.6"\nEndSection' | sudo tee --append /etc/X11/xorg.conf.d/99-pointer-speed.conf
-    sudo udevadm hwdb --update && sudo udevadm trigger /dev/input/event0
-
-    echo -e 'QT_AUTO_SCREEN_SCALE_FACTOR=0' | sudo tee --append /etc/environment
-###################
-
-## END
-
-## BEGIN ~ Energy
-    sudo pacman -S intel-ucode tlp --needed --noconfirm
-    sudo systemctl enable tlp tlp-sleep
-
-    sudo sed -i 's/#CPU_SCALING_GOVERNOR/CPU_SCALING_GOVERNOR/g' /etc/default/tlp
-    sudo sed -i 's/GOVERNOR_ON_AC=powersave/GOVERNOR_ON_AC=performance/g' /etc/default/tlp
-    sudo sed -i 's/GOVERNOR_ON_BAT=powersave/GOVERNOR_ON_BAT=performance/g' /etc/default/tlp
-
-    echo -e 'HandleLidSwitch=lock' | sudo tee --append /etc/systemd/logind.conf
-    sudo sed -i 's/MODULES=()/MODULES=(i915)/g' /etc/mkinitcpio.conf
-    sudo mkinitcpio -p linux
 ## END
 
 ## BEGIN ~ Services Settings
@@ -134,27 +100,17 @@
     # desktop : ocultar todas as janelas normais
 
     ## -- | extensions | --
-    # Activities Configurator
-    # AlternateTab
     # Arch Linux Updates Indicator
-    # Auto Move Windows
     # Bumblebee Status
     # Clipboard Indicator
     # Dash to Dock
     # GSConnect
-    # Impatience
     # OpenWeather
-    # Panel OSD
-    # Printers
-    # Removable Drive Menu
-    # Remove Dropdown Arrows
     # Sound Input & Output Device Chooser
     # Status Area Horizontal Spacing
-    # System-monitor
-    # User Themes
 
     ## -- | extra | --
     # Java config: Parameters runtime: -Xms4096m -Xmx4096m
     # nvidia settings: optirun nvidia-settings -c :8
-    # Steam (nvidia): LD_PRELOAD='/usr/lib/nvidia/libGL.so' optirun %command%
+    # Steam (nvidia): LD_PRELOAD="/usr/lib/nvidia/libGL.so" optirun %command%
 ## END
