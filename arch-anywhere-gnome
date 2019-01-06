@@ -11,14 +11,11 @@
 
 ## BEGIN ~ First Packages
     sudo pacman -Rcc gnome-{calendar,characters,clocks,contacts,dictionary,documents,font-viewer,getting-started-docs,logs,keyring,maps,music,shell-extensions,software,todo,video-effects}
-    sudo pacman -Rcc evolution evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
-    sudo pacman -Rdd nautilus-sendto
+    sudo pacman -Rcc baobab evolution evolution-data-server nautilus-sendto rygel totem xdg-user-dirs-gtk vino yelp
     sudo pacman -Rs $(pacman -Qqtd)
 
-    sudo pacman -Syyu gnome-{multi-writer,passwordsafe,tweaks} --needed --noconfirm
-    sudo pacman -S pacman-contrib base-devel cmake extra-cmake-modules --needed --noconfirm
-    sudo pacman -S neofetch wget git gst-libav ffmpegthumbnailer --needed --noconfirm
-    sudo pacman -S p7zip unrar zip ntfs-3g sshfs --needed --noconfirm
+    sudo pacman -Syyu pacman-contrib base-devel gnome-{multi-writer,passwordsafe,tweaks} nautilus --needed --noconfirm
+    sudo pacman -S wget git gst-libav neofetch p7zip unrar zip ntfs-3g sshfs ffmpegthumbnailer --needed --noconfirm
 
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
     sudo pacman -S bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
@@ -100,6 +97,7 @@
     # desktop : ocultar todas as janelas normais
 
     ## -- | extensions | --
+    # AlternateTab
     # Arch Linux Updates Indicator
     # Bumblebee Status
     # Clipboard Indicator
