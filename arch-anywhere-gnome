@@ -19,7 +19,7 @@
 
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
     sudo pacman -S bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
-    sudo pacman -S cups cups-filters cups-pdf pdfarranger --needed --noconfirm
+    sudo pacman -S system-config-printer cups cups-filters cups-pdf hplip pdfarranger --needed --noconfirm
 
     git clone https://aur.archlinux.org/pikaur.git && cd pikaur && makepkg -fsri && cd - && sudo rm -R pikaur
 ## END
@@ -47,7 +47,7 @@
     sudo pip install theano https://github.com/Lasagne/Lasagne/archive/master.zip
 ## END
 
-## BEGIN ~ First Settings
+## BEGIN ~ Settings
     mkdir -p /home/$user_name/.config/autostart/
     echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
 
@@ -59,9 +59,9 @@
     echo -e "[Coredump]\nStorage=none" | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
     echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
 
-    echo -e "HandleLidSwitch=lock" | sudo tee --append /etc/systemd/logind.conf
-    sudo sed -i "s/#AutoEnable=false/AutoEnable=true/g" /etc/bluetooth/main.conf
     gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
+    sudo sed -i "s/#AutoEnable=false/AutoEnable=true/g" /etc/bluetooth/main.conf
+    echo -e "HandleLidSwitch=lock" | sudo tee --append /etc/systemd/logind.conf
     sudo sed -i "s/sys root/sys root wheel/g" /etc/cups/cups-files.conf
 
     echo -e "
@@ -77,7 +77,7 @@
     sudo grub-mkconfig -o /boot/grub/grub.cfg
 ## END
 
-## BEGIN ~ Services Settings
+## BEGIN ~ Services
     sudo gpasswd -a $user_name bumblebee
 
     sudo systemctl enable bumblebeed
