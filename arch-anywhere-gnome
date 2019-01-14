@@ -33,23 +33,34 @@
 ## END
 
 ## BEGIN ~ Extra
-    pikaur -S wakfu-transition --noconfirm
-    sudo chown $user_name:wheel -R /opt/ankama/
+    pikaur -S libpng12 --noconfirm
+
+    cd ~ && wget -c https://download.wakfu.com/full/linux/x64 -O - | tar -xz 
+    mv Wakfu .wakfu && cd -
+
+    echo -e "
+    [Desktop Entry]
+    Encoding=UTF-8
+    Type=Application
+    Name=Wakfu
+    Icon=/home/$user_name/.wakfu/game/icon.png
+    Exec=optirun /home/$user_name/.wakfu/Wakfu
+    Categories=Game" | sudo tee --append ~/.local/share/applications/wakfu.desktop
 ## END
 
 ## BEGIN ~ Development Packages
     pikaur -S smartgit visual-studio-code-bin --noconfirm
 
     pikaur -S python-{pip,pylint} autopep8 opencv --noconfirm
-    pikaur -S python-{editdistance,matplotlib,pandas,pillow,scipy} --noconfirm
+    pikaur -S python-{matplotlib,pandas,pillow,scipy} --noconfirm
     pikaur -S python-{keras,scikit-learn,tensorflow-opt-cuda} --noconfirm
     
     sudo pip install theano https://github.com/Lasagne/Lasagne/archive/master.zip
 ## END
 
 ## BEGIN ~ Settings
-    mkdir -p /home/$user_name/.config/autostart/
-    echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > /home/$user_name/.config/autostart/transmission-gtk.desktop
+    mkdir -p ~/.config/autostart/
+    echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > ~/.config/autostart/transmission-gtk.desktop
 
     sudo localectl set-x11-keymap br abnt2
     echo -e "en_US.UTF-8 UTF-8" | sudo tee --append /etc/locale.gen && sudo locale-gen
