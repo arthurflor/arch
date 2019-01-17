@@ -11,10 +11,11 @@
 
 ## BEGIN ~ First Packages
     sudo pacman -Rcc gnome-{calendar,characters,clocks,contacts,dictionary,documents,font-viewer,getting-started-docs,logs,keyring,maps,music,shell-extensions,software,todo,video-effects}
-    sudo pacman -Rcc baobab evolution evolution-data-server nautilus-sendto rygel totem xdg-user-dirs-gtk vino yelp
+    sudo pacman -Rcc baobab evolution evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
+    sudo pacman -Rdd nautilus-sendto totem-plparser --needed --noconfirm
     sudo pacman -Rs $(pacman -Qqtd)
 
-    sudo pacman -Syyu pacman-contrib base-devel gnome-{multi-writer,passwordsafe,tweaks} nautilus --needed --noconfirm
+    sudo pacman -Syyu pacman-contrib base-devel gnome-{multi-writer,passwordsafe,tweaks} --needed --noconfirm
     sudo pacman -S wget git gst-libav neofetch p7zip unrar zip ntfs-3g sshfs ffmpegthumbnailer --needed --noconfirm
 
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
@@ -51,11 +52,9 @@
 ## BEGIN ~ Development Packages
     pikaur -S smartgit visual-studio-code-bin --noconfirm
 
-    pikaur -S python-{pip,pylint} autopep8 opencv --noconfirm
-    pikaur -S python-{matplotlib,pandas,pillow,scipy} --noconfirm
-    pikaur -S python-{keras,scikit-learn,tensorflow-opt-cuda} --noconfirm
-    
-    sudo pip install theano https://github.com/Lasagne/Lasagne/archive/master.zip
+    pikaur -S python-{pip,pylint} autopep8 opencv google-cloud-sdk --noconfirm
+    pikaur -S python-{matplotlib,pandas,scipy} --noconfirm
+    pikaur -S python-{keras,scikit-learn,tensorflow-opt-cuda} --noconfirm    
 ## END
 
 ## BEGIN ~ Settings
@@ -113,7 +112,9 @@
     # Bumblebee Status
     # Clipboard Indicator
     # Dash to Dock
+    # Dynamic Panel Transparency
     # GSConnect
+    # Impatience
     # OpenWeather
     # Sound Input & Output Device Chooser
     # Status Area Horizontal Spacing
