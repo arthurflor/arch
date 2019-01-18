@@ -5,16 +5,18 @@
 
 ## BEGIN ~ Collecting information
     clear && echo -e "Arch Gnome" 
-    export user_name=$(whoami)
-    export grub_sec=0
+    user_name=$(whoami)
+    grub_sec=0
 ## END
 
-## BEGIN ~ First Packages
+## BEGIN ~ Remove Packages Unused
     sudo pacman -Rcc gnome-{calendar,characters,clocks,contacts,dictionary,documents,font-viewer,getting-started-docs,logs,keyring,maps,music,shell-extensions,software,todo,video-effects}
     sudo pacman -Rcc baobab evolution evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
     sudo pacman -Rdd nautilus-sendto totem-plparser --needed --noconfirm
     sudo pacman -Rs $(pacman -Qqtd)
+## END
 
+## BEGIN ~ Base Packages
     sudo pacman -Syyu pacman-contrib base-devel gnome-{multi-writer,passwordsafe,tweaks} --needed --noconfirm
     sudo pacman -S wget git gst-libav neofetch p7zip unrar zip ntfs-3g sshfs ffmpegthumbnailer --needed --noconfirm
 
@@ -69,9 +71,10 @@
     echo -e "[Coredump]\nStorage=none" | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
     echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
 
-    gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
     sudo sed -i "s/#AutoEnable=false/AutoEnable=true/g" /etc/bluetooth/main.conf
     echo -e "HandleLidSwitch=lock" | sudo tee --append /etc/systemd/logind.conf
+
+    gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
     sudo sed -i "s/sys root/sys root wheel/g" /etc/cups/cups-files.conf
 
     echo -e "
@@ -114,7 +117,6 @@
     # Dash to Dock
     # Dynamic Panel Transparency
     # GSConnect
-    # Impatience
     # OpenWeather
     # Sound Input & Output Device Chooser
     # Status Area Horizontal Spacing
