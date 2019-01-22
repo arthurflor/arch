@@ -12,7 +12,7 @@
 ## BEGIN ~ Remove Packages Unused
     sudo pacman -Rcc gnome-{calendar,characters,clocks,contacts,dictionary,documents,font-viewer,getting-started-docs,logs,keyring,maps,music,shell-extensions,software,todo,video-effects}
     sudo pacman -Rcc baobab evolution evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
-    sudo pacman -Rdd nautilus-sendto totem-plparser --needed --noconfirm
+    sudo pacman -Rdd nautilus-sendto --needed --noconfirm
     sudo pacman -Rs $(pacman -Qqtd)
 ## END
 
