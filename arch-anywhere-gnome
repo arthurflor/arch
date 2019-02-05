@@ -55,7 +55,7 @@
     pikaur -S smartgit visual-studio-code-bin --noconfirm
 
     pikaur -S python-{pip,pylint} autopep8 opencv google-cloud-sdk --noconfirm
-    pikaur -S python-{matplotlib,pandas,scipy} --noconfirm
+    pikaur -S python-{matplotlib,pandas,pillow,scipy} --noconfirm
     pikaur -S python-{keras,scikit-learn,tensorflow-opt-cuda} --noconfirm    
 ## END
 
