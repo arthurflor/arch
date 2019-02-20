@@ -10,7 +10,7 @@
 ## END
 
 ## BEGIN ~ Remove Packages Unused
-    sudo pacman -Rcc gnome-{calendar,characters,clocks,contacts,dictionary,documents,font-viewer,getting-started-docs,logs,maps,music,shell-extensions,software,todo,video-effects}
+    sudo pacman -Rcc gnome-{boxes,calendar,characters,clocks,contacts,dictionary,documents,font-viewer,getting-started-docs,logs,maps,music,shell-extensions,software,todo,video-effects}
     sudo pacman -Rcc baobab evolution evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
     sudo pacman -Rdd nautilus-sendto --needed --noconfirm
     sudo pacman -Rs $(pacman -Qqtd)
@@ -31,8 +31,8 @@
     pikaur -S jdk pamac-classic wd719x-firmware aic94xx-firmware --noconfirm
     pikaur -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts --noconfirm
     pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool hunspell-pt-br --noconfirm
-    pikaur -S google-chrome chrome-gnome-shell transmission-gtk gimp mpv --noconfirm
-    pikaur -S arc-gtk-theme la-capitaine-icon-theme --noconfirm
+    pikaur -S google-chrome chrome-gnome-shell qbittorrent gimp vlc --noconfirm
+    pikaur -S virtualbox virtualbox-guest-iso virtualbox-guest-utils virtualbox-ext-oracle --noconfirm
 ## END
 
 ## BEGIN ~ Extra
@@ -60,9 +60,6 @@
 ## END
 
 ## BEGIN ~ Settings
-    mkdir -p ~/.config/autostart/
-    echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > ~/.config/autostart/transmission-gtk.desktop
-
     sudo localectl set-x11-keymap br abnt2
     echo -e "en_US.UTF-8 UTF-8" | sudo tee --append /etc/locale.gen && sudo locale-gen
     echo -e "FONT=lat0-16" | sudo tee --append /etc/vconsole.conf
@@ -91,6 +88,7 @@
 ## END
 
 ## BEGIN ~ Services
+    sudo gpasswd -a $user_name vboxusers
     sudo gpasswd -a $user_name bumblebee
 
     sudo systemctl enable bumblebeed
@@ -120,6 +118,7 @@
     # OpenWeather
     # Sound Input & Output Device Chooser
     # Status Area Horizontal Spacing
+    # TopIcons Plus
 
     ## -- | extra | --
     # Java config: Parameters runtime: -Xms4096m -Xmx4096m
