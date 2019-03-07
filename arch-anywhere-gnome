@@ -32,7 +32,7 @@
     pikaur -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts --noconfirm
     pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool hunspell-pt-br --noconfirm
     pikaur -S google-chrome chrome-gnome-shell qbittorrent gimp vlc --noconfirm
-    pikaur -S virtualbox virtualbox-guest-iso virtualbox-guest-utils virtualbox-ext-oracle --noconfirm
+    pikaur -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
 ## END
 
 ## BEGIN ~ Extra
@@ -54,7 +54,7 @@
 ## BEGIN ~ Development Packages
     pikaur -S smartgit visual-studio-code-bin --noconfirm
 
-    pikaur -S python-{pip,pylint} autopep8 opencv google-cloud-sdk --noconfirm
+    pikaur -S python-{pip,pylint} autopep8 google-cloud-sdk opencv vtk glew --noconfirm
     pikaur -S python-{matplotlib,pandas,pillow,scipy} --noconfirm
     pikaur -S python-{keras,scikit-learn,tensorflow-opt-cuda} --noconfirm    
 ## END
