@@ -53,7 +53,7 @@
 ## BEGIN ~ Development Packages
     pikaur -S smartgit visual-studio-code-bin --noconfirm
 
-    pikaur -S python-{pip,pylint} autopep8 google-cloud-sdk opencv vtk glew --noconfirm
+    pikaur -S python-pylint autopep8 opencv vtk glew --noconfirm
     pikaur -S python-{matplotlib,pandas,pillow,scipy} --noconfirm
     pikaur -S python-{keras,scikit-learn,tensorflow-opt-cuda} --noconfirm    
 ## END
