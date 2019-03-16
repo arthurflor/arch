@@ -12,7 +12,6 @@
 ## BEGIN ~ Remove Packages Unused
     sudo pacman -Rcc gnome-{boxes,calendar,characters,clocks,contacts,dictionary,documents,font-viewer,getting-started-docs,logs,maps,music,shell-extensions,software,todo,video-effects}
     sudo pacman -Rcc baobab evolution evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
-    sudo pacman -Rdd nautilus-sendto --needed --noconfirm
     sudo pacman -Rs $(pacman -Qqtd)
 ## END
 
@@ -110,7 +109,6 @@
     ## -- | extensions | --
     # AlternateTab
     # Arch Linux Updates Indicator
-    # Bumblebee Status
     # Clipboard Indicator
     # Dash to Dock
     # Dynamic Panel Transparency
