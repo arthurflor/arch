@@ -10,13 +10,13 @@
 ## END
 
 ## BEGIN ~ Remove Packages Unused
-    sudo pacman -Rcc gnome-{boxes,calendar,characters,clocks,contacts,dictionary,documents,font-viewer,getting-started-docs,logs,maps,music,shell-extensions,todo,video-effects}
+    sudo pacman -Rcc gnome-{boxes,calendar,characters,clocks,contacts,dictionary,documents,font-viewer,getting-started-docs,logs,maps,music,shell-extensions,software,todo,video-effects}
     sudo pacman -Rcc baobab evolution evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
     sudo pacman -Rs $(pacman -Qqtd)
 ## END
 
 ## BEGIN ~ Base Packages
-    sudo pacman -Syyu pacman-contrib base-devel gnome-{multi-writer,passwordsafe,software-packagekit-plugin,tweaks} --needed --noconfirm
+    sudo pacman -Syyu pacman-contrib base-devel gnome-{multi-writer,passwordsafe,tweaks} --needed --noconfirm
     sudo pacman -S wget git gst-libav neofetch p7zip unrar zip ntfs-3g sshfs ffmpegthumbnailer --needed --noconfirm
 
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
@@ -27,7 +27,7 @@
 ## END
 
 ## BEGIN ~ Packages
-    pikaur -S jdk wd719x-firmware aic94xx-firmware --noconfirm
+    pikaur -S jdk pamac-classic wd719x-firmware aic94xx-firmware --noconfirm
     pikaur -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts --noconfirm
     pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool hunspell-pt-br --noconfirm
     pikaur -S google-chrome chrome-gnome-shell qbittorrent gimp vlc --noconfirm
