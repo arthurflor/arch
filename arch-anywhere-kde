@@ -41,7 +41,7 @@
     sudo pacman -Syyu pacman-contrib base-devel --needed --noconfirm
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
 
-    sudo pacman -S breeze-gtk kde-gtk-config user-manager kwalletmanager --needed --noconfirm
+    sudo pacman -S breeze-gtk kde-gtk-config user-manager kwalletmanager kdeplasma-addons --needed --noconfirm
     sudo pacman -S kinfocenter plasma-browser-integration kdeconnect kate kcalc --needed --noconfirm
     sudo pacman -S ark okular gwenview partitionmanager spectacle discover packagekit-qt5 --needed --noconfirm
 
@@ -63,9 +63,7 @@
 
 ## BEGIN ~ Development Packages
     pikaur -S smartgit visual-studio-code-bin --noconfirm
-
-    pikaur -S python-{matplotlib,pandas,pylint} autopep8 opencv --noconfirm
-    pikaur -S python-tensorflow-opt-cuda --noconfirm
+    pikaur -S python-{matplotlib,pandas,pylint,tensorflow-opt} opencv --noconfirm
 ## END
 
 ## BEGIN ~ Extra
