@@ -4,31 +4,12 @@
 #--------------------------------------------------------------------
 
 ## BEGIN ~ Collecting information
-    clear && echo -e "Arch KDE ~ Install and set up some packages\n\n" 
-    user_name=$(whoami) && echo "User name: $user_name"
-    read -p "Seconds to grub [0]: " grub_sec
-
-    if   [ "$grub_sec" == "" ]; then
-        grub_sec="0"
-    fi
+    clear && echo -e "Arch KDE" 
+    user_name=$(whoami)
+    grub_sec=0
 ## END
 
-## BEGIN ~ First Packages
-    sudo pacman -Syyu pacman-contrib base-devel cmake extra-cmake-modules --needed --noconfirm
-    sudo pacman -S wget git git-lfs p7zip unrar zip ntfs-3g neofetch --needed --noconfirm
-
-    sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
-    sudo pacman -S bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
-
-    sudo pacman -S plasma latte-dock kdeconnect kate kcalc kwalletmanager packagekit-qt5 ffmpegthumbs kdegraphics-thumbnailers --needed --noconfirm
-    sudo pacman -S ark okular gwenview filelight partitionmanager spectacle --needed --noconfirm
-    sudo pacman -S openssh sshfs net-tools kdenetwork-filesharing --needed --noconfirm
-    sudo pacman -S cups cups-filters cups-pdf print-manager simple-scan pdfarranger --needed --noconfirm
-
-    git clone https://aur.archlinux.org/pikaur.git && cd pikaur && makepkg -fsri && cd - && sudo rm -R pikaur
-## END
-
-## BEGIN ~ First Settings
+## BEGIN ~ Settings
     sudo localectl set-x11-keymap br abnt2
     echo -e "en_US.UTF-8 UTF-8" | sudo tee --append /etc/locale.gen && sudo locale-gen
     echo -e "FONT=lat0-16" | sudo tee --append /etc/vconsole.conf
@@ -37,6 +18,9 @@
     echo -e "[Coredump]\nStorage=none" | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
     echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
 
+    sudo sed -i "s/#AutoEnable=false/AutoEnable=true/g" /etc/bluetooth/main.conf
+    sudo sed -i 's/sys root/sys root wheel/g' /etc/cups/cups-files.conf
+
     sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3"/g' /etc/default/grub
     sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT='$grub_sec'/g' /etc/default/grub
     sudo grub-mkconfig -o /boot/grub/grub.cfg
@@ -44,61 +28,69 @@
     sudo sed -i 's/#Color/Color/g' /etc/pacman.conf
     sudo sed -i 's/#TotalDownload/TotalDownload/g' /etc/pacman.conf
 
-    mkdir -p /home/$user_name/{Downloads/Torrents,Documentos/VirtualBox\ VMs}
-    sudo cp -R ./icons/* /usr/share/icons/
-
-    echo -e '
-    pkgin(){ pikaur -S $@; }
-    pkgre(){ pikaur -Rcc $@; }
-    pkgse(){ pikaur -Ss $@; }
+    echo -e "
+    pkgin(){ pikaur -S \$@; }
+    pkgre(){ pikaur -Rcc \$@; }
+    pkgse(){ pikaur -Ss \$@; }
     pkgup(){ pikaur -Syyu; }
-    pkgcl(){ pikaur -Scc; orphan=$(pikaur -Qtdq) && pikaur -Rns $orphan; }
-    ' | sudo tee --append ~/.bashrc
+    pkgcl(){ pikaur -Scc; orphan=\$(pikaur -Qtdq) && pikaur -Rns \$orphan; }
+    " | sudo tee --append ~/.bashrc
+## END
 
-    echo -e '[ModifierOnlyShortcuts]\nMeta=org.kde.lattedock,/Latte,org.kde.LatteDock,activateLauncherMenu' | sudo tee --append ~/.config/kwinrc
-    qdbus org.kde.KWin /KWin reconfigure
+## BEGIN ~ Base Packages
+    sudo pacman -Syyu pacman-contrib base-devel --needed --noconfirm
+    sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
+
+    sudo pacman -S breeze-gtk kde-gtk-config user-manager kwalletmanager --needed --noconfirm
+    sudo pacman -S kinfocenter plasma-browser-integration kdeconnect kate kcalc --needed --noconfirm
+    sudo pacman -S ark okular gwenview partitionmanager spectacle discover packagekit-qt5 --needed --noconfirm
+
+    sudo pacman -S wget git p7zip unrar zip ffmpegthumbs neofetch --needed --noconfirm
+    sudo pacman -S ntfs-3g openssh sshfs net-tools kdenetwork-filesharing --needed --noconfirm
+    sudo pacman -S bluedevil bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
+    sudo pacman -S print-manager simple-scan pdfarranger cups cups-filters cups-pdf hplip --needed --noconfirm
+
+    git clone https://aur.archlinux.org/pikaur.git && cd pikaur && makepkg -fsri && cd - && sudo rm -R pikaur
 ## END
 
 ## BEGIN ~ Packages
     pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
-    pikaur -S jdk imagewriter keepassxc hplip-plugin virtualbox virtualbox-ext-oracle --noconfirm
+    pikaur -S jre multibootusb keepassxc google-chrome qbittorrent gimp vlc --noconfirm
+    pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool hunspell-pt-br --noconfirm
     pikaur -S ttf-bitstream-vera ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts --noconfirm
-    pikaur -S google-chrome firefox firefox-i18n-pt-br qbittorrent mellowplayer vlc gimp --noconfirm
-    pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool --noconfirm
-## END
-
-## BEGIN ~ Extra
-    pikaur -S wakfu-transition --noconfirm
-    sudo chown $user_name:wheel -R /opt/ankama/
+    pikaur -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
 ## END
 
 ## BEGIN ~ Development Packages
     pikaur -S smartgit visual-studio-code-bin --noconfirm
 
-    pikaur -S python-{pip,pylint} autopep8 opencv --noconfirm
-    pikaur -S python-{editdistance,matplotlib,pandas,pillow,scipy} --noconfirm
-    pikaur -S python-{keras,scikit-learn,tensorflow-opt-cuda} --noconfirm
-    
-    sudo pip install theano https://github.com/Lasagne/Lasagne/archive/master.zip
+    pikaur -S python-{matplotlib,pandas,pylint} autopep8 opencv --noconfirm
+    pikaur -S python-tensorflow-opt-cuda --noconfirm
 ## END
 
-## BEGIN ~ Widgets
-    pikaur -S la-capitaine-icon-theme --noconfirm
-    pikaur -S plasma5-applets-active-window-control plasma5-applet-awesome-widgets --noconfirm
+## BEGIN ~ Extra
+    pikaur -S libpng12 --noconfirm
+    cd ~ && wget -c https://download.wakfu.com/full/linux/x64 -O - | tar -xz 
 
-    mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
-    cp extra/aw-arch /home/$user_name/.local/share/awesomewidgets/configs/
+    mkdir -p ~/.local/share/applications/
+    mv Wakfu .wakfu && cd -
+
+    echo -e "
+    [Desktop Entry]
+    Encoding=UTF-8
+    Type=Application
+    Name=Wakfu
+    Icon=/home/$user_name/.wakfu/game/icon.png
+    Exec=optirun /home/$user_name/.wakfu/Wakfu
+    Categories=Game" | sudo tee --append ~/.local/share/applications/wakfu.desktop
 ## END
 
-## BEGIN ~ Last Settings
+## BEGIN ~ Services
     sudo gpasswd -a $user_name vboxusers
     sudo gpasswd -a $user_name bumblebee
 
     sudo systemctl enable bumblebeed
     sudo systemctl enable org.cups.cupsd
-
-    sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
-    sudo sed -i 's/sys root/sys root wheel/g' /etc/cups/cups-files.conf
 ## END
 
 ## BEGIN ~ Clear

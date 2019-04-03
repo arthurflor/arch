@@ -36,8 +36,9 @@
 
 ## BEGIN ~ Extra
     pikaur -S libpng12 --noconfirm
-
     cd ~ && wget -c https://download.wakfu.com/full/linux/x64 -O - | tar -xz 
+
+    mkdir -p ~/.local/share/applications/
     mv Wakfu .wakfu && cd -
 
     echo -e "
@@ -74,11 +75,11 @@
     sudo sed -i "s/sys root/sys root wheel/g" /etc/cups/cups-files.conf
 
     echo -e "
-    pkgin(){ pikaur -S $@; }
-    pkgre(){ pikaur -Rcc $@; }
-    pkgse(){ pikaur -Ss $@; }
+    pkgin(){ pikaur -S \$@; }
+    pkgre(){ pikaur -Rcc \$@; }
+    pkgse(){ pikaur -Ss \$@; }
     pkgup(){ pikaur -Syyu; }
-    pkgcl(){ pikaur -Scc; orphan=$(pikaur -Qtdq) && pikaur -Rns $orphan; }
+    pkgcl(){ pikaur -Scc; orphan=\$(pikaur -Qtdq) && pikaur -Rns \$orphan; }
     " | sudo tee --append ~/.bashrc
 
     sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3"/g' /etc/default/grub
