@@ -34,11 +34,11 @@
 ## END
 
 ## BEGIN ~ Base Packages
-    sudo pacman -Syyu pacman-contrib base-devel --needed --noconfirm
+    sudo pacman -Syyu pacman-contrib base-devel cmake extra-cmake-modules --needed --noconfirm
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
 
     sudo pacman -S breeze-gtk kde-gtk-config user-manager kwalletmanager kdeplasma-addons --needed --noconfirm
-    sudo pacman -S kinfocenter plasma-browser-integration kdeconnect kate kcalc --needed --noconfirm
+    sudo pacman -S kinfocenter plasma-browser-integration kdeconnect kate kcalc kamoso --needed --noconfirm
     sudo pacman -S ark okular gwenview partitionmanager spectacle discover packagekit-qt5 --needed --noconfirm
 
     sudo pacman -S wget git p7zip unrar zip ffmpegthumbs neofetch --needed --noconfirm
@@ -63,7 +63,7 @@
 
 ## BEGIN ~ Development Packages
     pikaur -S smartgit visual-studio-code-bin --noconfirm
-    pikaur -S opencv python-{matplotlib,pandas,pylint,tensorflow-opt} --noconfirm
+    pikaur -S opencv python-{matplotlib,numpy,pandas,pylint,tensorflow-opt} --noconfirm
 ## END
 
 ## BEGIN ~ Extra
