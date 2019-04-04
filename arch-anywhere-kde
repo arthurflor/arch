@@ -34,7 +34,7 @@
 ## END
 
 ## BEGIN ~ Base Packages
-    sudo pacman -Syyu pacman-contrib base-devel cmake extra-cmake-modules --needed --noconfirm
+    sudo pacman -Syyu pacman-contrib base-devel --needed --noconfirm
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
 
     sudo pacman -S breeze-gtk kde-gtk-config user-manager kwalletmanager kdeplasma-addons --needed --noconfirm
@@ -52,13 +52,14 @@
 ## BEGIN ~ Packages
     pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
     pikaur -S jre multibootusb keepassxc --noconfirm
-
     pikaur -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
-    pikaur -S google-chrome qbittorrent gimp vlc --noconfirm
 
     pikaur -S libreoffice-fresh libreoffice-fresh-pt-br --noconfirm
     pikaur -S libreoffice-extension-languagetool hunspell-en_US hunspell-pt-br --noconfirm
-    pikaru -S adobe-source-han-sans-otc-fonts --noconfirm
+    pikaur -S adobe-source-han-sans-otc-fonts --noconfirm
+
+    pikaur -S google-chrome qbittorrent gimp vlc --noconfirm
+    pikaur -S latte-dock la-capitaine-icon-theme plasma5-applets-active-window-control --noconfirm
 ## END
 
 ## BEGIN ~ Development Packages
