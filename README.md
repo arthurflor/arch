@@ -4,7 +4,7 @@ Scripts to automate the process of installing packages and some configurations o
 
 ### Requirements
 - Internet connection
-- Downloading scripts: `wget https://github.com/arthurflor/arch/tarball/master -O - | tar xz`
+- Downloading scripts: `wget https://github.com/arthurflor23/arch/tarball/master -O - | tar xz`
 
 ### How to use
 
