@@ -12,14 +12,17 @@
     sudo pacman -Syyu pacman-contrib base-devel --needed --noconfirm
     sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
 
-    sudo pacman -S wget git p7zip unrar zip ffmpegthumbs neofetch --needed --noconfirm
-    sudo pacman -S ntfs-3g openssh sshfs net-tools kdenetwork-filesharing --needed --noconfirm
+    sudo pacman -S wget git p7zip unrar zip neofetch --needed --noconfirm
+    sudo pacman -S ntfs-3g openssh sshfs net-tools --needed --noconfirm
+
     sudo pacman -S bluedevil bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
     sudo pacman -S print-manager skanlite pdfarranger cups cups-filters cups-pdf hplip --needed --noconfirm
-    
+
     sudo pacman -S sddm-kcm breeze-gtk kde-gtk-config user-manager kdeplasma-addons --needed --noconfirm
     sudo pacman -S kinfocenter kwalletmanager plasma-browser-integration kaccounts-providers kdeconnect kate kcalc --needed --noconfirm
+
     sudo pacman -S ark okular gwenview kamoso partitionmanager spectacle discover packagekit-qt5 --needed --noconfirm
+    sudo pacman -S filelight kdenetwork-filesharing ffmpegthumbs kdegraphics-thumbnailers --needed --noconfirm
     
     git clone https://aur.archlinux.org/pikaur.git && cd pikaur && makepkg -fsri && cd - && sudo rm -R pikaur
 ## END
@@ -29,11 +32,11 @@
     pikaur -S jre multibootusb keepassxc --noconfirm
     pikaur -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
 
-    pikaur -S libreoffice-fresh libreoffice-fresh-pt-br --noconfirm
-    pikaur -S libreoffice-extension-languagetool hunspell-en_US hunspell-pt-br --noconfirm
-    
-    pikaur -S google-chrome qbittorrent gimp vlc --noconfirm
+    pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool --noconfirm
+    pikaur -S hunspell-en_US hunspell-pt-br --noconfirm
     pikaur -S adobe-source-han-sans-otc-fonts --noconfirm
+
+    pikaur -S google-chrome qbittorrent gimp vlc --noconfirm
 ## END
 
 ## BEGIN ~ Development Packages
