@@ -78,8 +78,8 @@ configure_system() {
 		echo -e "KEYMAP=$keyboard\nFONT=lat0-16" > "$ARCH"/etc/vconsole.conf
 		arch-chroot "$ARCH" localectl set-x11-keymap $(echo $keyboard | sed 's/-/ /g') &>/dev/null
 		
-		key=\"$(echo $keyboard | sed 's/-/"\\n\\tOption \\"XkbModel\\" \"/')\"		
-		echo -e Section \"InputClass\"\\n\\tIdentifier \"system-keyboard\"\\n\\tMatchIsKeyboard \"on\"\\n\\tOption "XkbLayout" $key\\nEndSection > "$ARCH"/etc/X11/xorg.conf.d/00-keyboard.conf
+		key=\"$(echo $keyboard | sed 's/-/"\\n\\tOption \"XkbModel\" \"/')\"
+		echo -e Section \"InputClass\"\\n\\tIdentifier \"system-keyboard\"\\n\\tMatchIsKeyboard \"on\"\\n\\tOption \"XkbLayout\" $key\\nEndSection > "$ARCH"/etc/X11/xorg.conf.d/00-keyboard.conf
 
 		echo "$(date -u "+%F %H:%M") : Set system keymap: $keyboard" >> "$log"
 	fi

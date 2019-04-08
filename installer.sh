@@ -1,10 +1,5 @@
 #!/bin/bash
-################################################
-### Arch Linux Install Script
-### Inspired by Anywhere
-################################################
 
-### Load conf files and libs
 init() {
 	aa_dir=$(dirname $(readlink -f "$0"))
 	
@@ -20,7 +15,6 @@ init() {
 	source "$lang_file"
 }
 
-### Step-by-step
 main() {
 	### configure_connection.sh
 	update_mirrors
