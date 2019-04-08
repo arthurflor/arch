@@ -31,6 +31,7 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
     pikaur -S pdfarranger hunspell-en_US hunspell-pt-br --noconfirm
 
     pikaur -S google-chrome qbittorrent gimp vlc --noconfirm
+    pikaur -S korla-icon-theme --noconfirm
 
     pikaur -S smartgit visual-studio-code-bin --noconfirm
     pikaur -S opencv python-{matplotlib,numpy,pylint,tensorflow-opt} --noconfirm
@@ -55,6 +56,8 @@ if [ $desktop == "plasma" ] ; then
     ### -- | shortcuts | --
     ## launcher: monitor, dolphin, google-chrome, qbittorrent 
     ## kwin: show desktop
+
+    sudo sed -i 's/margins.bottom;/margins.bottom + 4;/' /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/ui/code/layout.js
     
 ### Custom packages and settings to Gnome
 elif [ $desktop == "gnome" ] ; then
