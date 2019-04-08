@@ -5,12 +5,6 @@ reboot_system() {
 
 	### Check if system is installed
 	if "$INSTALLED" ; then
-		if [ "$bootloader" == "$none" ]; then
-			if (dialog --yes-button "$yes" --no-button "$no" --yesno "\n$complete_no_boot_msg" 10 60) then
-				reset ; exit
-			fi
-		fi
-
 		while (true) do
 			reboot_menu=$(dialog --nocancel --ok-button "$ok" --menu "$complete_msg" 16 60 7 \
 				"$reboot0" "-" \

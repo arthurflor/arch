@@ -45,15 +45,9 @@ install_base() {
 				echo "$(date -u "+%F %H:%M") : Install failed: please report to developer" >> "$log"
 				reset ; tail "$log" ; exit 1
 			fi
-    
-			case "$bootloader" in
-				grub) grub_config ;;
-				syslinux) syslinux_config ;;
-				systemd-boot) systemd_config ;;
-				efistub) efistub_config ;;
-			esac
-    
-			echo "$(date -u "+%F %H:%M") : Configured bootloader: $bootloader" >> "$log"
+
+			grub_config
+			echo "$(date -u "+%F %H:%M") : Configured bootloader" >> "$log"
 		else
 			if (dialog --yes-button "$yes" --no-button "$no" --yesno "\n$exit_msg" 10 60) then
 				main_menu

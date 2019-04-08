@@ -4,8 +4,8 @@
 ### Inspired by Anywhere
 ################################################
 
-main() {
-	### Load conf files and libs
+### Load conf files and libs
+init() {
 	aa_dir=$(dirname $(readlink -f "$0"))
 	
 	aa_lib="$aa_dir"/lib
@@ -18,7 +18,10 @@ main() {
 
 	export lang_file="$aa_dir"/etc/arch-lang.conf
 	source "$lang_file"
+}
 
+### Step-by-step
+main() {
 	### configure_connection.sh
 	update_mirrors
 	check_connection
@@ -51,4 +54,5 @@ main() {
 	reboot_system
 }
 
+init
 main

@@ -3,26 +3,6 @@
 configure_system() {
 	op_title="$config_op_msg"
 
-	if [ "$bootloader" == "syslinux" ] || [ "$bootloader" == "systemd-boot" ] && "$UEFI" ; then
-		if [ "$esp_mnt" != "/boot" ]; then
-			(mkdir "$ARCH"/etc/pacman.d/hooks
-			if [ "$kernel" == "linux" ]; then
-				echo -e "$linux_hook\nExec = /usr/bin/cp /boot/{vmlinuz-linux,initramfs-linux.img,initramfs-linux-fallback.img} ${esp_mnt}" > "$ARCH"/etc/pacman.d/hooks/linux-esp.hook
-				cp "$ARCH"/boot/{vmlinuz-linux,initramfs-linux.img,initramfs-linux-fallback.img} ${ARCH}${esp_mnt}
-			elif [ "$kernel" == "linux-lts" ]; then
-				echo -e "$lts_hook\nExec = /usr/bin/cp /boot/{vmlinuz-linux-lts,initramfs-linux-lts.img,initramfs-linux-lts-fallback.img} ${esp_mnt}" > "$ARCH"/etc/pacman.d/hooks/linux-esp.hook
-				cp "$ARCH"/boot/{vmlinuz-linux-lts,initramfs-linux-lts.img,initramfs-linux-lts-fallback.img} ${ARCH}${esp_mnt}
-			elif [ "$kernel" == "linux-hardened" ]; then
-				echo -e "$hardened_hook\nExec = /usr/bin/cp /boot/{vmlinuz-linux-hardened,initramfs-linux-hardened.img,initramfs-linux-hardened-fallback.img} ${esp_mnt}" > "$ARCH"/etc/pacman.d/hooks/linux-esp.hook
-				cp "$ARCH"/boot/{vmlinuz-linux-hardened,initramfs-linux-hardened.img,initramfs-linux-hardened-fallback.img} ${ARCH}${esp_mnt}
-			elif [ "$kernel" == "linux-zen" ]; then
-                                echo -e "$zen_hook\nExec = /usr/bin/cp /boot/{vmlinuz-linux-zen,initramfs-linux-zen.img,initramfs-linux-zen-fallback.img} ${esp_mnt}" > "$ARCH"/etc/pacman.d/hooks/linux-esp.hook
-                                cp "$ARCH"/boot/{vmlinuz-linux-zen,initramfs-linux-zen.img,initramfs-linux-zen-fallback.img} ${ARCH}${esp_mnt}
-			fi) &
-			pid=$! pri=0.1 msg="$wait_load \n\n \Z1> \Z2cp "$ARCH"/boot/ ${ARCH}${esp_mnt}\Zn" load
-		fi
-	fi
-
 	if "$drm" ; then
 		sed -i 's/MODULES=""/MODULES="nvidia nvidia_modeset nvidia_uvm nvidia_drm"/' "$ARCH"/etc/mkinitcpio.conf
 		sed -i 's!FILES=""!FILES="/etc/modprobe.d/nvidia.conf"!' "$ARCH"/etc/mkinitcpio.conf
@@ -98,7 +78,7 @@ configure_system() {
 		echo -e "KEYMAP=$keyboard\nFONT=lat0-16" > "$ARCH"/etc/vconsole.conf
 		arch-chroot "$ARCH" localectl set-x11-keymap $(echo $keyboard | sed 's/-/ /g') &>/dev/null
 		
-		key=\"$(echo $keyboard | sed 's/-/"\\n\\tOption \"XkbModel\" \"/')\"		
+		key=\"$(echo $keyboard | sed 's/-/"\\n\\tOption \\"XkbModel\\" \"/')\"		
 		echo -e Section \"InputClass\"\\n\\tIdentifier \"system-keyboard\"\\n\\tMatchIsKeyboard \"on\"\\n\\tOption "XkbLayout" $key\\nEndSection > "$ARCH"/etc/X11/xorg.conf.d/00-keyboard.conf
 
 		echo "$(date -u "+%F %H:%M") : Set system keymap: $keyboard" >> "$log"

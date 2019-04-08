@@ -52,7 +52,7 @@ add_user() {
 									arch-chroot "$ARCH" usermod -a -G wheel "$user"
 								fi
 
-								cp $custom_pkg $ARCH/home/$user/
+								cp $aa_dir/$custom_pkg $ARCH/home/$user/
 								arch-chroot "$ARCH" chown $user:users /home/$user/$custom_pkg
 								break
 							fi
