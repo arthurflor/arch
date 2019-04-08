@@ -1,15 +1,9 @@
-## Script Linux
+## Arch Linux
 
-Scripts to automate the process of installing packages and some configurations of some linux distributions
+### Run
+- Boot Arch Linux
+- Download scripts: `wget -O - https://github.com/arthurflor23/arch/tarball/master | tar xz`
+- Run installer: `<DIR>/installer.sh`
 
-### Requirements
-- Internet connection
-- Downloading scripts: `wget https://github.com/arthurflor23/arch/tarball/master -O - | tar xz`
-
-### How to use
-
-#### Arch Anywhere KDE
-- script: `./arch-anywhere-kde`
-
-#### Arch Anywhere Gnome
-- script: `./arch-anywhere-gnome`
+### Startup (some custom packages and settings)
+- Run script: `~/custom_pkg.sh`
