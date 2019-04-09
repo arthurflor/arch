@@ -24,10 +24,10 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
 
 ### Common packages 
     pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
-    pikaur -S jre multibootusb keepassxc --noconfirm
+    pikaur -S jre multibootusb keepassxc pdfarranger --noconfirm
 
+    pikaur -S google-chrome qbittorrent gimp vlc --noconfirm
     pikaur -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
-    pikaur -S google-chrome qbittorrent gimp vlc pdfarranger korla-icon-theme --noconfirm
 
     pikaur -S libreoffice-{fresh,extension-languagetool} hunspell-en_US hunspell-pt-br --noconfirm
     echo -e "export SAL_USE_VCLPLUGIN=gtk3" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
@@ -92,10 +92,7 @@ elif [ $desktop == "gnome" ] ; then
 fi
 
 ### Clear
-orphan=$(sudo pacman -Qtdq) 
-
-sudo pacman -Scc; 
-sudo pacman -Rns $orphan;
+sudo pacman -Scc; orphan=$(sudo pacman -Qtdq) && sudo pacman -Rns $orphan;
 
 ### -- | nvidia tips | --
 ## nvidia settings: optirun nvidia-settings -c :8
