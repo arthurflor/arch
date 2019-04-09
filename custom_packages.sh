@@ -25,13 +25,13 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
 ### Common packages 
     pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
     pikaur -S jre multibootusb keepassxc --noconfirm
+
     pikaur -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
+    pikaur -S google-chrome qbittorrent gimp vlc pdfarranger korla-icon-theme --noconfirm
 
-    pikaur -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool --noconfirm
-    pikaur -S pdfarranger hunspell-en_US hunspell-pt-br --noconfirm
-
-    pikaur -S google-chrome qbittorrent gimp vlc --noconfirm
-    pikaur -S korla-icon-theme --noconfirm
+    pikaur -S libreoffice-{fresh,extension-languagetool} hunspell-en_US hunspell-pt-br --noconfirm
+    echo -e "export SAL_USE_VCLPLUGIN=gtk3" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
+    sudo sed -i 's/Logo=1/Logo=0/' /etc/libreoffice/sofficerc
 
     pikaur -S smartgit visual-studio-code-bin --noconfirm
     pikaur -S opencv python-{matplotlib,numpy,pylint,tensorflow-opt} --noconfirm
