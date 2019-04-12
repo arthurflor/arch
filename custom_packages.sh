@@ -26,7 +26,8 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
     pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
     pikaur -S google-chrome qbittorrent gimp vlc --noconfirm
 
-    pikaur -S jre visual-studio-code-bin multibootusb keepassxc pdfarranger --noconfirm
+    pikaur -S jre smartgit visual-studio-code-bin --noconfirm
+    pikaur -S multibootusb keepassxc pdfarranger --noconfirm
     pikaur -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
 
     pikaur -S libreoffice-{fresh,extension-languagetool} hunspell-en_US hunspell-pt-br --noconfirm
