@@ -131,6 +131,6 @@ prepare_base() {
 	base_install+="pacman-contrib base-devel "
 	base_install+="grub wireless_tools wpa_supplicant "
 	base_install+="wget git p7zip unrar zip unzip "
-	base_install+="ntfs-3g openssh sshfs net-tools libpng12 neofetch "
+	base_install+="ntfs-3g openssh sshfs net-tools neofetch "
 	base_install+="cups cups-filters cups-pdf hplip "
 }

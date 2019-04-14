@@ -8,7 +8,6 @@ select yn in "Yes" "No"; do
     esac
 done
 
-user_name=$(whoami)
 desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
 
 ### AUR (pikaur)
@@ -24,29 +23,23 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
 
 ### Common packages 
     pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
-    pikaur -S google-chrome qbittorrent gimp vlc --noconfirm
+    pikaur -S jre multibootusb keepassxc pdfarranger --noconfirm
 
-    pikaur -S jre smartgit visual-studio-code-bin --noconfirm
-    pikaur -S multibootusb keepassxc pdfarranger --noconfirm
+    pikaur -S google-chrome qbittorrent gimp vlc --noconfirm
     pikaur -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
 
     pikaur -S libreoffice-{fresh,extension-languagetool} hunspell-en_US hunspell-pt-br --noconfirm
     echo -e "export SAL_USE_VCLPLUGIN=gtk3" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
     sudo sed -i 's/Logo=1/Logo=0/' /etc/libreoffice/sofficerc
 
+    pikaur -S visual-studio-code-bin python-pylint flake8 autopep8 --noconfirm
+
 ### Games
+    pikaur -S libpng12 --noconfirm
+
     cd ~ && wget -c https://download.wakfu.com/full/linux/x64 -O - | tar -xz
     mkdir -p ~/.local/share/applications/ && mv Wakfu .wakfu && cd -
-
-    echo -e "
-    [Desktop Entry]
-    Encoding=UTF-8
-    Type=Application
-    Name=Wakfu
-    Icon=/home/$user_name/.wakfu/game/icon.png
-    Exec=optirun /home/$user_name/.wakfu/Wakfu
-    Categories=Game" | sudo tee --append ~/.local/share/applications/wakfu.desktop
-
+    echo -e "[Desktop Entry]\nEncoding=UTF-8\nType=Application\nName=Wakfu\nIcon=~/.wakfu/game/icon.png\nExec=optirun ~/.wakfu/Wakfu\nCategories=Game" | sudo tee --append ~/.local/share/applications/wakfu.desktop
 
 ### Custom packages and settings to KDE
 if [ $desktop == "plasma" ] ; then
