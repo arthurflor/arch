@@ -32,7 +32,7 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
     echo -e "export SAL_USE_VCLPLUGIN=gtk3" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
     sudo sed -i 's/Logo=1/Logo=0/' /etc/libreoffice/sofficerc
 
-    pikaur -S smartgit visual-studio-code-bin python-pylint flake8 autopep8 --noconfirm
+    pikaur -S smartgit visual-studio-code-bin --noconfirm
 
 ### Games
     pikaur -S libpng12 --noconfirm
