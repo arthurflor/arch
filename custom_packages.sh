@@ -21,7 +21,7 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
     pkgcl(){ pikaur -Scc; orphan=\$(pikaur -Qtdq) && pikaur -Rns \$orphan; }
     " | sudo tee --append ~/.bashrc
 
-### Common packages 
+### Common packages
     pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
     pikaur -S jre multibootusb keepassxc pdfarranger --noconfirm
 
@@ -33,6 +33,7 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
     sudo sed -i 's/Logo=1/Logo=0/' /etc/libreoffice/sofficerc
 
     pikaur -S smartgit visual-studio-code-bin --noconfirm
+    pikaur -S opencv vtk glew hdf5 --noconfirm
 
 ### Games
     pikaur -S libpng12 --noconfirm
