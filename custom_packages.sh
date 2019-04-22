@@ -36,11 +36,12 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
     pikaur -S opencv vtk glew hdf5 --noconfirm
 
 ### Games
+    username=$(whoami)
     pikaur -S libpng12 --noconfirm
 
     cd ~ && wget -c https://download.wakfu.com/full/linux/x64 -O - | tar -xz
     mkdir -p ~/.local/share/applications/ && mv Wakfu .wakfu && cd -
-    echo -e "[Desktop Entry]\nEncoding=UTF-8\nType=Application\nName=Wakfu\nIcon=~/.wakfu/game/icon.png\nExec=optirun ~/.wakfu/Wakfu\nCategories=Game" | sudo tee --append ~/.local/share/applications/wakfu.desktop
+    echo -e "[Desktop Entry]\nEncoding=UTF-8\nType=Application\nName=Wakfu\nIcon=/home/$username/.wakfu/game/icon.png\nExec=optirun /home/$username/.wakfu/Wakfu\nCategories=Game" > ~/.local/share/applications/wakfu.desktop
 
 ### Custom packages and settings to KDE
 if [ $desktop == "plasma" ] ; then
