@@ -14,26 +14,26 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
     git clone https://aur.archlinux.org/pikaur.git && cd pikaur && makepkg -fsri && cd - && sudo rm -R pikaur
 
     echo -e "
+    activate(){ source venv/bin/activate; }
     pkgin(){ pikaur -S \$@; }
     pkgre(){ pikaur -Rcc \$@; }
     pkgse(){ pikaur -Ss \$@; }
     pkgup(){ pikaur -Syyu; }
-    pkgcl(){ pikaur -Scc; orphan=\$(pikaur -Qtdq) && pikaur -Rns \$orphan; }
-    " | sudo tee --append ~/.bashrc
+    pkgcl(){ pikaur -Scc; orphan=\$(pikaur -Qtdq) && pikaur -Rns \$orphan; }" >> ~/.bashrc
 
 ### Common packages
     pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
     pikaur -S jre multibootusb keepassxc pdfarranger --noconfirm
 
     pikaur -S google-chrome qbittorrent gimp vlc --noconfirm
-    pikaur -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
+    pikaur -S virtualbox virtualbox-ext-oracle --noconfirm
 
     pikaur -S libreoffice-{fresh,extension-languagetool} hunspell-en_US hunspell-pt-br --noconfirm
     echo -e "export SAL_USE_VCLPLUGIN=gtk3" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
     sudo sed -i 's/Logo=1/Logo=0/' /etc/libreoffice/sofficerc
 
     pikaur -S smartgit visual-studio-code-bin --noconfirm
-    pikaur -S opencv vtk glew hdf5 --noconfirm
+    # pikaur -S opencv vtk glew hdf5 tk --noconfirm
 
 ### Games
     username=$(whoami)
