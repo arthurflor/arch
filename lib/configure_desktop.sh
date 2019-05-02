@@ -86,7 +86,7 @@ graphics() {
 						DE+="plasma kde-applications "
 					fi
 
-					DE+="kio-gdrive kdeconnect partitionmanager packagekit-qt5 ffmpegthumbs skanlite "
+					DE+="kdeconnect partitionmanager packagekit-qt5 ffmpegthumbs skanlite "
 			;;
 			"deepin")	start_term="exec startdde"
 					DE+="deepin "
