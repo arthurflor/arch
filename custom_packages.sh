@@ -25,7 +25,7 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
     pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
     pikaur -S jre multibootusb keepassxc pdfarranger --noconfirm
 
-    pikaur -S google-chrome qbittorrent gimp vlc --noconfirm
+    pikaur -S korla-icon-theme google-chrome qbittorrent gimp vlc --noconfirm
     pikaur -S virtualbox virtualbox-ext-oracle --noconfirm
 
     pikaur -S libreoffice-{fresh,extension-languagetool} hunspell-en_US hunspell-pt-br --noconfirm
@@ -33,7 +33,6 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
     sudo sed -i 's/Logo=1/Logo=0/' /etc/libreoffice/sofficerc
 
     pikaur -S smartgit visual-studio-code-bin --noconfirm
-    # pikaur -S opencv vtk glew hdf5 tk --noconfirm
 
 ### Games
     pikaur -S openssl-1.0 libpng12 --noconfirm
