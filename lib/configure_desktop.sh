@@ -86,7 +86,7 @@ graphics() {
 						DE+="plasma kde-applications "
 					fi
 
-					DE+="kdeconnect partitionmanager packagekit-qt5 ffmpegthumbs skanlite "
+					DE+="latte-dock kdeconnect partitionmanager packagekit-qt5 ffmpegthumbs skanlite "
 			;;
 			"deepin")	start_term="exec startdde"
 					DE+="deepin "
