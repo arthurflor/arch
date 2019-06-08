@@ -25,7 +25,7 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
     pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
     pikaur -S jre multibootusb keepassxc pdfarranger --noconfirm
 
-    pikaur -S google-chrome qbittorrent gimp vlc --noconfirm
+    pikaur -S korla-icon-theme google-chrome qbittorrent gimp vlc --noconfirm
     pikaur -S virtualbox virtualbox-ext-oracle --noconfirm
 
     pikaur -S libreoffice-{fresh,extension-languagetool} hunspell-en_US hunspell-pt-br --noconfirm
@@ -43,16 +43,8 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
 
     echo -e "[Desktop Entry]\nEncoding=UTF-8\nType=Application\nName=W akfu\nIcon=/home/$username/.wakfu/game/icon.png\nExec=optirun ~/.wakfu/Wakfu\nCategories=Game" > ~/.local/share/applications/wakfu.desktop
 
-### Custom packages and settings to KDE
-if [ $desktop == "plasma" ] ; then
-    ### -- | shortcuts | --
-    ## launcher: monitor, dolphin, google-chrome, qbittorrent 
-    ## kwin: show desktop
-
-    sudo sed -i 's/margins.bottom;/margins.bottom + 6;/' /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/ui/code/layout.js
-    
 ### Custom packages and settings to Gnome
-elif [ $desktop == "gnome" ] ; then
+if [ $desktop == "gnome" ] ; then
     ### -- | shorcuts | --
     ## print   : gnome-screenshot --interactive
     ## terminal: gnome-terminal
@@ -81,6 +73,12 @@ elif [ $desktop == "gnome" ] ; then
     ### Gnome settings
     echo -e "HandleLidSwitch=lock" | sudo tee --append /etc/systemd/logind.conf
     gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
+
+### Custom packages and settings to KDE
+# elif [ $desktop == "plasma" ] ; then
+    ### -- | shortcuts | --
+    ## launcher: monitor, dolphin, google-chrome, qbittorrent 
+    ## kwin: show desktop
 fi
 
 ### Clear
