@@ -35,13 +35,12 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
     pikaur -S smartgit visual-studio-code-bin --noconfirm
 
 ### Games
-    username=$(whoami)
     pikaur -S openssl-1.0 libpng12 --noconfirm
-
     cd ~ && wget -c https://download.wakfu.com/full/linux/x64 -O - | tar -xz
-    mkdir -p ~/.local/share/applications/ && mv Wakfu .wakfu && cd -
 
-    echo -e "[Desktop Entry]\nEncoding=UTF-8\nType=Application\nName=W akfu\nIcon=/home/$username/.wakfu/game/icon.png\nExec=optirun ~/.wakfu/Wakfu\nCategories=Game" > ~/.local/share/applications/wakfu.desktop
+    mkdir -p ~/.local/share/applications/ && mv Wakfu .wakfu && cd -
+    sudo ln -s ~/.wakfu/Wakfu /usr/bin/wakfu
+    echo -e "[Desktop Entry]\nType=Application\nName=Wakfu\nIcon=/home/$(whoami)/.wakfu/game/icon.png\nExec=wakfu\nCategories=Game" > ~/.local/share/applications/wakfu.desktop
 
 ### Custom packages and settings to Gnome
 if [ $desktop == "gnome" ] ; then
@@ -75,10 +74,21 @@ if [ $desktop == "gnome" ] ; then
     gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
 
 ### Custom packages and settings to KDE
-# elif [ $desktop == "plasma" ] ; then
+elif [ $desktop == "plasma" ] ; then
     ### -- | shortcuts | --
     ## launcher: monitor, dolphin, google-chrome, qbittorrent 
     ## kwin: show desktop
+
+    pikaur -S libinput-gestures --noconfirm
+    sudo sed -i "s/gesture/#gesture/g" /etc/libinput-gestures.conf
+
+    echo -e "gesture swipe right _internal ws_up" | sudo tee --append /etc/libinput-gestures.conf
+    echo -e "gesture swipe left  _internal ws_down" | sudo tee --append /etc/libinput-gestures.conf
+
+    echo -e "gesture swipe up    xdotool key super+a" | sudo tee --append /etc/libinput-gestures.conf
+    echo -e "gesture swipe down  xdotool key ctrl+F7" | sudo tee --append /etc/libinput-gestures.conf
+
+    sudo gpasswd -a $(whoami) input && libinput-gestures-setup autostart
 fi
 
 ### Clear
