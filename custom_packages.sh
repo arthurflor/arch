@@ -14,12 +14,24 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
     git clone https://aur.archlinux.org/pikaur.git && cd pikaur && makepkg -fsri && cd - && sudo rm -R pikaur
 
     echo -e "
+    autoclick(){ xdotool click --delay 10000 --repeat 99999 1; }
     activate(){ source venv/bin/activate; }
     pkgin(){ pikaur -S \$@; }
     pkgre(){ pikaur -Rcc \$@; }
     pkgse(){ pikaur -Ss \$@; }
     pkgup(){ pikaur -Syyu; }
     pkgcl(){ pikaur -Scc; orphan=\$(pikaur -Qtdq) && pikaur -Rns \$orphan; }" >> ~/.bashrc
+
+    pikaur -S libinput-gestures --noconfirm
+    sudo sed -i "s/gesture/#gesture/g" /etc/libinput-gestures.conf
+
+    echo -e "gesture swipe right _internal ws_up" | sudo tee --append /etc/libinput-gestures.conf
+    echo -e "gesture swipe left  _internal ws_down" | sudo tee --append /etc/libinput-gestures.conf
+
+    echo -e "gesture swipe up    xdotool key super+a" | sudo tee --append /etc/libinput-gestures.conf
+    echo -e "gesture swipe down  xdotool key ctrl+F7" | sudo tee --append /etc/libinput-gestures.conf
+
+    sudo gpasswd -a $(whoami) input && libinput-gestures-setup autostart
 
 ### Common packages
     pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
@@ -74,21 +86,10 @@ if [ $desktop == "gnome" ] ; then
     gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
 
 ### Custom packages and settings to KDE
-elif [ $desktop == "plasma" ] ; then
+# elif [ $desktop == "plasma" ] ; then
     ### -- | shortcuts | --
     ## launcher: monitor, dolphin, google-chrome, qbittorrent 
     ## kwin: show desktop
-
-    pikaur -S libinput-gestures --noconfirm
-    sudo sed -i "s/gesture/#gesture/g" /etc/libinput-gestures.conf
-
-    echo -e "gesture swipe right _internal ws_up" | sudo tee --append /etc/libinput-gestures.conf
-    echo -e "gesture swipe left  _internal ws_down" | sudo tee --append /etc/libinput-gestures.conf
-
-    echo -e "gesture swipe up    xdotool key super+a" | sudo tee --append /etc/libinput-gestures.conf
-    echo -e "gesture swipe down  xdotool key ctrl+F7" | sudo tee --append /etc/libinput-gestures.conf
-
-    sudo gpasswd -a $(whoami) input && libinput-gestures-setup autostart
 fi
 
 ### Clear
