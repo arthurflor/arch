@@ -77,7 +77,7 @@ graphics() {
 			"KDE plasma")	start_term="exec startkde"
 					
 					if (dialog --defaultno --yes-button "$yes" --no-button "$no" --yesno "\n$extra_msg3" 10 60) then
-						DE+="plasma-desktop sddm konsole dolphin plasma-nm plasma-pa libxshmfence kscreen sddm-kcm breeze-gtk kde-gtk-config user-manager kdeplasma-addons kinfocenter kwalletmanager plasma-browser-integration kaccounts-providers kate kcalc ark okular gwenview kamoso spectacle discover kdenetwork-filesharing kdegraphics-thumbnailers print-manager "
+						DE+="plasma-desktop sddm konsole dolphin plasma-nm plasma-pa libxshmfence kscreen sddm-kcm breeze-gtk kde-gtk-config user-manager kdeplasma-addons kinfocenter kwalletmanager plasma-browser-integration kaccounts-providers kate kcalc ark okular gwenview spectacle discover kdenetwork-filesharing kdegraphics-thumbnailers print-manager "
 
 						if "$LAPTOP" ; then
 							DE+="powerdevil "
@@ -86,7 +86,7 @@ graphics() {
 						DE+="plasma kde-applications "
 					fi
 
-					DE+="kdeconnect partitionmanager packagekit-qt5 ffmpegthumbs skanlite "
+					DE+="kdeconnect partitionmanager skanlite packagekit-qt5 qt5-imageformats ffmpegthumbs "
 			;;
 			"deepin")	start_term="exec startdde"
 					DE+="deepin "
