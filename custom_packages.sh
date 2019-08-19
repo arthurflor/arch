@@ -35,7 +35,7 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
 
 ### Common packages
     pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
-    pikaur -S jre multibootusb keepassxc pdfarranger --noconfirm
+    pikaur -S jre-openjdk multibootusb keepassxc pdfarranger --noconfirm
 
     pikaur -S google-chrome qbittorrent gimp vlc --noconfirm
     pikaur -S virtualbox virtualbox-ext-oracle --noconfirm
@@ -53,6 +53,10 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
     mkdir -p ~/.local/share/applications/ && mv Wakfu .wakfu && cd -
     sudo ln -s ~/.wakfu/Wakfu /usr/bin/wakfu
     echo -e "[Desktop Entry]\nType=Application\nName=Wakfu\nIcon=/home/$(whoami)/.wakfu/game/icon.png\nExec=wakfu\nCategories=Game" > ~/.local/share/applications/wakfu.desktop
+
+    ### -- | wakfu tips | --
+    ## ~/.wakfu/jre/bin/ControlPanel
+    ## Java config: Parameters runtime: -Xms4096m -Xmx4096m
 
 ### Custom packages and settings to Gnome
 if [ $desktop == "gnome" ] ; then
