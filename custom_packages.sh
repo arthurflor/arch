@@ -15,7 +15,7 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
 
     echo -e "
     autoclick(){ xdotool click --delay 10000 --repeat 99999 1; }
-    activate(){ source venv/bin/activate; }
+    activate(){ python -m venv .venv && source .venv/bin/activate; }
     pkgin(){ pikaur -S \$@; }
     pkgre(){ pikaur -Rcc \$@; }
     pkgse(){ pikaur -Ss \$@; }
@@ -92,7 +92,7 @@ if [ $desktop == "gnome" ] ; then
 ### Custom packages and settings to KDE
 # elif [ $desktop == "plasma" ] ; then
     ### -- | shortcuts | --
-    ## launcher: monitor, dolphin, google-chrome, qbittorrent 
+    ## launcher: monitor, dolphin, google-chrome, qbittorrent
     ## kwin: show desktop
 fi
 
