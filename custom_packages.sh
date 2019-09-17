@@ -14,7 +14,6 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
     git clone https://aur.archlinux.org/pikaur.git && cd pikaur && makepkg -fsri && cd - && sudo rm -R pikaur
 
     echo -e "
-    autoclick(){ xdotool click --delay 10000 --repeat 99999 1; }
     activate(){ python -m venv .venv && source .venv/bin/activate; }
     pkgin(){ pikaur -S \$@; }
     pkgre(){ pikaur -Rcc \$@; }
@@ -22,20 +21,9 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
     pkgup(){ pikaur -Syyu; }
     pkgcl(){ pikaur -Scc; orphan=\$(pikaur -Qtdq) && pikaur -Rns \$orphan; }" >> ~/.bashrc
 
-    pikaur -S libinput-gestures --noconfirm
-    sudo sed -i "s/gesture/#gesture/g" /etc/libinput-gestures.conf
-
-    echo -e "gesture swipe right _internal ws_up" | sudo tee --append /etc/libinput-gestures.conf
-    echo -e "gesture swipe left  _internal ws_down" | sudo tee --append /etc/libinput-gestures.conf
-
-    echo -e "gesture swipe up    xdotool key super+a" | sudo tee --append /etc/libinput-gestures.conf
-    echo -e "gesture swipe down  xdotool key ctrl+F7" | sudo tee --append /etc/libinput-gestures.conf
-
-    sudo gpasswd -a $(whoami) input && libinput-gestures-setup autostart
-
 ### Common packages
     pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
-    pikaur -S jre multibootusb keepassxc pdfarranger --noconfirm
+    pikaur -S jre multibootusb keepassxc pdfarranger xautoclick --noconfirm
 
     pikaur -S google-chrome qbittorrent gimp vlc --noconfirm
     pikaur -S virtualbox virtualbox-ext-oracle --noconfirm
