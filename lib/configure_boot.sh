@@ -11,8 +11,8 @@ grub_config() {
 		sed -i '/GRUB_CMDLINE_LINUX_DEFAULT=/ s/.$/ nvidia-drm.modeset=1"/;s/" /"/' "$ARCH"/etc/default/grub
 	fi
 
-	sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3 pcie_aspm=off"/g' "$ARCH"/etc/default/grub
-    sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' "$ARCH"/etc/default/grub
+	sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=""/GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3 pcie_aspm=off"/g' "$ARCH"/etc/default/grub
+    	sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' "$ARCH"/etc/default/grub
 
 	if "$UEFI" ; then
 		(arch-chroot "$ARCH" grub-install --efi-directory="$esp_mnt" --target=x86_64-efi --bootloader-id=boot
