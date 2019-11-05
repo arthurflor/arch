@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ### SYSTEM ###
+
 sudo sed -i 's/loglevel=3/loglevel=3 quiet/g' /etc/default/grub
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
 sudo grub-mkconfig -o /boot/grub/grub.cfg
@@ -18,22 +19,23 @@ echo -e "HandleLidSwitch=lock" | sudo tee --append /etc/systemd/logind.conf
 gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
 
 ### PACKAGES ###
+
 yay -Rcc baobab epiphany evolution-data-server rygel totem xdg-user-dirs-gtk vino vim yelp
 yay -Rcc gnome-{books,characters,clocks,dictionary,disk-utility,documents,font-viewer,logs,music,photos,shell-extensions,software,weather}
 
-yay -S pacman-contrib base-devel fakeroot neofetch gnome-{passwordsafe,multi-writer,tweaks} --needed
-yay -S gparted gst-libav p7zip unrar sshfs ffmpegthumbnailer bluez-hid2hci bluez-plugins bluez-tools
+yay -S pacman-contrib base-devel fakeroot neofetch gnome-{passwordsafe,multi-writer,tweaks}
+yay -S gst-libav p7zip unrar sshfs bluez-hid2hci bluez-plugins bluez-tools ffmpegthumbnailer
+yay -S system-config-printer cups cups-filters cups-pdf pdfarranger gparted xautoclick
 yay -S ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts
-yay -S system-config-printer cups cups-filters cups-pdf pdfarranger
 yay -S wd719x-firmware aic94xx-firmware
 
-yay -S jre8-openjdk google-chrome chrome-gnome-shell transmission-gtk gimp mpv pamac-aur
-yay -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool hunspell-pt-br
-yay -S smartgit visual-studio-code-bin xautoclick
+yay -S jre8-openjdk google-chrome chrome-gnome-shell transmission-gtk gimp mpv pamac-aur smartgit visual-studio-code-bin
+yay -S libreoffice-{fresh,extension-languagetool} hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
 
 yay -c && yay -Scc
 
 ### WAKFU ###
+
 cd ~ && wget -c https://download.ankama.com/launcher/full/linux/x64 -O wakfu
 chmod +x wakfu
 
@@ -71,6 +73,7 @@ activate(){
 }" >> ~/.bashrc
 
 ### SHORCUTSS ###
+
 ## print   : gnome-screenshot --interactive
 ## terminal: gnome-terminal
 ## monitor : gnome-system-monitor
@@ -80,13 +83,14 @@ activate(){
 ## Trocar para o espaço de trabalho
 
 ### EXTENSIONS ###
+
 ## AlternateTab
-## Arch Linux Updates Indicator
 ## Clipboard Indicator
 ## Dash to Dock
 ## Dynamic Panel Transparency
 ## GSConnect
 ## OpenWeather
+## Pamac Updates Indicator
 ## Sound Input & Output Device Chooser
 ## Status Area Horizontal Spacing
 ## Top Panel Workspace Scroll
