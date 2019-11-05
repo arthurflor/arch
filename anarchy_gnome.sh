@@ -24,12 +24,10 @@ yay -Rcc gnome-{books,characters,clocks,dictionary,disk-utility,documents,font-v
 yay -S pacman-contrib base-devel fakeroot neofetch gnome-{passwordsafe,multi-writer,tweaks} --needed
 yay -S gparted gst-libav p7zip unrar sshfs ffmpegthumbnailer bluez-hid2hci bluez-plugins bluez-tools
 yay -S ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts
+yay -S system-config-printer cups cups-filters cups-pdf pdfarranger
 yay -S wd719x-firmware aic94xx-firmware
 
-yay -S system-config-printer cups cups-filters cups-pdf pdfarranger
-sudo systemctl enable org.cups.cupsd
-
-yay -S jre8-openjdk google-chrome chrome-gnome-shell transmission-gtk gimp vlc pamac-aur
+yay -S jre8-openjdk google-chrome chrome-gnome-shell transmission-gtk gimp mpv pamac-aur
 yay -S libreoffice-fresh libreoffice-fresh-pt-br libreoffice-extension-languagetool hunspell-pt-br
 yay -S smartgit visual-studio-code-bin xautoclick
 
@@ -51,9 +49,13 @@ Exec=wakfu\nCategories=Game" > ~/.local/share/applications/wakfu.desktop
 
 ### ENVIRONMENT ###
 
+sudo systemctl enable org.cups.cupsd
+sudo systemctl enable avahi-daemon.service
+
+cd /usr/share/applications && sudo rm cups.desktop pamac-updater.desktop && cd -
+
 mv ~/Área\ de\ trabalho ~/Code
-sed -i "s/Área de trabalho/Code/g" ~/.config/user-dirs.dirs
-xdg-user-dirs-update
+sed -i "s/Área de trabalho/Code/g" ~/.config/user-dirs.dirs && xdg-user-dirs-update
 
 mkdir -p ~/.config/autostart/
 echo -e "
