@@ -25,7 +25,7 @@ yay -Rcc gnome-{books,characters,clocks,dictionary,disk-utility,documents,font-v
 
 yay -S pacman-contrib base-devel fakeroot neofetch gnome-{passwordsafe,multi-writer,tweaks}
 yay -S gst-libav p7zip unrar sshfs bluez-hid2hci bluez-plugins bluez-tools ffmpegthumbnailer
-yay -S system-config-printer cups cups-filters cups-pdf pdfarranger gparted xautoclick
+yay -S xdotool gparted pdfarranger system-config-printer cups cups-filters cups-pdf
 yay -S ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts
 yay -S wd719x-firmware aic94xx-firmware
 
@@ -70,6 +70,14 @@ echo -e "
 activate(){
   python -m venv .venv ; source .venv/bin/activate ;
   pip install --upgrade -q pip ; pip install -q flake8 autopep8 ;
+}" >> ~/.bashrc
+
+echo -e "
+autoclick(){
+  while [ 1 ]; do
+    sleep 5 ; xdotool mousemove 737 187 click 1 ;
+    sleep 5 ; xdotool mousemove 1677 187 click 1 ;
+  done
 }" >> ~/.bashrc
 
 ### SHORCUTSS ###
