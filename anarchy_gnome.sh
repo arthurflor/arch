@@ -25,12 +25,15 @@ yay -Rcc gnome-{books,characters,clocks,dictionary,disk-utility,documents,font-v
 
 yay -S pacman-contrib base-devel fakeroot neofetch gnome-{passwordsafe,multi-writer,tweaks}
 yay -S gst-libav p7zip unrar sshfs bluez-hid2hci bluez-plugins bluez-tools ffmpegthumbnailer
-yay -S xdotool gparted pdfarranger system-config-printer cups cups-filters cups-pdf
+yay -S xdotool gparted pdfarranger system-config-printer cups cups-filters cups-pdf hplip
 yay -S ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts
 yay -S wd719x-firmware aic94xx-firmware
 
-yay -S jre8-openjdk google-chrome chrome-gnome-shell transmission-gtk gimp mpv pamac-aur smartgit visual-studio-code-bin
-yay -S libreoffice-{fresh,extension-languagetool} hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
+yay -S jre8-openjdk pamac-aur google-chrome chrome-gnome-shell
+yay -S transmission-gtk gimp mpv smartgit visual-studio-code-bin
+
+yay -S libreoffice-{fresh,extension-languagetool}
+yay -S hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
 
 yay -c && yay -Scc
 
@@ -53,8 +56,6 @@ Exec=wakfu\nCategories=Game" > ~/.local/share/applications/wakfu.desktop
 
 sudo systemctl enable org.cups.cupsd
 sudo systemctl enable avahi-daemon.service
-
-cd /usr/share/applications && sudo rm cups.desktop pamac-updater.desktop && cd -
 
 mv ~/Área\ de\ trabalho ~/Code
 sed -i "s/Área de trabalho/Code/g" ~/.config/user-dirs.dirs && xdg-user-dirs-update
