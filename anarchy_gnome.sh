@@ -13,24 +13,25 @@ sudo mkdir -p /etc/systemd/coredump.conf.d/
 echo -e "[Coredump]\nStorage=none" | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
 echo "SystemMaxUse=50M" | sudo tee --append /etc/systemd/journald.conf
 
-sudo sed -i "s/#AutoEnable=false/AutoEnable=true/g" /etc/bluetooth/main.conf
-echo -e "HandleLidSwitch=lock" | sudo tee --append /etc/systemd/logind.conf
-
 gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
+sudo sed -i "s/#AutoEnable=false/AutoEnable=true/g" /etc/bluetooth/main.conf
 
 ### PACKAGES ###
 
 yay -Rcc baobab epiphany evolution-data-server rygel totem xdg-user-dirs-gtk vino vim yelp
 yay -Rcc gnome-{books,characters,clocks,dictionary,disk-utility,documents,font-viewer,logs,music,photos,shell-extensions,software,weather}
 
-yay -S pacman-contrib base-devel fakeroot neofetch gnome-{passwordsafe,multi-writer,tweaks}
-yay -S gst-libav p7zip unrar sshfs bluez-hid2hci bluez-plugins bluez-tools ffmpegthumbnailer
-yay -S xdotool gparted pdfarranger system-config-printer cups cups-filters cups-pdf hplip
-yay -S ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts
 yay -S wd719x-firmware aic94xx-firmware
+yay -S pacman-contrib base-devel fakeroot neofetch acpid
 
-yay -S jre8-openjdk pamac-aur google-chrome chrome-gnome-shell
-yay -S transmission-gtk gimp mpv smartgit visual-studio-code-bin
+yay -S xdotool ffmpegthumbnailer p7zip unrar sshfs gst-libav bluez-{hid2hci,plugins,tools}
+yay -S gnome-{getting-started-docs,multi-writer,passwordsafe,tweaks}
+
+yay -S ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts
+yay -S pdfarranger system-config-printer cups cups-filters cups-pdf hplip
+
+yay -S gparted alacarte jre8-openjdk pamac-aur smartgit visual-studio-code-bin
+yay -S google-chrome chrome-gnome-shell transmission-gtk gimp mpv
 
 yay -S libreoffice-{fresh,extension-languagetool}
 yay -S hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
@@ -52,13 +53,40 @@ Name=Wakfu
 Icon=/home/$(whoami)/.config/Ankama/zaap/wakfu/icon.png
 Exec=wakfu\nCategories=Game" > ~/.local/share/applications/wakfu.desktop
 
+### Turn off screen when lid close ###
+
+echo -e "HandleLidSwitch=ignore" | sudo tee --append /etc/systemd/logind.conf
+echo -e "HandleLidSwitchDocked=ignore" | sudo tee --append /etc/systemd/logind.conf
+
+sudo touch /etc/acpi/events/lm_lid /etc/acpi/lid.sh
+sudo chmod +x /etc/acpi/lid.sh
+
+echo -e "event=button/lid.*\naction=/etc/acpi/lid.sh" | sudo tee --append /etc/acpi/events/lm_lid
+echo -e '
+#!/bin/bash
+
+USER='$(whoami)'
+grep -q close /proc/acpi/button/lid/*/state
+
+if [ $? = 0 ]; then
+  su -c  "sleep 0.5 && xset -display :0.0 dpms force off" - $USER
+fi
+
+grep -q open /proc/acpi/button/lid/*/state
+
+if [ $? = 0 ]; then
+  su -c  "xset -display :0 dpms force on &> /tmp/screen.lid" - $USER
+fi' | sudo tee --append /etc/acpi/lid.sh
+
+
 ### ENVIRONMENT ###
 
+sudo systemctl enable acpid
 sudo systemctl enable org.cups.cupsd
-sudo systemctl enable avahi-daemon.service
+sudo systemctl enable avahi-daemon
 
 mv ~/Área\ de\ trabalho ~/Code
-sed -i "s/Área de trabalho/Code/g" ~/.config/user-dirs.dirs && xdg-user-dirs-update
+sed -i "s/Área de trabalho/Code/g" ~/.config/user-dirs.dirs ; xdg-user-dirs-update
 
 mkdir -p ~/.config/autostart/
 echo -e "
@@ -76,12 +104,12 @@ activate(){
 echo -e "
 autoclick(){
   while [ 1 ]; do
-    sleep 5 ; xdotool mousemove 737 187 click 1 ;
-    sleep 5 ; xdotool mousemove 1677 187 click 1 ;
+    sleep 5 ; xdotool mousemove 738 187 click 1 ;
+    sleep 5 ; xdotool mousemove 1680 187 click 1 ;
   done
 }" >> ~/.bashrc
 
-### SHORCUTSS ###
+### SHORTCUTS ###
 
 ## print   : gnome-screenshot --interactive
 ## terminal: gnome-terminal
