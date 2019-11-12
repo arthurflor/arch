@@ -97,15 +97,15 @@ Exec=transmission-gtk -m" > ~/.config/autostart/transmission-gtk.desktop
 
 echo -e "
 activate(){
-  python -m venv .venv ; source .venv/bin/activate ;
-  pip install --upgrade -q pip ; pip install -q flake8 autopep8 ;
+  python -m venv .venv && source .venv/bin/activate
+  pip install --upgrade -q pip && pip install -q flake8 autopep8
 }" >> ~/.bashrc
 
 echo -e "
 autoclick(){
   while [ 1 ]; do
-    sleep 5 ; xdotool mousemove 738 187 click 1 ;
-    sleep 5 ; xdotool mousemove 1680 187 click 1 ;
+    sleep 5 && xdotool mousemove 738 187 click 1
+    sleep 5 && xdotool mousemove 1680 187 click 1
   done
 }" >> ~/.bashrc
 
