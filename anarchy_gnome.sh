@@ -107,8 +107,17 @@ activate(){
 echo -e '
 autoclick(){
   while [ 1 ]; do
-    sleep 5 && xdotool mousemove 738 187 click 1
-    sleep 5 && xdotool mousemove 1680 187 click 1
+    sleep 5 && xdotool mousemove 325 50  click 1
+    sleep 1 && xdotool mousemove 738 185 click 1
+
+    sleep 5 && xdotool mousemove 725 50 click 1
+    sleep 1 && xdotool mousemove 738 185 click 1
+
+    sleep 5 && xdotool mousemove 1275 55 click 1
+    sleep 1 && xdotool mousemove 1690 185 click 1
+
+    sleep 5 && xdotool mousemove 1700 55 click 1
+    sleep 1 && xdotool mousemove 1690 185 click 1
   done
 }' >> ~/.bashrc
 
