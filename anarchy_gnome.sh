@@ -19,22 +19,22 @@ sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
 ### PACKAGES ###
 
 yay -Rcc baobab epiphany evolution-data-server rygel totem xdg-user-dirs-gtk vino vim yelp
-yay -Rcc gnome-{books,characters,clocks,dictionary,disk-utility,documents,font-viewer,logs,music,photos,shell-extensions,software,weather}
+yay -Rcc gnome-{books,characters,clocks,dictionary,disk-utility,documents,font-viewer,getting-started-docs,logs,music,photos,shell-extensions,software,weather}
 
 yay -S wd719x-firmware aic94xx-firmware
-yay -S pacman-contrib base-devel acpid fakeroot downgrade neofetch
+yay -S pacman-contrib base-devel acpid fakeroot sshfs gst-libav
+yay -S p7zip unrar ffmpegthumbnailer xdotool downgrade neofetch
 
-yay -S xdotool ffmpegthumbnailer p7zip unrar sshfs gst-libav bluez-{hid2hci,plugins,tools}
-yay -S gnome-{getting-started-docs,multi-writer,passwordsafe,tweaks} gedit-plugins
-
-yay -S ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts
+yay -S jre8-openjdk bluez-{hid2hci,plugins}
 yay -S pdfarranger system-config-printer cups-{filters,pdf} hplip
-
-yay -S gparted alacarte jre8-openjdk pamac-aur smartgit visual-studio-code-bin
-yay -S google-chrome chrome-gnome-shell transmission-gtk gimp mpv
+yay -S ttf-liberation ttf-ms-fonts adobe-source-han-sans-otc-fonts
 
 yay -S libreoffice-{fresh,extension-languagetool}
 yay -S hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
+
+yay -S gnome-{multi-writer,passwordsafe,tweaks} gedit-plugins
+yay -S google-chrome chrome-gnome-shell transmission-gtk gimp vlc
+yay -S gparted pamac-aur smartgit visual-studio-code-bin
 
 yay -c && yay -Scc
 
