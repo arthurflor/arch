@@ -24,11 +24,10 @@ sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
 # ==================================================================================================
 
 yay -Rcc vim
-yay -S pacman-contrib base-devel fakeroot --needed
+yay -S pacman-contrib base-devel fakeroot nano p7zip unrar zip --needed
 
 yay -S wd719x-firmware aic94xx-firmware
-yay -S p7zip unrar sshfs gst-libav bluez-{hid2hci,plugins}
-yay -S xdotool downgrade neofetch ffmpegthumbnailer
+yay -S xdotool downgrade neofetch
 
 yay -S pdfarranger system-config-printer cups-{filters,pdf} hplip
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
@@ -57,8 +56,8 @@ if [ $desktop == 'gnome' ] ; then
 	## monitor : gnome-system-monitor
 	## xkill   : xkill
 	## nautilus: nautilus --new-window
-	## desktop : ocultar todas as janelas normais
-	## Trocar espaço de trabalho
+	## desktop : hide all windows
+	## Change workspace
 
 	# ==============================================================================================
 	# GNOME - EXTENSIONS
@@ -84,7 +83,7 @@ if [ $desktop == 'gnome' ] ; then
 	yay -Rcc gnome-{books,boxes,characters,clocks,dictionary,disk-utility,documents,font-viewer}
 	yay -Rcc gnome-{getting-started-docs,logs,music,photos,shell-extensions,software,weather}
 
-	yay -S acpid gnome-tweaks gedit-plugins chrome-gnome-shell gparted pamac-aur
+	yay -S acpid ffmpegthumbnailer gnome-tweaks gedit-plugins chrome-gnome-shell gparted pamac-aur
 
 	# ==============================================================================================
 	# GNOME - LID CLOSE
@@ -128,48 +127,20 @@ if [ $desktop == 'gnome' ] ; then
 elif [ $desktop == 'plasma' ] ; then
 
 	# ==============================================================================================
-	# KDE - SHORTCUTS
+	# KDE - ADDONS
 	# ==============================================================================================
 
-	## print   : 
-	## terminal: 
-	## monitor : 
-	## xkill   : xkill
-	## dolphin : 
-	## desktop : ocultar todas as janelas normais
-	## Trocar espaço de trabalho
-
+    ## Netspeed
+    ## La Capitaine
+    
 	# ==============================================================================================
 	# KDE - PACKAGES
 	# ==============================================================================================
 
-    # sudo pacman -Syyu pacman-contrib base-devel cmake extra-cmake-modules --needed --noconfirm
-    # sudo pacman -S wget git git-lfs p7zip unrar zip ntfs-3g neofetch --needed --noconfirm
-
-    # sudo pacman -S nvidia nvidia-utils nvidia-settings bumblebee --needed --noconfirm
-    # sudo pacman -S bluez-hid2hci bluez-utils bluez-plugins bluez-tools --needed --noconfirm
-
-    # sudo pacman -S plasma latte-dock kdeconnect kate kcalc kwalletmanager packagekit-qt5 ffmpegthumbs kdegraphics-thumbnailers --needed --noconfirm
-    # sudo pacman -S ark okular gwenview filelight partitionmanager spectacle --needed --noconfirm
-    # sudo pacman -S openssh sshfs net-tools kdenetwork-filesharing --needed --noconfirm
-    # sudo pacman -S cups cups-filters cups-pdf print-manager simple-scan pdfarranger --needed --noconfirm
-
-	# ==============================================================================================
-	# KDE - WIDGETS
-	# ==============================================================================================
-
-    # pikaur -S la-capitaine-icon-theme --noconfirm
-    # pikaur -S plasma5-applets-active-window-control plasma5-applet-awesome-widgets --noconfirm
-
-    # mkdir -p /home/$user_name/.local/share/awesomewidgets/configs/
-    # cp extra/aw-arch /home/$user_name/.local/share/awesomewidgets/configs/
-
-	# ==============================================================================================
-	# KDE - ENVIRONMENT
-	# ==============================================================================================
-
-    # echo -e '[ModifierOnlyShortcuts]\nMeta=org.kde.lattedock,/Latte,org.kde.LatteDock,activateLauncherMenu' | sudo tee --append ~/.config/kwinrc
-    # qdbus org.kde.KWin /KWin reconfigure
+	yay -S kde-gtk-config kdeplasma-addons kinfocenter sddm-kcm user-manager
+	yay -S discover packagekit-qt5 bluedevil ffmpegthumbs kdegraphics-thumbnailers
+	yay -S breeze-gtk plasma-browser-integration kwalletmanager kdeconnect spectacle
+	yay -S print-manager skanlite kate kcalc ark okular gwenview filelight partitionmanager
 
 fi
 
@@ -181,19 +152,24 @@ fi
 cd ~ && wget -c https://download.ankama.com/launcher/full/linux/x64 -O wakfu
 chmod +x wakfu
 
-mkdir -p ~/.config/Ankama/ && mv ./wakfu ~/.config/Ankama/
+mkdir -p ~/.config/Ankama/
+mkdir -p ~/.local/share/applications/
+
+mv ./wakfu ~/.config/Ankama/
 sudo ln -s ~/.config/Ankama/wakfu /usr/bin/wakfu
 
 echo -e '
 [Desktop Entry]
 Type=Application
 Name=Wakfu
-Icon=/home/$(whoami)/.config/Ankama/zaap/wakfu/icon.png
+Icon=/home/'$(whoami)'/.config/Ankama/zaap/wakfu/icon.png
 Exec=wakfu\nCategories=Game' > ~/.local/share/applications/wakfu.desktop
 
 # ==================================================================================================
 # ENVIRONMENT
 # ==================================================================================================
+
+echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 
 sudo gpasswd -a $(whoami) vboxusers
 
@@ -212,17 +188,17 @@ activate(){
 echo -e '
 autoclick(){
   while [ 1 ]; do
-    sleep 5 && xdotool mousemove 325 50  click 1
-    sleep 1 && xdotool mousemove 738 185 click 1
+    sleep 5 && xdotool mousemove 325 50  click 1 && sleep 1 && xdotool click 1
+    sleep 1 && xdotool mousemove 738 185 click 1 && sleep 1 && xdotool click 1
 
-    sleep 5 && xdotool mousemove 725 50 click 1
-    sleep 1 && xdotool mousemove 738 185 click 1
+    sleep 5 && xdotool mousemove 725 50  click 1 && sleep 1 && xdotool click 1
+    sleep 1 && xdotool mousemove 738 185 click 1 && sleep 1 && xdotool click 1
 
-    sleep 5 && xdotool mousemove 1275 55 click 1
-    sleep 1 && xdotool mousemove 1690 185 click 1
+    sleep 5 && xdotool mousemove 1275 55  click 1 && sleep 1 && xdotool click 1
+    sleep 1 && xdotool mousemove 1690 185 click 1 && sleep 1 && xdotool click 1
 
-    sleep 5 && xdotool mousemove 1700 55 click 1
-    sleep 1 && xdotool mousemove 1690 185 click 1
+    sleep 5 && xdotool mousemove 1700 55  click 1 && sleep 1 && xdotool click 1
+    sleep 1 && xdotool mousemove 1690 185 click 1 && sleep 1 && xdotool click 1
   done
 }' >> ~/.bashrc
 
