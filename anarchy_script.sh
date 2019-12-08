@@ -2,11 +2,11 @@
 
 desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
 
-# ==================================================================================================
+# ===============================================================================
 # SYSTEM
-# ==================================================================================================
+# ===============================================================================
 
-sudo sed -i 's/loglevel=3/loglevel=3 quiet/g' /etc/default/grub
+sudo sed -i 's/loglevel=3/loglevel=3 quiet pci=noaer/g' /etc/default/grub
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -18,10 +18,11 @@ echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.con
 echo 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf
 
 sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
+echo -e 'vm.swappiness=10' | sudo tee --append /etc/sysctl.d/99-swappiness.conf
 
-# ==================================================================================================
+# ===============================================================================
 # PACKAGES
-# ==================================================================================================
+# ===============================================================================
 
 yay -Rcc vim
 yay -S pacman-contrib base-devel fakeroot nano p7zip unrar zip --needed
@@ -33,7 +34,7 @@ yay -S pdfarranger system-config-printer cups-{filters,pdf} hplip
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
 
 yay -S jre8-openjdk multibootusb keepassxc
-yay -S google-chrome qbittorrent gimp mpv
+yay -S google-chrome firefox qbittorrent gimp mpv
 
 yay -S libreoffice-{fresh,extension-languagetool}
 yay -S hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
@@ -41,15 +42,15 @@ yay -S hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
 yay -S smartgit visual-studio-code-bin
 yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
 
-# ==================================================================================================
+# ===============================================================================
 # GNOME
-# ==================================================================================================
+# ===============================================================================
 
 if [ $desktop == 'gnome' ] ; then
 
-	# ==============================================================================================
+	# ===========================================================================
 	# GNOME - SHORTCUTS
-	# ==============================================================================================
+	# ===========================================================================
 
 	## print   : gnome-screenshot --interactive
 	## terminal: gnome-terminal
@@ -59,9 +60,9 @@ if [ $desktop == 'gnome' ] ; then
 	## desktop : hide all windows
 	## Change workspace
 
-	# ==============================================================================================
+	# ===========================================================================
 	# GNOME - EXTENSIONS
-	# ==============================================================================================
+	# ===========================================================================
 
 	## AlternateTab
 	## Clipboard Indicator
@@ -75,9 +76,9 @@ if [ $desktop == 'gnome' ] ; then
 	## Top Panel Workspace Scroll
 	## Transparent Top Bar
 
-	# ==============================================================================================
+	# ===========================================================================
 	# GNOME - PACKAGES
-	# ==============================================================================================
+	# ===========================================================================
 	
 	yay -Rcc baobab epiphany evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
 	yay -Rcc gnome-{books,boxes,characters,clocks,dictionary,disk-utility,documents,font-viewer}
@@ -85,9 +86,9 @@ if [ $desktop == 'gnome' ] ; then
 
 	yay -S acpid ffmpegthumbnailer gnome-tweaks gedit-plugins chrome-gnome-shell gparted pamac-aur
 
-	# ==============================================================================================
+	# ===========================================================================
 	# GNOME - LID CLOSE
-	# ==============================================================================================
+	# ===========================================================================
 
 	echo -e 'HandleLidSwitch=ignore' | sudo tee --append /etc/systemd/logind.conf
 	echo -e 'HandleLidSwitchDocked=ignore' | sudo tee --append /etc/systemd/logind.conf
@@ -114,28 +115,28 @@ if [ $desktop == 'gnome' ] ; then
 
 	sudo systemctl enable acpid
 
-	# ==============================================================================================
+	# ===========================================================================
 	# GNOME - ENVIRONMENT
-	# ==============================================================================================
+	# ===========================================================================
 
 	gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
 
-# ==================================================================================================
+# ===============================================================================
 # KDE
-# ==================================================================================================
+# ===============================================================================
 
 elif [ $desktop == 'plasma' ] ; then
 
-	# ==============================================================================================
+	# ===========================================================================
 	# KDE - ADDONS
-	# ==============================================================================================
+	# ===========================================================================
 
     ## Netspeed
     ## La Capitaine
     
-	# ==============================================================================================
+	# ===========================================================================
 	# KDE - PACKAGES
-	# ==============================================================================================
+	# ===========================================================================
 
 	yay -S kde-gtk-config kdeplasma-addons kinfocenter sddm-kcm user-manager
 	yay -S discover packagekit-qt5 bluedevil ffmpegthumbs kdegraphics-thumbnailers
@@ -145,9 +146,9 @@ elif [ $desktop == 'plasma' ] ; then
 fi
 
 
-# ==================================================================================================
+# ===============================================================================
 # WAKFU
-# ==================================================================================================
+# ===============================================================================
 
 cd ~ && wget -c https://download.ankama.com/launcher/full/linux/x64 -O wakfu
 chmod +x wakfu
@@ -165,9 +166,9 @@ Name=Wakfu
 Icon=/home/'$(whoami)'/.config/Ankama/zaap/wakfu/icon.png
 Exec=wakfu\nCategories=Game' > ~/.local/share/applications/wakfu.desktop
 
-# ==================================================================================================
+# ===============================================================================
 # ENVIRONMENT
-# ==================================================================================================
+# ===============================================================================
 
 echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 
@@ -189,18 +190,17 @@ echo -e '
 autoclick(){
   while [ 1 ]; do
     sleep 5 && xdotool mousemove 325 50  click 1 && sleep 1 && xdotool click 1
-    sleep 1 && xdotool mousemove 738 185 click 1 && sleep 1 && xdotool click 1
+    sleep 1 && xdotool mousemove 738 200 click 1 && sleep 1 && xdotool click 1
 
     sleep 5 && xdotool mousemove 725 50  click 1 && sleep 1 && xdotool click 1
-    sleep 1 && xdotool mousemove 738 185 click 1 && sleep 1 && xdotool click 1
+    sleep 1 && xdotool mousemove 738 200 click 1 && sleep 1 && xdotool click 1
 
-    sleep 5 && xdotool mousemove 1275 55  click 1 && sleep 1 && xdotool click 1
-    sleep 1 && xdotool mousemove 1690 185 click 1 && sleep 1 && xdotool click 1
+    sleep 5 && xdotool mousemove 1275 50  click 1 && sleep 1 && xdotool click 1
+    sleep 1 && xdotool mousemove 1690 200 click 1 && sleep 1 && xdotool click 1
 
-    sleep 5 && xdotool mousemove 1700 55  click 1 && sleep 1 && xdotool click 1
-    sleep 1 && xdotool mousemove 1690 185 click 1 && sleep 1 && xdotool click 1
+    sleep 5 && xdotool mousemove 1700 50  click 1 && sleep 1 && xdotool click 1
+    sleep 1 && xdotool mousemove 1690 200 click 1 && sleep 1 && xdotool click 1
   done
 }' >> ~/.bashrc
 
 yay -c && yay -Scc
-
