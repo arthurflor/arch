@@ -190,16 +190,16 @@ echo -e '
 autoclick(){
   while [ 1 ]; do
     sleep 5 && xdotool mousemove 325 50  click 1 && sleep 1 && xdotool click 1
-    sleep 1 && xdotool mousemove 738 200 click 1 && sleep 1 && xdotool click 1
+    sleep 1 && xdotool mousemove 725 200 click 1 && sleep 1 && xdotool click 1
 
-    sleep 5 && xdotool mousemove 725 50  click 1 && sleep 1 && xdotool click 1
-    sleep 1 && xdotool mousemove 738 200 click 1 && sleep 1 && xdotool click 1
+    sleep 5 && xdotool mousemove 625 50  click 1 && sleep 1 && xdotool click 1
+    sleep 1 && xdotool mousemove 725 200 click 1 && sleep 1 && xdotool click 1
 
     sleep 5 && xdotool mousemove 1275 50  click 1 && sleep 1 && xdotool click 1
-    sleep 1 && xdotool mousemove 1690 200 click 1 && sleep 1 && xdotool click 1
+    sleep 1 && xdotool mousemove 1675 200 click 1 && sleep 1 && xdotool click 1
 
-    sleep 5 && xdotool mousemove 1700 50  click 1 && sleep 1 && xdotool click 1
-    sleep 1 && xdotool mousemove 1690 200 click 1 && sleep 1 && xdotool click 1
+    sleep 5 && xdotool mousemove 1575 50  click 1 && sleep 1 && xdotool click 1
+    sleep 1 && xdotool mousemove 1675 200 click 1 && sleep 1 && xdotool click 1
   done
 }' >> ~/.bashrc
 
