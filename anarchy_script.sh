@@ -33,6 +33,7 @@ yay -S xdotool downgrade neofetch
 yay -S pdfarranger system-config-printer cups-{filters,pdf} hplip
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
 
+yay -S la-capitaine-icon-themes
 yay -S jre8-openjdk multibootusb keepassxc
 yay -S google-chrome firefox qbittorrent gimp mpv
 
@@ -122,27 +123,26 @@ if [ $desktop == 'gnome' ] ; then
 	gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
 
 # ===============================================================================
-# KDE
+# KDE PLASMA
 # ===============================================================================
 
 elif [ $desktop == 'plasma' ] ; then
-
-	# ===========================================================================
-	# KDE - ADDONS
-	# ===========================================================================
-
-    ## Netspeed
-    ## La Capitaine
     
 	# ===========================================================================
-	# KDE - PACKAGES
+	# KDE PLASMA - PACKAGES
 	# ===========================================================================
 
 	yay -S kde-gtk-config kdeplasma-addons kinfocenter sddm-kcm user-manager
 	yay -S discover packagekit-qt5 bluedevil ffmpegthumbs kdegraphics-thumbnailers
-	yay -S breeze-gtk plasma-browser-integration kwalletmanager kdeconnect spectacle
-	yay -S print-manager skanlite kate kcalc ark okular gwenview filelight partitionmanager
+	yay -S breeze-gtk plasma-browser-integration kdeconnect spectacle print-manager
+	yay -S ark okular gwenview skanlite kate kcalc filelight partitionmanager
 
+	# ===========================================================================
+	# KDE PLASMA - ENVIRONMENT
+	# ===========================================================================
+
+    echo -e '[Wallet]\nEnabled=false' | sudo tee --append ~/.config/kwalletrc
+	
 fi
 
 
@@ -189,17 +189,17 @@ activate(){
 echo -e '
 autoclick(){
   while [ 1 ]; do
-    sleep 5 && xdotool mousemove 325 50  click 1 && sleep 1 && xdotool click 1
-    sleep 1 && xdotool mousemove 725 200 click 1 && sleep 1 && xdotool click 1
+    sleep 5 && xdotool mousemove 325 50  && xdotool click 1 key Escape
+    sleep 2 && xdotool mousemove 725 200 && xdotool click 1 key Escape
 
-    sleep 5 && xdotool mousemove 625 50  click 1 && sleep 1 && xdotool click 1
-    sleep 1 && xdotool mousemove 725 200 click 1 && sleep 1 && xdotool click 1
+    sleep 5 && xdotool mousemove 625 50  && xdotool click 1 key Escape
+    sleep 2 && xdotool mousemove 725 200 && xdotool click 1 key Escape
 
-    sleep 5 && xdotool mousemove 1275 50  click 1 && sleep 1 && xdotool click 1
-    sleep 1 && xdotool mousemove 1675 200 click 1 && sleep 1 && xdotool click 1
+    sleep 5 && xdotool mousemove 1275 50  && xdotool click 1 key Escape
+    sleep 2 && xdotool mousemove 1675 200 && xdotool click 1 key Escape
 
-    sleep 5 && xdotool mousemove 1575 50  click 1 && sleep 1 && xdotool click 1
-    sleep 1 && xdotool mousemove 1675 200 click 1 && sleep 1 && xdotool click 1
+    sleep 5 && xdotool mousemove 1575 50  && xdotool click 1 key Escape
+    sleep 2 && xdotool mousemove 1675 200 && xdotool click 1 key Escape
   done
 }' >> ~/.bashrc
 
