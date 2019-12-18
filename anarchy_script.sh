@@ -35,7 +35,7 @@ yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
 
 yay -S la-capitaine-icon-themes
 yay -S jre8-openjdk multibootusb keepassxc
-yay -S google-chrome firefox qbittorrent gimp mpv
+yay -S google-chrome firefox qbittorrent gimp vlc
 
 yay -S libreoffice-{fresh,extension-languagetool}
 yay -S hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
