@@ -23,7 +23,7 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
 
 ### Common packages
     pikaur -S wd719x-firmware aic94xx-firmware --noconfirm
-    pikaur -S jre multibootusb keepassxc pdfarranger xautoclick --noconfirm
+    pikaur -S jre imagewriter keepassxc pdfarranger xautoclick --noconfirm
 
     pikaur -S google-chrome qbittorrent gimp vlc --noconfirm
     pikaur -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle --noconfirm
