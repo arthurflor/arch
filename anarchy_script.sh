@@ -33,7 +33,6 @@ yay -S xdotool downgrade neofetch
 yay -S pdfarranger system-config-printer cups-{filters,pdf} hplip
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
 
-yay -S la-capitaine-icon-themes
 yay -S jre8-openjdk multibootusb keepassxc
 yay -S google-chrome firefox qbittorrent gimp vlc
 
