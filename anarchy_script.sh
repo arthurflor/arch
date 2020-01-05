@@ -28,7 +28,7 @@ yay -Rcc vim
 yay -S pacman-contrib base-devel fakeroot nano p7zip unrar zip --needed
 
 yay -S wd719x-firmware aic94xx-firmware
-yay -S xdotool downgrade neofetch
+yay -S openssh xdotool downgrade neofetch
 
 yay -S pdfarranger system-config-printer cups-{filters,pdf} hplip
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
