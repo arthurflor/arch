@@ -18,7 +18,6 @@ echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.con
 echo 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf
 
 sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
-echo -e 'vm.swappiness=10' | sudo tee --append /etc/sysctl.d/99-swappiness.conf
 
 # ===============================================================================
 # PACKAGES
@@ -26,8 +25,6 @@ echo -e 'vm.swappiness=10' | sudo tee --append /etc/sysctl.d/99-swappiness.conf
 
 yay -Rcc vim
 yay -S pacman-contrib base-devel fakeroot nano p7zip unrar zip --needed
-
-yay -S wd719x-firmware aic94xx-firmware
 yay -S openssh xdotool downgrade neofetch
 
 yay -S pdfarranger system-config-printer cups-{filters,pdf} hplip
@@ -174,7 +171,6 @@ echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreo
 sudo gpasswd -a $(whoami) vboxusers
 
 sudo systemctl enable org.cups.cupsd
-sudo systemctl enable avahi-daemon
 
 echo -e '
 activate(){
