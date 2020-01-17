@@ -19,25 +19,6 @@ echo 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf
 
 sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
 
-# ===============================================================================
-# PACKAGES
-# ===============================================================================
-
-yay -Rcc vim
-yay -S pacman-contrib base-devel fakeroot nano p7zip unrar zip --needed
-yay -S openssh xdotool downgrade neofetch
-
-yay -S pdfarranger system-config-printer cups-{filters,pdf} hplip
-yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
-
-yay -S jre8-openjdk multibootusb keepassxc
-yay -S google-chrome firefox qbittorrent gimp vlc
-
-yay -S libreoffice-{fresh,extension-languagetool}
-yay -S hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
-
-yay -S smartgit visual-studio-code-bin
-yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
 
 # ===============================================================================
 # GNOME
@@ -55,7 +36,7 @@ if [ $desktop == 'gnome' ] ; then
 	## xkill   : xkill
 	## nautilus: nautilus --new-window
 	## desktop : hide all windows
-	## Change workspace
+	## change workspace
 
 	# ===========================================================================
 	# GNOME - EXTENSIONS
@@ -77,40 +58,19 @@ if [ $desktop == 'gnome' ] ; then
 	# GNOME - PACKAGES
 	# ===========================================================================
 	
-	yay -Rcc baobab epiphany evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
-	yay -Rcc gnome-{books,boxes,characters,clocks,dictionary,disk-utility,documents,font-viewer}
-	yay -Rcc gnome-{getting-started-docs,logs,music,photos,shell-extensions,software,weather}
+	yay -Rcc baobab epiphany evolution-data-server rygel totem vino yelp
+	yay -Rcc gnome-{books,boxes,characters,clocks,dictionary,disk-utility,documents}
+	yay -Rcc gnome-{font-viewer,logs,music,photos,shell-extensions,software,weather}
 
-	yay -S acpid ffmpegthumbnailer gnome-tweaks gedit-plugins chrome-gnome-shell gparted pamac-aur
+	yay -S gnome-{multi-writer,tweaks} alacarte ffmpegthumbnailer
+	yay -S transmission-gtk chrome-gnome-shell gparted pamac-aur
 
-	# ===========================================================================
-	# GNOME - LID CLOSE
-	# ===========================================================================
-
-	echo -e 'HandleLidSwitch=ignore' | sudo tee --append /etc/systemd/logind.conf
-	echo -e 'HandleLidSwitchDocked=ignore' | sudo tee --append /etc/systemd/logind.conf
-
-	sudo touch /etc/acpi/events/lm_lid /etc/acpi/lid.sh
-	sudo chmod +x /etc/acpi/lid.sh
-
-	echo -e 'event=button/lid.*\naction=/etc/acpi/lid.sh' | sudo tee --append /etc/acpi/events/lm_lid
-	echo -e '
-	#!/bin/bash
-
-	USER='$(whoami)'
-	grep -q close /proc/acpi/button/lid/*/state
-
-	if [ $? = 0 ]; then
-	  su -c  "sleep 0.5 && xset -display :0.0 dpms force off" - $USER
-	fi
-
-	grep -q open /proc/acpi/button/lid/*/state
-
-	if [ $? = 0 ]; then
-	  su -c  "xset -display :0 dpms force on &> /tmp/screen.lid" - $USER
-	fi' | sudo tee --append /etc/acpi/lid.sh
-
-	sudo systemctl enable acpid
+	mkdir -p ~/.config/autostart/
+	echo -e "
+	[Desktop Entry]
+	Type=Application
+	Name=transmission-gtk
+	Exec=transmission-gtk -m" > ~/.config/autostart/transmission-gtk.desktop
 
 	# ===========================================================================
 	# GNOME - ENVIRONMENT
@@ -132,14 +92,35 @@ elif [ $desktop == 'plasma' ] ; then
 	yay -S discover packagekit-qt5 bluedevil ffmpegthumbs kdegraphics-thumbnailers
 	yay -S breeze-gtk plasma-browser-integration kdeconnect spectacle print-manager
 	yay -S ark okular gwenview skanlite kate kcalc filelight partitionmanager
+	yay -S multibootusb qbittorrent
 
 	# ===========================================================================
 	# KDE PLASMA - ENVIRONMENT
 	# ===========================================================================
 
     echo -e '[Wallet]\nEnabled=false' | sudo tee --append ~/.config/kwalletrc
-	
+
 fi
+
+
+# ===============================================================================
+# PACKAGES
+# ===============================================================================
+
+yay -Rcc vim xterm pavucontrol
+
+yay -S pacman-contrib base-devel fakeroot nano p7zip unrar zip --needed
+yay -S openssh xdotool downgrade neofetch jre8-openjdk keepassxc
+
+yay -S pdfarranger system-config-printer cups-{filters,pdf} hplip
+yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
+
+yay -S libreoffice-{fresh,extension-languagetool}
+yay -S hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
+
+yay -S google-chrome firefox gimp vlc
+yay -S smartgit visual-studio-code-bin
+yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
 
 
 # ===============================================================================
