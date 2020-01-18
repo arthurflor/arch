@@ -33,7 +33,6 @@ if [ $desktop == 'gnome' ] ; then
 	## print   : gnome-screenshot --interactive
 	## terminal: gnome-terminal
 	## monitor : gnome-system-monitor
-	## xkill   : xkill
 	## nautilus: nautilus --new-window
 	## desktop : hide all windows
 	## change workspace
@@ -43,16 +42,16 @@ if [ $desktop == 'gnome' ] ; then
 	# ===========================================================================
 
 	## AlternateTab
+	## Arch Linux Updates Indicator
 	## Clipboard Indicator
 	## Dash to Dock
 	## Dynamic Panel Transparency
 	## GSConnect
+	## NetSpeed
 	## OpenWeather
-	## Pamac Updates Indicator
 	## Sound Input & Output Device Chooser
 	## Status Area Horizontal Spacing
 	## Top Panel Workspace Scroll
-	## Transparent Top Bar
 
 	# ===========================================================================
 	# GNOME - PACKAGES
@@ -62,8 +61,8 @@ if [ $desktop == 'gnome' ] ; then
 	yay -Rcc gnome-{books,boxes,characters,clocks,dictionary,disk-utility,documents}
 	yay -Rcc gnome-{font-viewer,logs,music,photos,shell-extensions,software,weather}
 
-	yay -S gnome-{multi-writer,tweaks} alacarte ffmpegthumbnailer
-	yay -S transmission-gtk chrome-gnome-shell gparted pamac-aur
+	yay -S gnome-{multi-writer,tweaks} alacarte gparted
+	yay -S chrome-gnome-shell transmission-gtk
 
 	mkdir -p ~/.config/autostart/
 	echo -e "
@@ -98,7 +97,7 @@ elif [ $desktop == 'plasma' ] ; then
 	# KDE PLASMA - ENVIRONMENT
 	# ===========================================================================
 
-    echo -e '[Wallet]\nEnabled=false' | sudo tee --append ~/.config/kwalletrc
+	echo -e '[Wallet]\nEnabled=false' | sudo tee --append ~/.config/kwalletrc
 
 fi
 
@@ -107,7 +106,7 @@ fi
 # PACKAGES
 # ===============================================================================
 
-yay -Rcc vim xterm pavucontrol
+yay -Rcc vim xterm pavucontrol xf86-video-intel
 
 yay -S pacman-contrib base-devel fakeroot nano p7zip unrar zip --needed
 yay -S openssh xdotool downgrade neofetch jre8-openjdk keepassxc
