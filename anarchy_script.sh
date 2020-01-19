@@ -75,7 +75,9 @@ if [ $desktop == 'gnome' ] ; then
 	# GNOME - ENVIRONMENT
 	# ===========================================================================
 
+	xdg-user-dirs-update --set DESKTOP ~/Code
 	gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
+
 
 # ===============================================================================
 # KDE PLASMA
