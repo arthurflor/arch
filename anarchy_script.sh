@@ -111,7 +111,7 @@ fi
 yay -Rcc vim xterm pavucontrol xf86-video-intel
 
 yay -S pacman-contrib base-devel fakeroot nano p7zip unrar zip --needed
-yay -S openssh xdotool downgrade neofetch jre8-openjdk keepassxc
+yay -S openssh neofetch jre8-openjdk keepassxc downgrade xmacro
 
 yay -S pdfarranger system-config-printer cups-{filters,pdf} hplip
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
@@ -161,23 +161,6 @@ activate(){
   if [ "$1" == "initial" ]; then
     pip install --upgrade pip flake8 autopep8
   fi
-}' >> ~/.bashrc
-
-echo -e '
-autoclick(){
-  while [ 1 ]; do
-    sleep 5 && xdotool mousemove 325 50  && xdotool click 1 key Escape
-    sleep 2 && xdotool mousemove 725 200 && xdotool click 1 key Escape
-
-    sleep 5 && xdotool mousemove 625 50  && xdotool click 1 key Escape
-    sleep 2 && xdotool mousemove 725 200 && xdotool click 1 key Escape
-
-    sleep 5 && xdotool mousemove 1275 50  && xdotool click 1 key Escape
-    sleep 2 && xdotool mousemove 1675 200 && xdotool click 1 key Escape
-
-    sleep 5 && xdotool mousemove 1575 50  && xdotool click 1 key Escape
-    sleep 2 && xdotool mousemove 1675 200 && xdotool click 1 key Escape
-  done
 }' >> ~/.bashrc
 
 yay -c && yay -Scc
