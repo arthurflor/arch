@@ -61,7 +61,7 @@ if [ $desktop == 'gnome' ] ; then
 	yay -Rcc gnome-{books,boxes,characters,clocks,dictionary,disk-utility,documents}
 	yay -Rcc gnome-{font-viewer,logs,music,photos,shell-extensions,software,weather}
 
-	yay -S gnome-{multi-writer,tweaks} alacarte gparted
+	yay -S gnome-{multi-writer,tweaks} alacarte gparted ffmpegthumbnailer
 	yay -S chrome-gnome-shell transmission-gtk
 
 	mkdir -p ~/.config/autostart/
@@ -110,8 +110,9 @@ fi
 
 yay -Rcc vim xterm pavucontrol xf86-video-intel
 
-yay -S pacman-contrib base-devel fakeroot nano p7zip unrar zip --needed
-yay -S openssh neofetch jre8-openjdk keepassxc downgrade xmacro
+yay -S vulkan-intel pacman-contrib base-devel --needed
+yay -S nano openssh fakeroot downgrade xmacro p7zip unrar zip
+yay -S neofetch jre8-openjdk keepassxc
 
 yay -S pdfarranger system-config-printer cups-{filters,pdf} hplip
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
@@ -119,8 +120,7 @@ yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
 yay -S libreoffice-{fresh,extension-languagetool}
 yay -S hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
 
-yay -S google-chrome firefox gimp vlc
-yay -S smartgit visual-studio-code-bin
+yay -S google-chrome firefox gimp vlc smartgit visual-studio-code-bin
 yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
 
 
