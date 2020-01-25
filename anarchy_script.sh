@@ -111,38 +111,19 @@ fi
 yay -Rcc vim xterm pavucontrol xf86-video-intel
 
 yay -S vulkan-intel pacman-contrib base-devel --needed
-yay -S nano openssh fakeroot downgrade xmacro p7zip unrar zip
-yay -S neofetch jre8-openjdk keepassxc
+yay -S nano openssh neofetch fakeroot downgrade xmacro p7zip unrar zip
+yay -S system-config-printer cups-{filters,pdf} hplip
+yay -S jre10-openjdk keepassxc pdfarranger
 
-yay -S pdfarranger system-config-printer cups-{filters,pdf} hplip
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
-
 yay -S libreoffice-{fresh,extension-languagetool}
 yay -S hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
 
-yay -S google-chrome firefox gimp vlc smartgit visual-studio-code-bin
 yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
+yay -S google-chrome firefox gimp vlc
+yay -S smartgit visual-studio-code-bin
+yay -S ankama-launcher
 
-
-# ===============================================================================
-# WAKFU
-# ===============================================================================
-
-cd ~ && wget -c https://download.ankama.com/launcher/full/linux/x64 -O wakfu
-chmod +x wakfu
-
-mkdir -p ~/.config/Ankama/
-mkdir -p ~/.local/share/applications/
-
-mv ./wakfu ~/.config/Ankama/
-sudo ln -s ~/.config/Ankama/wakfu /usr/bin/wakfu
-
-echo -e '
-[Desktop Entry]
-Type=Application
-Name=Wakfu
-Icon=/home/'$(whoami)'/.config/Ankama/zaap/wakfu/icon.png
-Exec=wakfu\nCategories=Game' > ~/.local/share/applications/wakfu.desktop
 
 # ===============================================================================
 # ENVIRONMENT
@@ -151,6 +132,7 @@ Exec=wakfu\nCategories=Game' > ~/.local/share/applications/wakfu.desktop
 echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 
 sudo gpasswd -a $(whoami) vboxusers
+sudo gpasswd -a $(whoami) games
 
 sudo systemctl enable org.cups.cupsd
 
