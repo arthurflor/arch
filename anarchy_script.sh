@@ -43,6 +43,7 @@ if [ $desktop == 'gnome' ] ; then
 
 	## AlternateTab
 	## Arch Linux Updates Indicator
+	## Autohide Battery
 	## Clipboard Indicator
 	## Dash to Dock
 	## Dynamic Panel Transparency
