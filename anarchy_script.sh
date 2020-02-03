@@ -61,7 +61,7 @@ if [ $desktop == 'gnome' ] ; then
 	yay -Rcc gnome-{books,boxes,characters,clocks,dictionary,disk-utility,documents}
 	yay -Rcc gnome-{font-viewer,logs,music,photos,shell-extensions,software,weather}
 
-	yay -S gnome-{multi-writer,tweaks} alacarte gparted ffmpegthumbnailer
+	yay -S gnome-{multi-writer,tweaks} gparted ffmpegthumbnailer
 	yay -S chrome-gnome-shell transmission-gtk
 
 	mkdir -p ~/.config/autostart/
@@ -112,17 +112,16 @@ yay -Rcc vim xterm pavucontrol xf86-video-intel
 
 yay -S vulkan-intel pacman-contrib base-devel --needed
 yay -S nano openssh neofetch fakeroot downgrade xmacro p7zip unrar zip
-yay -S system-config-printer cups-{filters,pdf} hplip
-yay -S jre10-openjdk keepassxc pdfarranger
+yay -S system-config-printer pdfarranger cups-{filters,pdf} hplip
 
-yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
+yay -S jre10-openjdk keepassxc ttf-ms-fonts adobe-source-han-sans-otc-fonts
+yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
+
 yay -S libreoffice-{fresh,extension-languagetool}
 yay -S hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
 
-yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
-yay -S google-chrome firefox gimp vlc
+yay -S google-chrome gimp vlc ankama-launcher
 yay -S smartgit visual-studio-code-bin
-yay -S ankama-launcher
 
 
 # ===============================================================================
