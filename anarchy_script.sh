@@ -57,12 +57,12 @@ if [ $desktop == 'gnome' ] ; then
 	# GNOME - PACKAGES
 	# ===========================================================================
 	
-	yay -Rcc baobab epiphany evolution-data-server rygel totem vino yelp
-	yay -Rcc gnome-{books,boxes,characters,clocks,dictionary,disk-utility,documents}
-	yay -Rcc gnome-{font-viewer,logs,music,photos,shell-extensions,software,weather}
+	yay -Rcc baobab epiphany rygel totem xdg-user-dirs-gtk vino yelp
+	yay -Rcc gnome-{books,boxes,characters,clocks,contacts,dictionary,disk-utility,documents}
+	yay -Rcc gnome-{font-viewer,logs,maps,music,notes,photos,shell-extensions,software,todo,weather}
 
-	yay -S gnome-{multi-writer,tweaks} gparted ffmpegthumbnailer
-	yay -S chrome-gnome-shell transmission-gtk
+	yay -S ffmpegthumbnailer chrome-gnome-shell papirus-icon-theme
+	yay -S gnome-{multi-writer,tweaks} gparted transmission-gtk
 
 	mkdir -p ~/.config/autostart/
 	echo -e "
@@ -75,7 +75,8 @@ if [ $desktop == 'gnome' ] ; then
 	# GNOME - ENVIRONMENT
 	# ===========================================================================
 
-	xdg-user-dirs-update --set DESKTOP ~/Code
+	echo -e 'HandleLidSwitch=ignore' | sudo tee --append /etc/systemd/logind.conf
+
 	gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
 
 
@@ -128,10 +129,16 @@ yay -S smartgit visual-studio-code-bin
 # ENVIRONMENT
 # ===============================================================================
 
+mkdir Code
+gio set Code metadata::custom-icon-name "folder-script"
+
+mkdir VirtualBox\ VMs
+gio set VirtualBox\ VMs metadata::custom-icon-name "folder-linux"
+
 echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 
-sudo gpasswd -a $(whoami) vboxusers
 sudo gpasswd -a $(whoami) games
+sudo gpasswd -a $(whoami) vboxusers
 
 sudo systemctl enable org.cups.cupsd
 
