@@ -109,10 +109,10 @@ fi
 # PACKAGES
 # ===============================================================================
 
-yay -Rcc vim xterm pavucontrol xf86-video-intel
+yay -Rcc vim xterm pavucontrol
 
-yay -S vulkan-intel pacman-contrib base-devel --needed
-yay -S nano openssh neofetch fakeroot downgrade xmacro p7zip unrar zip
+yay -S pacman-contrib base-devel --needed
+yay -S nano openssh neofetch fakeroot downgrade xmacro zip rar p7zip
 yay -S system-config-printer pdfarranger cups-{filters,pdf} hplip
 
 yay -S jre10-openjdk keepassxc ttf-ms-fonts adobe-source-han-sans-otc-fonts
