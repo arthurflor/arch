@@ -146,7 +146,7 @@ echo -e '
 activate(){
   python -m venv .venv && source .venv/bin/activate
 
-  if [ "$1" == "initial" ]; then
+  if [ "$1" == "--initial" ]; then
     pip install --upgrade pip flake8 autopep8
   fi
 }' >> ~/.bashrc
