@@ -50,7 +50,6 @@ if [ $desktop == 'gnome' ] ; then
 	## NetSpeed
 	## OpenWeather
 	## Sound Input & Output Device Chooser
-	## Status Area Horizontal Spacing
 	## Top Panel Workspace Scroll
 
 	# ===========================================================================
@@ -61,8 +60,13 @@ if [ $desktop == 'gnome' ] ; then
 	yay -Rcc gnome-{books,boxes,characters,clocks,contacts,dictionary,disk-utility,documents}
 	yay -Rcc gnome-{font-viewer,logs,maps,music,notes,photos,shell-extensions,software,todo,weather}
 
-	yay -S ffmpegthumbnailer chrome-gnome-shell papirus-icon-theme
-	yay -S gnome-{multi-writer,tweaks} gparted transmission-gtk
+	yay -S ffmpegthumbnailer chrome-gnome-shell gnome-{multi-writer,tweaks} gparted transmission-gtk
+	yay -S --edit-menu tela-icon-theme
+
+	
+	# ===========================================================================
+	# GNOME - ENVIRONMENT
+	# ===========================================================================
 
 	mkdir -p ~/.config/autostart/
 	echo -e "
@@ -71,13 +75,9 @@ if [ $desktop == 'gnome' ] ; then
 	Name=transmission-gtk
 	Exec=transmission-gtk -m" > ~/.config/autostart/transmission-gtk.desktop
 
-	# ===========================================================================
-	# GNOME - ENVIRONMENT
-	# ===========================================================================
-
-	echo -e 'HandleLidSwitch=ignore' | sudo tee --append /etc/systemd/logind.conf
-
 	gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
+
+	sudo cp ./gnome-tweak-tool-lid-inhibitor /usr/lib/
 
 
 # ===============================================================================
@@ -133,7 +133,7 @@ mkdir Code
 gio set Code metadata::custom-icon-name "folder-script"
 
 mkdir VirtualBox\ VMs
-gio set VirtualBox\ VMs metadata::custom-icon-name "folder-linux"
+gio set VirtualBox\ VMs metadata::custom-icon-name "folder-activities"
 
 echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 
