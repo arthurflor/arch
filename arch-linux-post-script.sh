@@ -143,12 +143,21 @@ sudo gpasswd -a $(whoami) vboxusers
 sudo systemctl enable org.cups.cupsd
 
 echo -e '
-activate(){
+activate () {
   python -m venv .venv && source .venv/bin/activate
 
   if [ "$1" == "--initial" ]; then
     pip install --upgrade pip flake8 autopep8
   fi
-}' >> ~/.bashrc
+}
+
+macrorec () {
+  xmacrorec2 > "$1"
+}
+
+macroplay () {
+  for ((;;)) do xmacroplay < "$1"; done
+}
+' >> ~/.bashrc
 
 yay -c && yay -Scc
