@@ -56,8 +56,8 @@ if [ $desktop == 'gnome' ] ; then
 	# GNOME - PACKAGES
 	# ===========================================================================
 	
-	yay -Rcc baobab epiphany rygel totem xdg-user-dirs-gtk vino yelp
-	yay -Rcc gnome-{books,boxes,characters,clocks,contacts,dictionary,disk-utility,documents}
+	yay -Rcc baobab epiphany evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
+	yay -Rcc gnome-{books,boxes,calendar,characters,clocks,contacts,dictionary,disk-utility,documents}
 	yay -Rcc gnome-{font-viewer,logs,maps,music,notes,photos,shell-extensions,software,todo,weather}
 
 	yay -S ffmpegthumbnailer chrome-gnome-shell gnome-{multi-writer,tweaks} gparted transmission-gtk
