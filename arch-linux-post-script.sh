@@ -49,6 +49,7 @@ if [ $desktop == 'gnome' ] ; then
 	## GSConnect
 	## NetSpeed
 	## OpenWeather
+	## Soft brightness
 	## Sound Input & Output Device Chooser
 	## Top Panel Workspace Scroll
 
