@@ -121,7 +121,7 @@ yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
 yay -S libreoffice-{fresh,extension-languagetool}
 yay -S hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
 
-yay -S google-chrome gimp vlc ankama-launcher
+yay -S google-chrome firefox gimp vlc ankama-launcher
 yay -S smartgit visual-studio-code-bin
 
 
