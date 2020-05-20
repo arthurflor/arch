@@ -43,12 +43,10 @@ if [ $desktop == 'gnome' ] ; then
 
 	## AlternateTab
 	## Arch Linux Updates Indicator
-	## Clipboard Indicator
 	## Dash to Dock
 	## Dynamic Panel Transparency
 	## GSConnect
 	## NetSpeed
-	## OpenWeather
 	## Sound Input & Output Device Chooser
 	## Top Panel Workspace Scroll
 
@@ -57,11 +55,11 @@ if [ $desktop == 'gnome' ] ; then
 	# ===========================================================================
 	
 	yay -Rcc baobab epiphany evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
-	yay -Rcc gnome-{books,boxes,calendar,characters,clocks,contacts,dictionary,disk-utility,documents}
-	yay -Rcc gnome-{font-viewer,logs,maps,music,notes,photos,shell-extensions,software,todo,weather}
+	yay -Rcc gnome-{books,boxes,characters,clocks,contacts,dictionary,disk-utility,documents}
+	yay -Rcc gnome-{font-viewer,logs,maps,music,notes,photos,shell-extensions,software,todo}
 
-	yay -S ffmpegthumbnailer chrome-gnome-shell gnome-{multi-writer,tweaks} gparted transmission-gtk
-	yay -S --edit-menu tela-icon-theme
+	yay -S gnome-{calendar,multi-writer,tweaks,weather} ffmpegthumbnailer chrome-gnome-shell
+	yay -S gparted transmission-gtk tela-icon-theme
 
 	
 	# ===========================================================================
