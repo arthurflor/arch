@@ -114,7 +114,7 @@ yay -S pacman-contrib base-devel --needed
 yay -S nano openssh neofetch fakeroot downgrade xmacro zip rar p7zip
 yay -S system-config-printer pdfarranger cups-{filters,pdf} hplip
 
-yay -S jre10-openjdk keepassxc ttf-ms-fonts adobe-source-han-sans-otc-fonts
+yay -S jre8-openjdk keepassxc ttf-ms-fonts adobe-source-han-sans-otc-fonts
 yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
 
 yay -S libreoffice-{fresh,extension-languagetool}
