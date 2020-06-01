@@ -58,8 +58,8 @@ if [ $desktop == 'gnome' ] ; then
 	yay -Rcc gnome-{books,boxes,characters,clocks,contacts,dictionary,disk-utility,documents}
 	yay -Rcc gnome-{font-viewer,logs,maps,music,notes,photos,shell-extensions,software,todo}
 
-	yay -S gnome-{calendar,multi-writer,tweaks,weather} ffmpegthumbnailer chrome-gnome-shell
-	yay -S gparted transmission-gtk tela-icon-theme
+	yay -S gnome-{calendar,multi-writer,tweaks,weather}
+	yay -S ffmpegthumbnailer chrome-gnome-shell transmission-gtk tela-icon-theme
 
 	
 	# ===========================================================================
