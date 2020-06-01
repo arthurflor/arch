@@ -47,7 +47,6 @@ if [ $desktop == 'gnome' ] ; then
 	## Dynamic Panel Transparency
 	## GSConnect
 	## NetSpeed
-	## OpenWeather
 	## Sound Input & Output Device Chooser
 	## Top Panel Workspace Scroll
 
@@ -57,9 +56,9 @@ if [ $desktop == 'gnome' ] ; then
 	
 	yay -Rcc baobab epiphany evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
 	yay -Rcc gnome-{books,boxes,characters,clocks,contacts,dictionary,disk-utility,documents}
-	yay -Rcc gnome-{font-viewer,logs,maps,music,notes,photos,shell-extensions,software,todo,weather}
+	yay -Rcc gnome-{font-viewer,logs,maps,music,notes,photos,shell-extensions,software,todo}
 
-	yay -S gnome-{calendar,multi-writer,tweaks} ffmpegthumbnailer chrome-gnome-shell
+	yay -S gnome-{calendar,multi-writer,tweaks,weather} ffmpegthumbnailer chrome-gnome-shell
 	yay -S gparted transmission-gtk tela-icon-theme
 
 	
