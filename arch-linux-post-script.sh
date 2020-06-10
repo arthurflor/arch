@@ -56,12 +56,11 @@ if [ $desktop == 'gnome' ] ; then
 	# ===========================================================================
 	
 	yay -Rcc baobab epiphany evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
-	yay -Rcc gnome-{books,boxes,characters,clocks,contacts,dictionary,disk-utility,documents}
+	yay -Rcc gnome-{books,boxes,calendar,characters,clocks,contacts,dictionary,disk-utility,documents}
 	yay -Rcc gnome-{font-viewer,logs,maps,music,notes,photos,shell-extensions,software,todo,weather}
 
-	yay -S gnome-{calendar,multi-writer,tweaks}
-	yay -S ffmpegthumbnailer chrome-gnome-shell transmission-gtk tela-icon-theme
-
+	yay -S ffmpegthumbnailer chrome-gnome-shell
+	yay -S gnome-{multi-writer,tweaks} transmission-gtk tela-icon-theme
 	
 	# ===========================================================================
 	# GNOME - ENVIRONMENT
