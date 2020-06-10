@@ -112,12 +112,15 @@ yay -Rcc vim xterm pavucontrol
 
 yay -S pacman-contrib base-devel fakeroot --needed
 yay -S nano openssh neofetch xmacro zip unrar p7zip
-yay -S system-config-printer cups-{filters,pdf} pdfarranger hplip
+
+yay -S system-config-printer cups-{filters,pdf}
+yay -S jre8-openjdk keepassxc pdfarranger hplip
 
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
-yay -S libreoffice-{fresh,extension-languagetool} hunspell-{en_US} hyphen-{en} libmythes mythes-{en}
+yay -S libreoffice-{fresh,extension-languagetool}
+yay -S hunspell-{en_US} hyphen-{en} libmythes mythes-{en}
 
-yay -S jre8-openjdk keepassxc virtualbox virtualbox-guest-iso
+yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
 yay -S google-chrome firefox gimp vlc ankama-launcher
 yay -S smartgit visual-studio-code-bin
 
@@ -126,11 +129,11 @@ yay -S smartgit visual-studio-code-bin
 # ENVIRONMENT
 # ===============================================================================
 
-mkdir Code
-gio set Code metadata::custom-icon-name "folder-script"
+mkdir ~/Code
+gio set ~/Code metadata::custom-icon-name "folder-script"
 
-mkdir VirtualBox\ VMs
-gio set VirtualBox\ VMs metadata::custom-icon-name "folder-activities"
+mkdir ~/Documents/VirtualBox\ VMs
+gio set ~/Documents/VirtualBox\ VMs metadata::custom-icon-name "folder-activities"
 
 echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 
