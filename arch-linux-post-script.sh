@@ -110,16 +110,14 @@ fi
 
 yay -Rcc vim xterm pavucontrol
 
-yay -S pacman-contrib base-devel --needed
-yay -S nano openssh neofetch fakeroot downgrade xmacro zip rar p7zip
-yay -S system-config-printer pdfarranger cups-{filters,pdf} hplip
+yay -S pacman-contrib base-devel fakeroot --needed
+yay -S nano openssh neofetch xmacro zip unrar p7zip
+yay -S system-config-printer cups-{filters,pdf} pdfarranger hplip
 
-yay -S jre8-openjdk keepassxc ttf-ms-fonts adobe-source-han-sans-otc-fonts
-yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
+yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
+yay -S libreoffice-{fresh,extension-languagetool} hunspell-{en_US} hyphen-{en} libmythes mythes-{en}
 
-yay -S libreoffice-{fresh,extension-languagetool}
-yay -S hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
-
+yay -S jre8-openjdk keepassxc virtualbox virtualbox-guest-iso
 yay -S google-chrome firefox gimp vlc ankama-launcher
 yay -S smartgit visual-studio-code-bin
 
