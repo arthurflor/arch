@@ -50,7 +50,6 @@ if [ $desktop == 'gnome' ] ; then
 	## NetSpeed
 	## OpenWeather
 	## Sound Input & Output Device Chooser
-	## Top Panel Workspace Scroll
 
 	# ===========================================================================
 	# GNOME - PACKAGES
