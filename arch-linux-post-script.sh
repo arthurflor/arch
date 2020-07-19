@@ -47,7 +47,6 @@ if [ $desktop == 'gnome' ] ; then
 	## Dash to Dock
 	## Dynamic Panel Transparency
 	## GSConnect
-	## NetSpeed
 	## Sound Input & Output Device Chooser
 
 	# ===========================================================================
