@@ -47,6 +47,7 @@ if [ $desktop == 'gnome' ] ; then
 	## Dash to Dock
 	## Dynamic Panel Transparency
 	## GSConnect
+	## OpenWeather
 	## Sound Input & Output Device Chooser
 
 	# ===========================================================================
@@ -55,7 +56,7 @@ if [ $desktop == 'gnome' ] ; then
 	
 	yay -Rcc baobab epiphany evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
 	yay -Rcc gnome-{books,boxes,calendar,characters,clocks,contacts,dictionary,disk-utility,documents}
-	yay -Rcc gnome-{font-viewer,logs,maps,music,notes,photos,shell-extensions,software,todo}
+	yay -Rcc gnome-{font-viewer,logs,maps,music,notes,photos,shell-extensions,software,todo,weather}
 
 	yay -S ffmpegthumbnailer chrome-gnome-shell
 	yay -S gnome-{multi-writer,tweaks} transmission-gtk tela-icon-theme
