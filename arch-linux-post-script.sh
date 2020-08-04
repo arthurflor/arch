@@ -126,11 +126,8 @@ yay -S smartgit visual-studio-code-bin
 # ENVIRONMENT
 # ===============================================================================
 
-mkdir ~/Code
+mkdir ~/Code ~/Documents/VirtualBox\ VMs
 gio set ~/Code metadata::custom-icon-name "folder-script"
-
-mkdir ~/Documents/VirtualBox\ VMs
-gio set ~/Documents/VirtualBox\ VMs metadata::custom-icon-name "folder-activities"
 
 echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 
