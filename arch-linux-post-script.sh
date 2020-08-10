@@ -6,7 +6,7 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
 # SYSTEM
 # ===============================================================================
 
-sudo sed -i 's/loglevel=3/loglevel=3 quiet pci=noaer/g' /etc/default/grub
+sudo sed -i 's/loglevel=3/loglevel=3 quiet pci=noaer fbcon=nodefer/g' /etc/default/grub
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
