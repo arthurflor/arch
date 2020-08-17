@@ -45,7 +45,6 @@ if [ $desktop == 'gnome' ] ; then
 	## Arch Linux Updates Indicator
 	## Clipboard Indicator
 	## Dash to Dock
-	## Dynamic Panel Transparency
 	## GSConnect
 	## Sound Input & Output Device Chooser
 
