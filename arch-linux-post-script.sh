@@ -18,6 +18,7 @@ echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.con
 echo 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf
 
 sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
+sudo rm -R /usr/share/backgrounds/anarchy
 
 
 # ===============================================================================
@@ -30,22 +31,22 @@ if [ $desktop == 'gnome' ] ; then
 	# GNOME - SHORTCUTS
 	# ===========================================================================
 
-	## print   : gnome-screenshot --interactive
-	## terminal: gnome-terminal
-	## monitor : gnome-system-monitor
-	## nautilus: nautilus --new-window
-	## desktop : hide all windows
-	## change workspace
+	## Hide all normal windows  : Super + D
+	## Monitor                  : Ctrl + Alt + Delete (gnome-system-monitor)
+	## Nautilus                 : Super + E (nautilus --new-window)
+	## Print                    : Print (gnome-screenshot --interactive)
+	## Switch to workspace      : Super + [F1, F2, F3, F4]
+	## Switch windows           : Alt + Tab
+	## Terminal                 : Ctrl + Alt + T (gnome-terminal)
 
 	# ===========================================================================
 	# GNOME - EXTENSIONS
 	# ===========================================================================
 
-	## AlternateTab
 	## Arch Linux Updates Indicator
-	## Clipboard Indicator
 	## Dash to Dock
 	## GSConnect
+	## OpenWeather
 	## Sound Input & Output Device Chooser
 
 	# ===========================================================================
@@ -54,7 +55,7 @@ if [ $desktop == 'gnome' ] ; then
 	
 	yay -Rcc baobab epiphany evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
 	yay -Rcc gnome-{books,boxes,calendar,characters,clocks,contacts,dictionary,disk-utility,documents}
-	yay -Rcc gnome-{font-viewer,logs,maps,music,notes,photos,shell-extensions,software,todo}
+	yay -Rcc gnome-{font-viewer,logs,maps,music,notes,photos,shell-extensions,software,todo,weather}
 
 	yay -S ffmpegthumbnailer chrome-gnome-shell
 	yay -S gnome-{multi-writer,tweaks} transmission-gtk tela-icon-theme
@@ -73,6 +74,9 @@ if [ $desktop == 'gnome' ] ; then
 	gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
 
 	sudo cp ./gnome-tweak-tool-lid-inhibitor /usr/lib/
+	
+	sudo cp -R ./ghib /usr/share/backgrounds/gnome/
+    sudo mv /usr/share/backgrounds/gnome/ghib/ghib-dynamic.xml /usr/share/gnome-background-properties/
 
 
 # ===============================================================================
