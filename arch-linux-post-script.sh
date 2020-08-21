@@ -87,7 +87,7 @@ if [ $desktop == 'gnome' ] ; then
     echo 'HandleLidSwitchDocked=ignore' | sudo tee --append /etc/systemd/logind.conf
     echo 'event=button/lid.*' | sudo tee --append /etc/acpi/events/lm_lid
     echo 'action=/etc/acpi/lid.sh' | sudo tee --append /etc/acpi/events/lm_lid
-	echo -e '#!/bin/bash
+    echo -e '#!/bin/bash
 
 pid=$(pgrep "^gnome-shell$")
 user=$(ps -o uname= -p $pid)
@@ -104,7 +104,7 @@ if [ $? = 0 ]; then
     runuser -l $user -c "busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 0"
 fi' > /etc/acpi/lid.sh
 
-	chmod +x /etc/acpi/lid.sh
+    chmod +x /etc/acpi/lid.sh
 
 
 # ===============================================================================
