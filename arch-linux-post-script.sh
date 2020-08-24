@@ -44,6 +44,7 @@ if [ $desktop == 'gnome' ] ; then
 	# ===========================================================================
 
 	## Arch Linux Updates Indicator
+	## Clipboard Indicator
 	## Dash to Dock
 	## GSConnect
 	## OpenWeather
