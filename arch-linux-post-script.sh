@@ -6,9 +6,11 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
 # SYSTEM
 # ===============================================================================
 
-sudo sed -i 's/loglevel=3/loglevel=3 quiet pci=noaer fbcon=nodefer/g' /etc/default/grub
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
+sudo sed -i 's/loglevel=3/loglevel=0 quiet rd.udev.log_priority=0 rd.systemd.show_status=0 pci=noaer fbcon=nodefer/g' /etc/default/grub
+
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg
 
 echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen && sudo locale-gen
 echo -e 'FONT=lat0-16' | sudo tee --append /etc/vconsole.conf
