@@ -175,7 +175,7 @@ activate () {
   python -m venv .venv && source .venv/bin/activate
 
   if [ "$1" == "--initial" ]; then
-    pip install --upgrade pip flake8 autopep8
+    pip -q install pip flake8 autopep8 --upgrade
   fi
 }
 
