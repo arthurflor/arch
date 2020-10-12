@@ -36,7 +36,7 @@ if [ $desktop == 'gnome' ] ; then
 	## Hide all normal windows  : Super + D
 	## Monitor                  : Ctrl + Alt + Delete (gnome-system-monitor)
 	## Nautilus                 : Super + E (nautilus --new-window)
-	## Print                    : Print (gnome-screenshot --interactive)
+	## Print                    : Print (gnome-screenshot -a --interactive)
 	## Switch to workspace      : Super + [F1, F2, F3, F4]
 	## Switch windows           : Alt + Tab
 	## Terminal                 : Ctrl + Alt + T (gnome-terminal)
@@ -149,7 +149,7 @@ yay -S jre8-openjdk keepassxc pdfarranger hplip
 
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
 yay -S libreoffice-{fresh,extension-languagetool}
-yay -S hunspell-{en_US} hyphen-{en} libmythes mythes-{en}
+yay -S hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
 
 yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
 yay -S google-chrome firefox gimp vlc ankama-launcher
@@ -162,8 +162,6 @@ yay -S smartgit visual-studio-code-bin
 
 mkdir ~/Code ~/Documents/VirtualBox\ VMs
 gio set ~/Code metadata::custom-icon-name "folder-script"
-
-echo -e "export SAL_USE_VCLPLUGIN=gtk" | sudo tee --append /etc/profile.d/libreoffice-fresh.sh
 
 sudo gpasswd -a $(whoami) games
 sudo gpasswd -a $(whoami) vboxusers
