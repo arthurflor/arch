@@ -75,9 +75,10 @@ if [ $desktop == 'gnome' ] ; then
 	Exec=transmission-gtk -m" > ~/.config/autostart/transmission-gtk.desktop
 
 	gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
-	
-	sudo cp -R ./ghib /usr/share/backgrounds/gnome/
+
+	sudo cp -R ./dynamic-wallpaper/** /usr/share/backgrounds/gnome/
 	sudo mv /usr/share/backgrounds/gnome/ghib/ghib-dynamic.xml /usr/share/gnome-background-properties/
+	sudo mv /usr/share/backgrounds/gnome/earth/earth-dynamic.xml /usr/share/gnome-background-properties/
 
 	# ===========================================================================
 	# GNOME - ACPID LID CLOSE/OPEN EVENT
