@@ -75,6 +75,7 @@ if [ $desktop == 'gnome' ] ; then
 	Exec=transmission-gtk -m" > ~/.config/autostart/transmission-gtk.desktop
 
 	gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
+	gsettings set org.gnome.gedit.preferences.editor ensure-trailing-newline false
 
 	sudo cp -R ./dynamic-wallpaper/** /usr/share/backgrounds/gnome/
 	sudo mv /usr/share/backgrounds/gnome/ghib/ghib-dynamic.xml /usr/share/gnome-background-properties/
