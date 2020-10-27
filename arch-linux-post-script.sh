@@ -167,8 +167,12 @@ gio set ~/Code metadata::custom-icon-name "folder-script"
 
 sudo gpasswd -a $(whoami) games
 sudo gpasswd -a $(whoami) vboxusers
-
 sudo systemctl enable org.cups.cupsd
+
+echo -e '
+PATH="$HOME/.node_modules/bin:$PATH"
+export npm_config_prefix=~/.node_modules
+' >> ~/.bashrc
 
 echo -e '
 activate () {
