@@ -60,9 +60,8 @@ if [ $desktop == 'gnome' ] ; then
 	yay -Rcc gnome-{books,boxes,calendar,characters,clocks,contacts,dictionary,disk-utility,documents}
 	yay -Rcc gnome-{font-viewer,logs,maps,music,notes,photos,shell-extensions,software,todo,weather}
 
-	yay -S ffmpegthumbnailer chrome-gnome-shell
-	yay -S gnome-{multi-writer,tweaks} transmission-gtk tela-icon-theme
-	
+	yay -S ffmpegthumbnailer chrome-gnome-shell gnome-multi-writer transmission-gtk tela-icon-theme
+
 	# ===========================================================================
 	# GNOME - ENVIRONMENT
 	# ===========================================================================
@@ -74,12 +73,21 @@ if [ $desktop == 'gnome' ] ; then
 	Name=transmission-gtk
 	Exec=transmission-gtk -m" > ~/.config/autostart/transmission-gtk.desktop
 
-	gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
-	gsettings set org.gnome.gedit.preferences.editor ensure-trailing-newline false
-
 	sudo cp -R ./dynamic-wallpaper/** /usr/share/backgrounds/gnome/
 	sudo mv /usr/share/backgrounds/gnome/ghib/ghib-dynamic.xml /usr/share/gnome-background-properties/
 	sudo mv /usr/share/backgrounds/gnome/earth/earth-dynamic.xml /usr/share/gnome-background-properties/
+
+    # Theme
+    gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+    gsettings set org.gnome.desktop.interface icon-theme "Tela-dark"
+    # Keyboard & Mouse
+    gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing false
+    gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false
+    gsettings set org.gnome.desktop.wm.preferences mouse-button-modifier "<Alt>"
+	# GEdit without extra blank line
+	gsettings set org.gnome.gedit.preferences.editor ensure-trailing-newline false
+    # Screencast unlimited
+	gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0   
 
 	# ===========================================================================
 	# GNOME - ACPID LID CLOSE/OPEN EVENT
