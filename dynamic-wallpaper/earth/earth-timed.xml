@@ -44,7 +44,7 @@
     <transition type="overlay">
         <duration>1800.0</duration>
         <from>/usr/share/backgrounds/gnome/earth/004.jpg</from>
-        <to>/usr/share/backgrounds/gnome/earth/004.jpg</to>
+        <to>/usr/share/backgrounds/gnome/earth/005.jpg</to>
     </transition>
 
     <static>
