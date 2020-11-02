@@ -102,13 +102,12 @@ if [ $desktop == 'gnome' ] ; then
 	echo 'action=/etc/acpi/lid.sh' | sudo tee --append /etc/acpi/events/lm_lid
 	echo -e '#!/bin/bash
 
-pid=$(pgrep "^gnome-shell$")
-user=$(ps -o uname= -p $pid)
+user=$(ps -o uname= -p $(pgrep "^gnome-shell$"))
+screen=$(cat /sys/class/drm/card0/*HDMI*/status | grep "^connected" | wc -l)
 
-hdmi=$(cat /sys/class/drm/card0/*HDMI*/status | grep "^connected")
 grep -q close /proc/acpi/button/lid/*/state
 
-if [ $? = 0 ] && [ -z "$hdmi" ]; then
+if [ $? = 0 ] && [ $screen -eq 0 ]; then
     runuser -l $user -c "busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 1"
 fi
 
