@@ -105,9 +105,10 @@ if [ $desktop == 'gnome' ] ; then
 pid=$(pgrep "^gnome-shell$")
 user=$(ps -o uname= -p $pid)
 
+hdmi=$(cat /sys/class/drm/card0/*HDMI*/status | grep "^connected")
 grep -q close /proc/acpi/button/lid/*/state
 
-if [ $? = 0 ]; then
+if [ $? = 0 ] && [ -z "$hdmi" ]; then
     runuser -l $user -c "busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 1"
 fi
 
