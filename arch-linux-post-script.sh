@@ -40,6 +40,7 @@ if [ $desktop == 'gnome' ] ; then
 	## Switch to workspace      : Super + [F1, F2, F3, F4]
 	## Switch windows           : Alt + Tab
 	## Terminal                 : Ctrl + Alt + T (gnome-terminal)
+    ## Power Off                : Super + Delete (gnome-session-quit --power-off)
 
 	# ===========================================================================
 	# GNOME - EXTENSIONS
