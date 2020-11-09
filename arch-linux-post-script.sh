@@ -156,7 +156,7 @@ yay -S pacman-contrib base-devel fakeroot --needed
 yay -S nano openssh neofetch xmacro zip unrar p7zip
 
 yay -S system-config-printer cups-{filters,pdf} hplip
-yay -S jre8-openjdk keepassxc pdfarranger img2pdf
+yay -S jre-openjdk keepassxc pdfarranger img2pdf
 
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
 yay -S libreoffice-{fresh,extension-languagetool}
