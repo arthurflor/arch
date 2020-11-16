@@ -52,6 +52,7 @@ if [ $desktop == 'gnome' ] ; then
 	## GSConnect
 	## OpenWeather
 	## Sound Input & Output Device Chooser
+	## Top Panel Workspace Scroll
 
 	# ===========================================================================
 	# GNOME - PACKAGES
