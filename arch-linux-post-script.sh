@@ -59,21 +59,18 @@ if [ $desktop == 'gnome' ] ; then
 	# ===========================================================================
 	
 	yay -Rcc baobab epiphany evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
-	yay -Rcc gnome-{books,boxes,calendar,characters,clocks,contacts,dictionary,disk-utility,documents}
+	yay -Rcc gnome-{books,boxes,calendar,characters,clocks,contacts,dictionary,documents}
 	yay -Rcc gnome-{font-viewer,logs,maps,music,notes,photos,shell-extensions,software,todo,weather}
 
-	yay -S ffmpegthumbnailer chrome-gnome-shell gnome-multi-writer transmission-gtk tela-icon-theme
+    yay -S evolution-on chrome-gnome-shell gnome-multi-writer
+	yay -S tela-icon-theme ffmpegthumbnailer transmission-gtk
 
 	# ===========================================================================
 	# GNOME - ENVIRONMENT
 	# ===========================================================================
 
 	mkdir -p ~/.config/autostart/
-	echo -e "
-	[Desktop Entry]
-	Type=Application
-	Name=transmission-gtk
-	Exec=transmission-gtk -m" > ~/.config/autostart/transmission-gtk.desktop
+	echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > ~/.config/autostart/transmission-gtk.desktop
 
 	sudo cp -R ./dynamic-wallpaper/** /usr/share/backgrounds/gnome/
 	sudo mv /usr/share/backgrounds/gnome/ghib/ghib-dynamic.xml /usr/share/gnome-background-properties/
@@ -85,7 +82,6 @@ if [ $desktop == 'gnome' ] ; then
     # Keyboard & Mouse
     gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing false
     gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false
-    gsettings set org.gnome.desktop.wm.preferences mouse-button-modifier "<Alt>"
 	# GEdit without extra blank line
 	gsettings set org.gnome.gedit.preferences.editor ensure-trailing-newline false
     # Screencast unlimited
@@ -156,7 +152,7 @@ yay -Rcc vim xterm pavucontrol
 yay -S pacman-contrib base-devel fakeroot --needed
 yay -S nano openssh neofetch xmacro zip unrar p7zip
 
-yay -S system-config-printer cups-{filters,pdf} hplip
+yay -S system-config-printer cups-{filters,pdf} hplip-minimal
 yay -S jre-openjdk keepassxc pdfarranger img2pdf
 
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
