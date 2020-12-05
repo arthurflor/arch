@@ -74,7 +74,6 @@ if [ $desktop == 'gnome' ] ; then
 
 	sudo cp -R ./dynamic-wallpaper/** /usr/share/backgrounds/gnome/
 	sudo mv /usr/share/backgrounds/gnome/ghib/ghib-dynamic.xml /usr/share/gnome-background-properties/
-	sudo mv /usr/share/backgrounds/gnome/earth/earth-dynamic.xml /usr/share/gnome-background-properties/
 
     # Theme
     gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
