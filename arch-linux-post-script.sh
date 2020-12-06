@@ -7,10 +7,8 @@ desktop=$(echo $DESKTOP_SESSION | grep -Eo "plasma|gnome")
 # ===============================================================================
 
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
-sudo sed -i 's/loglevel=3/loglevel=0 quiet rd.udev.log_priority=0 rd.systemd.show_status=0 pci=noaer fbcon=nodefer/g' /etc/default/grub
-
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg
+sudo sed -i 's/loglevel=3/quiet loglevel=0 rd.systemd.show_status=0 rd.udev.log_priority=0 pci=noaer fbcon=nodefer/g' /etc/default/grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg && sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg
 
 echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen && sudo locale-gen
 echo -e 'FONT=lat0-16' | sudo tee --append /etc/vconsole.conf
@@ -50,7 +48,6 @@ if [ $desktop == 'gnome' ] ; then
 	## Clipboard Indicator
 	## Dash to Dock
 	## GSConnect
-	## OpenWeather
 	## Sound Input & Output Device Chooser
 	## Top Panel Workspace Scroll
 
@@ -62,8 +59,7 @@ if [ $desktop == 'gnome' ] ; then
 	yay -Rcc gnome-{books,boxes,calendar,characters,contacts,dictionary,documents,font-viewer}
 	yay -Rcc gnome-{logs,maps,music,notes,photos,shell-extensions,software,todo}
 
-    yay -S evolution-on chrome-gnome-shell gnome-multi-writer
-	yay -S tela-icon-theme ffmpegthumbnailer transmission-gtk
+    yay -S ffmpegthumbnailer chrome-gnome-shell transmission-gtk gnome-multi-writer
 
 	# ===========================================================================
 	# GNOME - ENVIRONMENT
@@ -77,7 +73,6 @@ if [ $desktop == 'gnome' ] ; then
 
     # Theme
     gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
-    gsettings set org.gnome.desktop.interface icon-theme "Tela-dark"
     # Keyboard & Mouse
     gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing false
     gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false
@@ -159,16 +154,13 @@ yay -S libreoffice-{fresh,extension-languagetool}
 yay -S hunspell-{en_US,pt-br} hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
 
 yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
-yay -S google-chrome firefox gimp vlc ankama-launcher
+yay -S google-chrome gimp vlc ankama-launcher
 yay -S smartgit visual-studio-code-bin
 
 
 # ===============================================================================
 # ENVIRONMENT
 # ===============================================================================
-
-mkdir ~/Code ~/Documents/VirtualBox\ VMs
-gio set ~/Code metadata::custom-icon-name "folder-script"
 
 sudo gpasswd -a $(whoami) games
 sudo gpasswd -a $(whoami) vboxusers
