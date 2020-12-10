@@ -55,17 +55,19 @@ if [ $desktop == 'gnome' ] ; then
 	# GNOME - PACKAGES
 	# ===========================================================================
 	
-	yay -Rcc baobab epiphany evolution-data-server rygel totem xdg-user-dirs-gtk vino yelp
+	yay -Rcc baobab epiphany rygel totem xdg-user-dirs-gtk vino yelp
 	yay -Rcc gnome-{books,boxes,calendar,characters,contacts,dictionary,documents,font-viewer}
 	yay -Rcc gnome-{logs,maps,music,notes,photos,shell-extensions,software,todo}
 
-    yay -S ffmpegthumbnailer chrome-gnome-shell transmission-gtk gnome-multi-writer
+    yay -S ffmpegthumbnailer chrome-gnome-shell
+    yay -S geary transmission-gtk gnome-multi-writer
 
 	# ===========================================================================
 	# GNOME - ENVIRONMENT
 	# ===========================================================================
 
 	mkdir -p ~/.config/autostart/
+	echo -e "[Desktop Entry]\nType=Application\nName=geary\nExec=geary --gapplication-service" > ~/.config/autostart/geary.desktop
 	echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > ~/.config/autostart/transmission-gtk.desktop
 
 	sudo cp -R ./dynamic-wallpaper/** /usr/share/backgrounds/gnome/
