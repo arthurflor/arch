@@ -161,7 +161,7 @@ chmod +x /etc/acpi/lid.sh
 
 sudo gpasswd -a $(whoami) games
 sudo gpasswd -a $(whoami) vboxusers
-sudo systemctl enable org.cups.cupsd
+sudo systemctl enable cups
 
 echo -e '
 PATH="$HOME/.node_modules/bin:$PATH"
