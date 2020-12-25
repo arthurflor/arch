@@ -59,18 +59,17 @@ yay -c && yay -Scc
 # ===============================================================================
 
 yay -S pacman-contrib base-devel fakeroot nano openssh --needed
-yay -S zip unrar p7zip neofetch ffmpegthumbnailer xmacro
+yay -S zip unrar p7zip neofetch ffmpegthumbnailer
 
-yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
 yay -S system-config-printer cups-{filters,pdf} hplip-minimal pdfarranger img2pdf
 yay -S jre-openjdk keepassxc ventoy-bin papirus-icon-theme
 
-yay -S hunspell hunspell-{en_US,pt-br} hyphen hyphen-{en,pt-br} libmythes mythes-{en,pt-br}
-yay -S libreoffice-{fresh,extension-languagetool}
+yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
+yay -S hunspell hunspell-{en_US,pt-br} libreoffice-{fresh,extension-languagetool}
 
 yay -S transmission-gtk gimp vlc geary google-chrome chrome-gnome-shell
-yay -S smartgit visual-studio-code-bin ankama-launcher
 yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
+yay -S smartgit visual-studio-code-bin ankama-launcher
 
 # ===========================================================================
 # GNOME - ENVIRONMENT
@@ -137,7 +136,6 @@ echo 'HandleLidSwitchDocked=ignore' | sudo tee --append /etc/systemd/logind.conf
 echo 'event=button/lid.*' | sudo tee --append /etc/acpi/events/lm_lid
 echo 'action=/etc/acpi/lid.sh' | sudo tee --append /etc/acpi/events/lm_lid
 echo -e '#!/bin/bash
-
 user=$(ps -o uname= -p $(pgrep "^gnome-shell$"))
 screen=$(cat /sys/class/drm/card0/*HDMI*/status | grep "^connected" | wc -l)
 
@@ -166,22 +164,4 @@ sudo systemctl enable cups
 echo -e '
 PATH="$HOME/.node_modules/bin:$PATH"
 export npm_config_prefix=~/.node_modules
-' >> ~/.bashrc
-
-echo -e '
-activate () {
-  python -m venv .venv && source .venv/bin/activate
-
-  if [ "$1" == "--initial" ]; then
-    pip install pip flake8 autopep8 --upgrade
-  fi
-}
-
-macrorec () {
-  xmacrorec2 > "$1"
-}
-
-macroplay () {
-  for ((;;)) do xmacroplay < "$1"; done
-}
 ' >> ~/.bashrc
