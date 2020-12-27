@@ -161,4 +161,11 @@ sudo systemctl enable cups
 echo -e '
 PATH="$HOME/.node_modules/bin:$PATH"
 export npm_config_prefix=~/.node_modules
+
+activate () {
+  python -m venv .venv && source .venv/bin/activate
+  if [ "$1" == "--init" ]; then
+    pip install pip flake8 autopep8 --upgrade
+  fi
+}
 ' >> ~/.bashrc
