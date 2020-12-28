@@ -118,6 +118,9 @@ sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap
 gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
 sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
 
+# GEdit without extra blank line
+gsettings set org.gnome.gedit.preferences.editor ensure-trailing-newline false
+
 # Screencast unlimited
 gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0s
 
