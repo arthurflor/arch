@@ -28,16 +28,20 @@
 # SYSTEM
 # ===============================================================================
 
-sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg
-
-echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen && sudo locale-gen
-echo -e 'FONT=lat0-16' | sudo tee --append /etc/vconsole.conf
+echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen
+sudo locale-gen
 
 sudo mkdir -p /etc/systemd/coredump.conf.d/
 echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
 echo 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf
+
+sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg
+
+echo -e 'FONT=lat0-16' | sudo tee --append /etc/vconsole.conf
+sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf
+sudo mkinitcpio -p linux
 
 # ===========================================================================
 # CLEAR PACKAGES
@@ -118,11 +122,15 @@ sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap
 gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
 sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.keyboard numlock-state true
 
+# Enable Night Light mode
+gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+sudo -u gdm dbus-launch gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+
 # GEdit without extra blank line
 gsettings set org.gnome.gedit.preferences.editor ensure-trailing-newline false
 
 # Screencast unlimited
-gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0s
+gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
 
 # ===========================================================================
 # ACPID LID CLOSE/OPEN EVENT
