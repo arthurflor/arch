@@ -40,7 +40,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg
 
 echo -e 'FONT=lat0-16' | sudo tee --append /etc/vconsole.conf
-sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf
+sudo sed -i 's/MODULES=()/MODULES=(i915)/g' /etc/mkinitcpio.conf
 sudo mkinitcpio -p linux
 
 # ===========================================================================
