@@ -40,7 +40,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg
 
 echo -e 'FONT=lat0-16' | sudo tee --append /etc/vconsole.conf
-sudo sed -i 's/MODULES=()/MODULES=(i915)/g' /etc/mkinitcpio.conf
+sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf
 sudo mkinitcpio -p linux
 
 # ===========================================================================
@@ -124,7 +124,10 @@ sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.keyboard num
 
 # Enable Night Light mode
 gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 4000
+
 sudo -u gdm dbus-launch gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+sudo -u gdm dbus-launch gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 4000
 
 # GEdit without extra blank line
 gsettings set org.gnome.gedit.preferences.editor ensure-trailing-newline false
