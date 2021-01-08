@@ -63,7 +63,7 @@ yay -c && yay -Scc
 # ===============================================================================
 
 yay -S pacman-contrib base-devel fakeroot nano openssh --needed
-yay -S zip unrar p7zip neofetch ffmpegthumbnailer
+yay -S zip unrar p7zip neofetch ffmpegthumbnailer xmacro
 
 yay -S system-config-printer cups-{filters,pdf} hplip-minimal pdfarranger img2pdf
 yay -S jre-openjdk keepassxc ventoy-bin papirus-icon-theme
@@ -181,5 +181,13 @@ activate () {
   if [ "$1" == "--init" ]; then
     pip install pip flake8 autopep8 --upgrade
   fi
+}
+
+macrorec () {
+  xmacrorec2 > "$1"
+}
+
+macroplay () {
+  for ((;;)) do xmacroplay < "$1"; done
 }
 ' >> ~/.bashrc
