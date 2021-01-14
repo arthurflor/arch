@@ -104,18 +104,22 @@ mkdir ~/VirtualBox\ VMs ; gio set ~/VirtualBox\ VMs metadata::custom-icon-name "
 gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
 gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
 
+# Sounds
+gsettings set org.gnome.desktop.sound event-sounds false
+gsettings set org.gnome.desktop.sound allow-volume-above-100-percent true
+
 # Mouse & Touchpad
-gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false
 gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing false
 gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 gsettings set org.gnome.desktop.peripherals.touchpad two-finger-scrolling-enabled true
 
 gsettings set org.gnome.desktop.peripherals.mouse speed .4
-gsettings set org.gnome.desktop.peripherals.touchpad speed .4
-gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
-
 sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.mouse speed .4
+
+gsettings set org.gnome.desktop.peripherals.touchpad speed .4
 sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad speed .4
+
+gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 
 # Keyboard
@@ -124,9 +128,9 @@ sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.keyboard num
 
 # Enable Night Light mode
 gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
-gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 4000
-
 sudo -u gdm dbus-launch gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+
+gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 4000
 sudo -u gdm dbus-launch gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 4000
 
 # GEdit without extra blank line
