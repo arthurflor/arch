@@ -66,7 +66,7 @@ yay -S pacman-contrib base-devel fakeroot nano openssh --needed
 yay -S zip unrar p7zip neofetch ffmpegthumbnailer xmacro
 
 yay -S system-config-printer cups-{filters,pdf} hplip-minimal pdfarranger img2pdf
-yay -S jre-openjdk keepassxc ventoy-bin papirus-icon-theme
+yay -S jre-openjdk ventoy-bin papirus-icon-theme
 
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
 yay -S hunspell hunspell-{en_US,pt-br} libreoffice-{fresh,extension-languagetool}
