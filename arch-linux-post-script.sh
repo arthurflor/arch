@@ -29,17 +29,33 @@
 # ===============================================================================
 
 echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen
+echo -e 'FONT=lat0-16' | sudo tee --append /etc/vconsole.conf
 sudo locale-gen
 
 sudo mkdir -p /etc/systemd/coredump.conf.d/
 echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
 echo 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf
 
+echo -e '
+<device screen="0" driver="dri2">
+  <application name="default">
+    <option name="vblank_mode" vavlue="0">
+  </application>
+</device>
+' > .drirc
+
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
+sudo sed -i 's/loglevel=3/loglevel=3 fbcon=nodefer/g' /etc/default/grub
+
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg
 
-echo -e 'FONT=lat0-16' | sudo tee --append /etc/vconsole.conf
+echo -p '
+option i915 enable_guc=2
+option i915 enable_fbc=1
+option i915 fastboot=1
+' > /etc/modprobe.d/i915.conf
+
 sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf
 sudo mkinitcpio -p linux
 
@@ -62,11 +78,11 @@ yay -c && yay -Scc
 # INSTALL PACKAGES
 # ===============================================================================
 
-yay -S pacman-contrib base-devel fakeroot nano openssh --needed
-yay -S zip unrar p7zip neofetch ffmpegthumbnailer xmacro
+yay -S pacman-contrib base-devel fakeroot openssh nano zip unrar p7zip neofetch
+yay -S cpupower intel-media-driver vulkan-intel
 
-yay -S system-config-printer cups-{filters,pdf} hplip-minimal pdfarranger img2pdf
-yay -S jre-openjdk ventoy-bin papirus-icon-theme
+yay -S system-config-printer cups-{filters,pdf} hplip-minimal
+yay -S pdfarranger img2pdf jre-openjdk papirus-icon-theme ventoy-bin
 
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
 yay -S hunspell hunspell-{en_US,pt-br} libreoffice-{fresh,extension-languagetool}
@@ -174,6 +190,8 @@ chmod +x /etc/acpi/lid.sh
 
 sudo gpasswd -a $(whoami) games
 sudo gpasswd -a $(whoami) vboxusers
+
+sudo systemctl enable cpupower
 sudo systemctl enable cups
 
 echo -e '
@@ -185,13 +203,5 @@ activate () {
   if [ "$1" == "--init" ]; then
     pip install pip flake8 autopep8 --upgrade
   fi
-}
-
-macrorec () {
-  xmacrorec2 > "$1"
-}
-
-macroplay () {
-  for ((;;)) do xmacroplay < "$1"; done
 }
 ' >> ~/.bashrc
