@@ -38,9 +38,9 @@ echo 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf
 
 echo -e '
 <device screen="0" driver="dri2">
-  <application name="default">
-    <option name="vblank_mode" vavlue="0">
-  </application>
+	<application name="Default">
+		<option name="vblank_mode" value="0"/>
+	</application>
 </device>
 ' > .drirc
 
