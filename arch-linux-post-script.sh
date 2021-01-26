@@ -36,14 +36,6 @@ sudo mkdir -p /etc/systemd/coredump.conf.d/
 echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
 echo 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf
 
-echo -e '
-<device screen="0" driver="dri2">
-	<application name="Default">
-		<option name="vblank_mode" value="0"/>
-	</application>
-</device>
-' > .drirc
-
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
 sudo sed -i 's/loglevel=3/loglevel=3 fbcon=nodefer/g' /etc/default/grub
 
