@@ -42,11 +42,11 @@ sudo sed -i 's/loglevel=3/loglevel=3 fbcon=nodefer/g' /etc/default/grub
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg
 
-echo -p '
+echo -e '
 option i915 enable_guc=2
 option i915 enable_fbc=1
 option i915 fastboot=1
-' > /etc/modprobe.d/i915.conf
+' | sudo tee /etc/modprobe.d/i915.conf
 
 sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf
 sudo mkinitcpio -p linux
