@@ -24,33 +24,6 @@
 ## Sound Input & Output Device Chooser
 ## Top Panel Workspace Scroll
 
-# ===============================================================================
-# SYSTEM
-# ===============================================================================
-
-echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen
-echo -e 'FONT=lat0-16' | sudo tee --append /etc/vconsole.conf
-sudo locale-gen
-
-sudo mkdir -p /etc/systemd/coredump.conf.d/
-echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
-echo 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf
-
-sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
-sudo sed -i 's/loglevel=3/loglevel=3 fbcon=nodefer/g' /etc/default/grub
-
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg
-
-echo -e '
-option i915 enable_guc=2
-option i915 enable_fbc=1
-option i915 fastboot=1
-' | sudo tee /etc/modprobe.d/i915.conf
-
-sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf
-sudo mkinitcpio -p linux
-
 # ===========================================================================
 # CLEAR PACKAGES
 # ===========================================================================
@@ -70,18 +43,89 @@ yay -c && yay -Scc
 # INSTALL PACKAGES
 # ===============================================================================
 
-yay -S pacman-contrib base-devel fakeroot openssh nano zip unrar p7zip neofetch
-yay -S cpupower intel-media-driver vulkan-intel
+yay -S pacman-contrib base-devel fakeroot nano neofetch
+yay -S openssh zip unrar p7zip ventoy-bin jre-openjdk
 
-yay -S system-config-printer cups-{filters,pdf} hplip-minimal
-yay -S pdfarranger img2pdf jre-openjdk papirus-icon-theme ventoy-bin
+yay -S system-config-printer cups-{filters,pdf} hplip-minimal pdfarranger img2pdf
+yay -S transmission-gtk gimp vlc geary google-chrome chrome-gnome-shell papirus-icon-theme
 
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
 yay -S hunspell hunspell-{en_US,pt-br} libreoffice-{fresh,extension-languagetool}
 
-yay -S transmission-gtk gimp vlc geary google-chrome chrome-gnome-shell
 yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
 yay -S smartgit visual-studio-code-bin ankama-launcher
+
+# ===========================================================================
+# ACPID LID CLOSE/OPEN EVENT
+# ===========================================================================
+
+yay -S acpid
+
+echo 'HandleLidSwitch=ignore' | sudo tee --append /etc/systemd/logind.conf
+echo 'HandleLidSwitchDocked=ignore' | sudo tee --append /etc/systemd/logind.conf
+
+echo 'event=button/lid.*' | sudo tee --append /etc/acpi/events/lm_lid
+echo 'action=/etc/acpi/lid.sh' | sudo tee --append /etc/acpi/events/lm_lid
+
+echo -e '#!/bin/bash
+user=$(ps -o uname= -p $(pgrep "^gnome-shell$"))
+screen=$(cat /sys/class/drm/card0/*HDMI*/status | grep "^connected" | wc -l)
+
+grep -q close /proc/acpi/button/lid/*/state
+
+if [ $? = 0 ] && [ $screen -eq 0 ]; then
+    runuser -l $user -c "busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 1"
+fi
+
+grep -q open /proc/acpi/button/lid/*/state
+
+if [ $? = 0 ]; then
+    runuser -l $user -c "busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 0"
+fi' > /etc/acpi/lid.sh
+
+chmod +x /etc/acpi/lid.sh
+
+sudo systemctl enable acpid
+
+# ===========================================================================
+# PLYMOUTH AND SILENT BOOT
+# ===========================================================================
+
+yay -S plymouth
+
+sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf
+sudo sed -i 's/base udev/base udev plymouth/g' /etc/mkinitcpio.conf
+
+sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
+sudo sed -i 's/loglevel=3/quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_level=3 fbcon=nodefer/g' /etc/default/grub
+
+sudo sed -i 's/loglevel=3/quiet splash rd.loglevel=0 vga=current vt.global_cursor_default=0 systemd.show_status=false rd.udev.log-priority=0 udev.log-priority=0 fbcon=nodefer/g' /etc/default/grub
+
+sudo cp -R ./plymouth/** /usr/share/plymouth/themes/
+sudo plymouth-set-default-theme minimal
+
+sudo mkinitcpio -p linux
+sudo grub-mkconfig -o /boot/grub/grub.cfg ; sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg
+
+# ===============================================================================
+# SYSTEM
+# ===============================================================================
+
+# Language
+echo -e 'FONT=lat0-16' | sudo tee --append /etc/vconsole.conf
+echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen
+sudo locale-gen
+
+# Logs
+sudo mkdir -p /etc/systemd/coredump.conf.d/
+echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
+echo 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf
+
+# Autostart bluetooth
+sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
+
+# Services
+sudo systemctl enable cups
 
 # ===========================================================================
 # GNOME - ENVIRONMENT
@@ -91,18 +135,15 @@ yay -S smartgit visual-studio-code-bin ankama-launcher
 mkdir -p ~/.config/autostart/
 echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > ~/.config/autostart/transmission-gtk.desktop
 
-# Autostart bluetooth
-sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
+# Custom folders
+mkdir ~/Code ; gio set ~/Code metadata::custom-icon-name "folder-script"
+mkdir ~/VirtualBox\ VMs ; gio set ~/VirtualBox\ VMs metadata::custom-icon-name "folder-linux"
 
 # Background images
 sudo rm -R /usr/share/backgrounds/anarchy
 
 sudo cp -R ./dynamic-wallpaper/** /usr/share/backgrounds/gnome/
 sudo mv /usr/share/backgrounds/gnome/ghib/ghib-dynamic.xml /usr/share/gnome-background-properties/
-
-# Custom folders
-mkdir ~/Code ; gio set ~/Code metadata::custom-icon-name "folder-script"
-mkdir ~/VirtualBox\ VMs ; gio set ~/VirtualBox\ VMs metadata::custom-icon-name "folder-linux"
 
 # ===========================================================================
 # GNOME - GSETTINGS
@@ -148,43 +189,10 @@ gsettings set org.gnome.gedit.preferences.editor ensure-trailing-newline false
 gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
 
 # ===========================================================================
-# ACPID LID CLOSE/OPEN EVENT
+# USER ENVIRONMENT
 # ===========================================================================
-
-yay -S acpid
-sudo systemctl enable acpid
-
-echo 'HandleLidSwitch=ignore' | sudo tee --append /etc/systemd/logind.conf
-echo 'HandleLidSwitchDocked=ignore' | sudo tee --append /etc/systemd/logind.conf
-echo 'event=button/lid.*' | sudo tee --append /etc/acpi/events/lm_lid
-echo 'action=/etc/acpi/lid.sh' | sudo tee --append /etc/acpi/events/lm_lid
-echo -e '#!/bin/bash
-user=$(ps -o uname= -p $(pgrep "^gnome-shell$"))
-screen=$(cat /sys/class/drm/card0/*HDMI*/status | grep "^connected" | wc -l)
-
-grep -q close /proc/acpi/button/lid/*/state
-
-if [ $? = 0 ] && [ $screen -eq 0 ]; then
-    runuser -l $user -c "busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 1"
-fi
-
-grep -q open /proc/acpi/button/lid/*/state
-
-if [ $? = 0 ]; then
-    runuser -l $user -c "busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 0"
-fi' > /etc/acpi/lid.sh
-
-chmod +x /etc/acpi/lid.sh
-
-# ===============================================================================
-# ENVIRONMENT SCRIPTS
-# ===============================================================================
-
 sudo gpasswd -a $(whoami) games
 sudo gpasswd -a $(whoami) vboxusers
-
-sudo systemctl enable cpupower
-sudo systemctl enable cups
 
 echo -e '
 PATH="$HOME/.node_modules/bin:$PATH"
