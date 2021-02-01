@@ -97,8 +97,6 @@ sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf
 sudo sed -i 's/base udev/base udev plymouth/g' /etc/mkinitcpio.conf
 
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
-sudo sed -i 's/loglevel=3/quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_level=3 fbcon=nodefer/g' /etc/default/grub
-
 sudo sed -i 's/loglevel=3/quiet splash rd.loglevel=0 vga=current vt.global_cursor_default=0 systemd.show_status=false rd.udev.log-priority=0 udev.log-priority=0 fbcon=nodefer/g' /etc/default/grub
 
 sudo cp -R ./plymouth/** /usr/share/plymouth/themes/
