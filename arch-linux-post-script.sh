@@ -28,16 +28,16 @@
 # CLEAR PACKAGES
 # ===========================================================================
 
-yay -Rcc gnome-{backgrounds,books,boxes,calendar,characters,contacts,dictionary,documents}
-yay -Rcc gnome-{font-viewer,logs,maps,menus,music,notes,photos,shell-extensions,software,todo}
-yay -Rcc baobab epiphany rygel totem vino yelp xdg-user-dirs-gtk xdg-user-dirs tracker tracker-miners
+yay -Rcc gnome-{backgrounds,books,boxes,characters,contacts,dictionary,documents,font-viewer}
+yay -Rcc gnome-{logs,maps,menus,music,notes,photos,shell-extensions,software,todo}
+yay -Rcc baobab epiphany evolution totem rygel tracker tracker-miners vino yelp xdg-user-dirs-gtk xdg-user-dirs
 
 yay -Rcc xf86-video-intel network-manager-applet wireless_tools
-yay -Rcc base luit cpupower dialog sushi orca man-{pages,db}
+yay -Rcc base luit dialog sushi orca man-{pages,db}
 yay -Rcc vim xterm pavucontrol mousetweaks dleyna-server
 
-yay -Qttdq | yay -Rns -
-yay -c && yay -Scc
+yay -Rsc $(yay -Qetq $(yay -Qgq base-devel | sort))
+yay -Qttdq | yay -Rns - ; yay -c && yay -Scc
 
 # ===============================================================================
 # INSTALL PACKAGES
@@ -85,19 +85,17 @@ fi' > /etc/acpi/lid.sh
 
 chmod +x /etc/acpi/lid.sh
 
-sudo systemctl enable acpid
-
 # ===========================================================================
-# PLYMOUTH AND SILENT BOOT
+# PERFORMANCE AND PLYMOUTH
 # ===========================================================================
 
-yay -S plymouth
+yay -S intel-ucode haveged cpupopwer plymouth
 
 sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf
 sudo sed -i 's/base udev/base udev plymouth/g' /etc/mkinitcpio.conf
 
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
-sudo sed -i 's/loglevel=3/quiet splash loglevel=0 vga=current vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_priority=0 fbcon=nodefer/g' /etc/default/grub
+sudo sed -i 's/loglevel=3/quiet splash pci=noaer loglevel=0 vga=current vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_priority=0 fbcon=nodefer i915.enable_guc=2 i915.enable_fbc=1 i915.fastboot=1/g' /etc/default/grub
 
 sudo cp -R ./plymouth/** /usr/share/plymouth/themes/
 sudo plymouth-set-default-theme minimal
@@ -123,7 +121,7 @@ echo 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf
 sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
 
 # Services
-sudo systemctl enable cups
+sudo systemctl enable acpid cpupower cups haveged
 
 # ===========================================================================
 # GNOME - ENVIRONMENT
