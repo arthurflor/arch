@@ -18,11 +18,9 @@
 # ===========================================================================
 
 ## Arch Linux Updates Indicator
-## Clipboard Indicator
-## Dash to Dock
 ## GSConnect
+## Just Perfection
 ## Sound Input & Output Device Chooser
-## Top Panel Workspace Scroll
 
 # ===========================================================================
 # CLEAR PACKAGES
@@ -89,7 +87,7 @@ chmod +x /etc/acpi/lid.sh
 # PERFORMANCE AND PLYMOUTH
 # ===========================================================================
 
-yay -S intel-ucode haveged cpupopwer plymouth
+yay -S intel-ucode haveged cpupower plymouth
 
 sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf
 sudo sed -i 's/base udev/base udev plymouth/g' /etc/mkinitcpio.conf
