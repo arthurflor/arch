@@ -34,7 +34,6 @@ yay -Rcc xf86-video-intel cpupower network-manager-applet wireless_tools
 yay -Rcc base luit dialog sushi orca man-{pages,db}
 yay -Rcc vim xterm pavucontrol mousetweaks dleyna-server
 
-yay -Rsc $(yay -Qetq $(yay -Qgq base-devel | sort))
 yay -Qttdq | yay -Rns - ; yay -c && yay -Scc
 
 # ===============================================================================
