@@ -40,7 +40,7 @@ yay -Qttdq | yay -Rns - ; yay -c && yay -Scc
 # INSTALL PACKAGES
 # ===============================================================================
 
-yay -S pacman-contrib base-devel fakeroot nano neofetch
+yay -S intel-ucode pacman-contrib base-devel fakeroot nano neofetch
 yay -S openssh zip unrar p7zip ventoy-bin jre-openjdk
 
 yay -S system-config-printer cups-{filters,pdf} hplip-minimal pdfarranger img2pdf
@@ -83,19 +83,14 @@ fi' > /etc/acpi/lid.sh
 chmod +x /etc/acpi/lid.sh
 
 # ===========================================================================
-# PERFORMANCE AND PLYMOUTH
+# SILENT BOOT
 # ===========================================================================
 
-yay -S intel-ucode plymouth
-
 sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf
-sudo sed -i 's/base udev/base udev plymouth/g' /etc/mkinitcpio.conf
+sudo sed -i 's/base udev/base systemd/g' /etc/mkinitcpio.conf
 
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
-sudo sed -i 's/loglevel=3/quiet splash pci=noaer loglevel=0 vga=current vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_priority=0 fbcon=nodefer i915.enable_guc=2 i915.enable_fbc=1/g' /etc/default/grub
-
-sudo cp -R ./plymouth/** /usr/share/plymouth/themes/
-sudo plymouth-set-default-theme minimal
+sudo sed -i 's/loglevel=3/quiet loglevel=3 vga=current pci=noaer vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_priority=3 fbcon=nodefer i915.enable_guc=2 i915.enable_fbc=1/g' /etc/default/grub
 
 sudo mkinitcpio -p linux
 sudo grub-mkconfig -o /boot/grub/grub.cfg ; sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg
