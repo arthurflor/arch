@@ -100,7 +100,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg ; sudo sed -i 's/echo/#echo/g' /boot/g
 # ===============================================================================
 
 # Language
-echo -e 'FONT=lat0-16' | sudo tee --append /etc/vconsole.conf
+echo -e 'FONT=lat2-16\nFONT_MAP=8859-2' | sudo tee --append /etc/vconsole.conf
 echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen
 sudo locale-gen
 
