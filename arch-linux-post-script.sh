@@ -28,7 +28,7 @@
 
 yay -Rcc gnome-{backgrounds,books,boxes,characters,contacts,dictionary,documents,font-viewer}
 yay -Rcc gnome-{logs,maps,menus,music,notes,photos,shell-extensions,software,todo}
-yay -Rcc baobab epiphany evolution totem rygel tracker tracker-miners vino yelp xdg-user-dirs-gtk xdg-user-dirs
+yay -Rcc epiphany evolution totem rygel tracker tracker-miners vino yelp xdg-user-dirs-gtk xdg-user-dirs
 
 yay -Rcc xf86-video-intel cpupower network-manager-applet wireless_tools
 yay -Rcc base luit dialog sushi orca man-{pages,db}
