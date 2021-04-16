@@ -53,6 +53,21 @@ yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
 yay -S smartgit visual-studio-code-bin ankama-launcher
 
 # ===========================================================================
+# SWAP
+# ===========================================================================
+
+sudo swapoff /swapfile ;
+sudo rm -f /swapfile ;
+
+sudo fallocate -l 15905M /swapfile ;
+
+sudo chmod 600 /swapfile ;
+sudo mkswap /swapfile ;
+sudo swapon /swapfile ;
+
+echo -e '# swap\n/swapfile none swap defaults 0 0' | sudo tee --append /etc/fstab
+
+# ===========================================================================
 # ACPID LID CLOSE/OPEN EVENT
 # ===========================================================================
 
@@ -86,11 +101,16 @@ chmod +x /etc/acpi/lid.sh
 # SILENT BOOT
 # ===========================================================================
 
+yay -S plymouth-git
+
 sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf
-sudo sed -i 's/base udev/base systemd/g' /etc/mkinitcpio.conf
+sudo sed -i 's/base udev/base systemd plymouth/g' /etc/mkinitcpio.conf
 
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
-sudo sed -i 's/loglevel=3/quiet loglevel=3 vga=current pci=noaer vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_priority=3 fbcon=nodefer i915.enable_guc=2 i915.enable_fbc=1/g' /etc/default/grub
+sudo sed -i 's/loglevel=3/quiet splash loglevel=3 vga=current pci=noaer vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_priority=3 fbcon=nodefer i915.enable_guc=2 i915.enable_fbc=1/g' /etc/default/grub
+
+sudo cp -R ./plymouth/** /usr/share/plymouth/themes/
+sudo plymouth-set-default-theme minimal
 
 sudo mkinitcpio -p linux
 sudo grub-mkconfig -o /boot/grub/grub.cfg ; sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg
