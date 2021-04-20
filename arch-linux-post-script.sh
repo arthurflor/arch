@@ -19,7 +19,6 @@
 
 ## Arch Linux Updates Indicator
 ## GSConnect
-## Just Perfection
 ## Sound Input & Output Device Chooser
 
 # ===========================================================================
