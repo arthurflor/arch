@@ -27,11 +27,10 @@
 
 yay -Rcc gnome-{backgrounds,books,boxes,characters,clocks,contacts,dictionary,documents}
 yay -Rcc gnome-{font-viewer,logs,maps,menus,music,notes,photos,shell-extensions,software,todo}
-yay -Rcc epiphany evolution totem rygel tracker tracker-miners vino yelp xdg-user-dirs-gtk xdg-user-dirs
+yay -Rcc epiphany evolution totem rygel tracker tracker-miners vino xdg-user-dirs-gtk xdg-user-dirs
 
-yay -Rcc xf86-video-intel cpupower network-manager-applet wireless_tools
-yay -Rcc base luit dialog sushi orca man-{pages,db}
-yay -Rcc vim xterm pavucontrol mousetweaks dleyna-server
+yay -Rcc xf86-video-intel network-manager-applet wireless_tools vim xterm pavucontrol 
+yay -Rcc base luit dialog sushi orca man-{pages,db} mousetweaks dleyna-server
 
 yay -Qttdq | yay -Rns - ; yay -c && yay -Scc
 
@@ -39,11 +38,11 @@ yay -Qttdq | yay -Rns - ; yay -c && yay -Scc
 # INSTALL PACKAGES
 # ===============================================================================
 
-yay -S intel-ucode pacman-contrib base-devel fakeroot nano neofetch
-yay -S openssh zip unrar p7zip ventoy-bin jre-openjdk
+yay -S pacman-contrib base-devel fakeroot intel-ucode cpupower
+yay -S nano neofetch openssh zip unrar p7zip ventoy-bin jre-openjdk
 
 yay -S system-config-printer cups-{filters,pdf} hplip-minimal pdfarranger img2pdf
-yay -S transmission-gtk gimp vlc geary google-chrome chrome-gnome-shell papirus-icon-theme
+yay -S transmission-gtk gimp mpv geary google-chrome chrome-gnome-shell papirus-icon-theme
 
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
 yay -S hunspell hunspell-{en_US,pt-br} libreoffice-{fresh,extension-languagetool}
@@ -58,7 +57,7 @@ yay -S smartgit visual-studio-code-bin ankama-launcher
 sudo swapoff /swapfile ;
 sudo rm -f /swapfile ;
 
-sudo fallocate -l 15905M /swapfile ;
+sudo fallocate -l 31.1G /swapfile ;
 
 sudo chmod 600 /swapfile ;
 sudo mkswap /swapfile ;
@@ -111,8 +110,9 @@ sudo sed -i 's/loglevel=3/quiet splash loglevel=3 vga=current pci=noaer vt.globa
 sudo cp -R ./plymouth/** /usr/share/plymouth/themes/
 sudo plymouth-set-default-theme minimal
 
-sudo mkinitcpio -p linux
-sudo grub-mkconfig -o /boot/grub/grub.cfg ; sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg
+sudo mkinitcpio -p linux ;
+sudo grub-mkconfig -o /boot/grub/grub.cfg ;
+sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
 
 # ===============================================================================
 # SYSTEM
@@ -132,7 +132,7 @@ echo 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf
 sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
 
 # Services
-sudo systemctl enable acpid cups
+sudo systemctl enable cups acpid cpupower
 
 # ===========================================================================
 # GNOME - ENVIRONMENT
