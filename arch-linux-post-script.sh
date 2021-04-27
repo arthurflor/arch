@@ -38,8 +38,8 @@ yay -Qttdq | yay -Rns - ; yay -c && yay -Scc
 # INSTALL PACKAGES
 # ===============================================================================
 
-yay -S pacman-contrib base-devel fakeroot intel-ucode cpupower
-yay -S nano neofetch openssh zip unrar p7zip ventoy-bin jre-openjdk
+yay -S pacman-contrib base-devel fakeroot nano intel-ucode
+yay -S neofetch openssh zip unrar p7zip ventoy-bin jre-openjdk
 
 yay -S system-config-printer cups-{filters,pdf} hplip-minimal pdfarranger img2pdf
 yay -S transmission-gtk gimp mpv geary google-chrome chrome-gnome-shell papirus-icon-theme
@@ -132,7 +132,7 @@ echo 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf
 sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
 
 # Services
-sudo systemctl enable cups acpid cpupower
+sudo systemctl enable cups acpid
 
 # ===========================================================================
 # GNOME - ENVIRONMENT
