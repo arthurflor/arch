@@ -25,7 +25,7 @@
 # CLEAR PACKAGES
 # ===========================================================================
 
-yay -Rcc gnome-{backgrounds,books,boxes,calendar,characters,clocks,contacts,dictionary,documents}
+yay -Rcc gnome-{backgrounds,books,boxes,characters,clocks,contacts,dictionary,documents}
 yay -Rcc gnome-{font-viewer,logs,maps,menus,music,notes,photos,shell-extensions,software,todo,weather}
 yay -Rcc epiphany evolution totem rygel tracker tracker-miners vino xdg-user-dirs-gtk xdg-user-dirs
 
@@ -57,7 +57,7 @@ yay -S smartgit visual-studio-code-bin ankama-launcher
 sudo swapoff /swapfile ;
 sudo rm -f /swapfile ;
 
-sudo fallocate -l 31.1G /swapfile ;
+sudo fallocate -l 15905M /swapfile ;
 
 sudo chmod 600 /swapfile ;
 sudo mkswap /swapfile ;
