@@ -18,6 +18,7 @@
 # ===========================================================================
 
 ## Arch Linux Updates Indicator
+## Bluetooth quick connect
 ## GSConnect
 ## Sound Input & Output Device Chooser
 
@@ -26,7 +27,7 @@
 # ===========================================================================
 
 yay -Rcc gnome-{backgrounds,books,boxes,characters,clocks,contacts,dictionary,documents}
-yay -Rcc gnome-{font-viewer,logs,maps,menus,music,notes,photos,shell-extensions,software,todo,weather}
+yay -Rcc gnome-{font-viewer,logs,maps,menus,music,notes,photos,shell-extensions,software,todo}
 yay -Rcc epiphany evolution totem rygel tracker tracker-miners vino xdg-user-dirs-gtk xdg-user-dirs
 
 yay -Rcc xf86-video-intel network-manager-applet wireless_tools vim xterm pavucontrol 
