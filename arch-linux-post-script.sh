@@ -67,16 +67,21 @@ sudo swapon /swapfile ;
 echo -e '# swap\n/swapfile none swap defaults 0 0' | sudo tee --append /etc/fstab
 
 # ===========================================================================
+# NOISE CANCELLATION
+# ===========================================================================
+
+echo -e 'load-module module-echo-cancel aec_args="analog_gain_control=0 digital_gain_control=0" source_name=noiseless\nset-default-source noiseless' | sudo tee --append /etc/pulse/default.pa
+
+pulseaudio -k
+
+# ===========================================================================
 # ACPID LID CLOSE/OPEN EVENT
 # ===========================================================================
 
 yay -S acpid
 
-echo 'HandleLidSwitch=ignore' | sudo tee --append /etc/systemd/logind.conf
-echo 'HandleLidSwitchDocked=ignore' | sudo tee --append /etc/systemd/logind.conf
-
-echo 'event=button/lid.*' | sudo tee --append /etc/acpi/events/lm_lid
-echo 'action=/etc/acpi/lid.sh' | sudo tee --append /etc/acpi/events/lm_lid
+echo -e 'HandleLidSwitch=ignore\nHandleLidSwitchDocked=ignore' | sudo tee --append /etc/systemd/logind.conf
+echo -e  'event=button/lid.*\naction=/etc/acpi/lid.sh' | sudo tee --append /etc/acpi/events/lm_lid
 
 echo -e '#!/bin/bash
 user=$(ps -o uname= -p $(pgrep "^gnome-shell$"))
