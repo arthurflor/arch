@@ -21,6 +21,7 @@
 ## Bluetooth quick connect
 ## GSConnect
 ## Sound Input & Output Device Chooser
+## Top Panel Workspace Scroll
 
 # ===========================================================================
 # CLEAR PACKAGES
@@ -43,9 +44,9 @@ yay -S pacman-contrib base-devel fakeroot nano intel-ucode
 yay -S neofetch openssh zip unrar p7zip ventoy-bin jre-openjdk
 
 yay -S system-config-printer cups-{filters,pdf} hplip-minimal pdfarranger img2pdf
-yay -S transmission-gtk gimp mpv geary google-chrome chrome-gnome-shell papirus-icon-theme
+yay -S geary google-chrome chrome-gnome-shell transmission-gtk gimp mpv mpv-mpris
 
-yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts
+yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts papirus-icon-theme
 yay -S hunspell hunspell-{en_US,pt-br} libreoffice-{fresh,extension-languagetool}
 
 yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
