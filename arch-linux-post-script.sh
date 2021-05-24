@@ -18,7 +18,6 @@
 # ===========================================================================
 
 ## Arch Linux Updates Indicator
-## Bluetooth quick connect
 ## GSConnect
 ## Sound Input & Output Device Chooser
 ## Top Panel Workspace Scroll
@@ -53,6 +52,23 @@ yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
 yay -S smartgit visual-studio-code-bin ankama-launcher
 
 # ===========================================================================
+# BLUETOOTH
+# ===========================================================================
+
+sudo sed -i 's/#FastConnectable = false/FastConnectable = true/g' /etc/bluetooth/main.conf ; 
+sudo sed -i 's/#ReconnectAttempts/ReconnectAttempts/g' /etc/bluetooth/main.conf ; 
+sudo sed -i 's/#ReconnectIntervals/ReconnectIntervals/g' /etc/bluetooth/main.conf ; 
+sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf ; 
+
+# ===========================================================================
+# NOISE CANCELLATION
+# ===========================================================================
+
+echo -e 'load-module module-echo-cancel source_name=noiseless\nset-default-source noiseless' | sudo tee --append /etc/pulse/default.pa
+
+pulseaudio -k
+
+# ===========================================================================
 # SWAP
 # ===========================================================================
 
@@ -66,14 +82,6 @@ sudo mkswap /swapfile ;
 sudo swapon /swapfile ;
 
 echo -e '# swap\n/swapfile none swap defaults 0 0' | sudo tee --append /etc/fstab
-
-# ===========================================================================
-# NOISE CANCELLATION
-# ===========================================================================
-
-echo -e 'load-module module-echo-cancel aec_args="analog_gain_control=0 digital_gain_control=0" source_name=noiseless\nset-default-source noiseless' | sudo tee --append /etc/pulse/default.pa
-
-pulseaudio -k
 
 # ===========================================================================
 # ACPID LID CLOSE/OPEN EVENT
@@ -126,17 +134,14 @@ sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
 # ===============================================================================
 
 # Language
-echo -e 'FONT=lat2-16\nFONT_MAP=8859-2' | sudo tee --append /etc/vconsole.conf
-echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen
-sudo locale-gen
+echo -e 'FONT=lat2-16\nFONT_MAP=8859-2' | sudo tee --append /etc/vconsole.conf  ; 
+echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen ; 
+sudo locale-gen ; 
 
 # Logs
-sudo mkdir -p /etc/systemd/coredump.conf.d/
-echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf
-echo 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf
-
-# Autostart bluetooth
-sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf
+sudo mkdir -p /etc/systemd/coredump.conf.d ; 
+echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf ; 
+echo 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf ; 
 
 # Services
 sudo systemctl enable cups acpid
