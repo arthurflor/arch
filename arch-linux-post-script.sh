@@ -18,6 +18,8 @@
 # ===========================================================================
 
 ## Arch Linux Updates Indicator
+## Bluetooth quick connect
+## Disconnect Wifi
 ## GSConnect
 ## Sound Input & Output Device Chooser
 ## Top Panel Workspace Scroll
