@@ -18,8 +18,8 @@
 # ===========================================================================
 
 ## Arch Linux Updates Indicator
-## Bluetooth quick connect
-## Disconnect Wifi
+## Color Picker
+## Gnome 40 UI Improvements
 ## GSConnect
 ## Sound Input & Output Device Chooser
 ## Top Panel Workspace Scroll
@@ -61,14 +61,6 @@ sudo sed -i 's/#FastConnectable = false/FastConnectable = true/g' /etc/bluetooth
 sudo sed -i 's/#ReconnectAttempts/ReconnectAttempts/g' /etc/bluetooth/main.conf ; 
 sudo sed -i 's/#ReconnectIntervals/ReconnectIntervals/g' /etc/bluetooth/main.conf ; 
 sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf ; 
-
-# ===========================================================================
-# NOISE CANCELLATION
-# ===========================================================================
-
-echo -e 'load-module module-echo-cancel source_name=noiseless\nset-default-source noiseless' | sudo tee --append /etc/pulse/default.pa
-
-pulseaudio -k
 
 # ===========================================================================
 # SWAP
@@ -173,10 +165,6 @@ sudo mv /usr/share/backgrounds/gnome/ghib/ghib-dynamic.xml /usr/share/gnome-back
 # Theme
 gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
 gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
-
-# Sounds
-gsettings set org.gnome.desktop.sound event-sounds false
-gsettings set org.gnome.desktop.sound allow-volume-above-100-percent true
 
 # Mouse & Touchpad
 gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing false
