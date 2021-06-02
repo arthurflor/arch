@@ -19,7 +19,6 @@
 
 ## Arch Linux Updates Indicator
 ## Color Picker
-## Gnome 40 UI Improvements
 ## GSConnect
 ## Sound Input & Output Device Chooser
 ## Top Panel Workspace Scroll
@@ -84,7 +83,7 @@ echo -e '# swap\n/swapfile none swap defaults 0 0' | sudo tee --append /etc/fsta
 yay -S acpid
 
 echo -e 'HandleLidSwitch=ignore\nHandleLidSwitchDocked=ignore' | sudo tee --append /etc/systemd/logind.conf
-echo -e  'event=button/lid.*\naction=/etc/acpi/lid.sh' | sudo tee --append /etc/acpi/events/lm_lid
+echo -e 'event=button/lid.*\naction=/etc/acpi/lid.sh' | sudo tee --append /etc/acpi/events/lm_lid
 
 echo -e '#!/bin/bash
 user=$(ps -o uname= -p $(pgrep "^gnome-shell$"))
@@ -105,13 +104,13 @@ fi' > /etc/acpi/lid.sh
 chmod +x /etc/acpi/lid.sh
 
 # ===========================================================================
-# SILENT BOOT
+# BOOT AND PLYMOUTH
 # ===========================================================================
 
 yay -S plymouth-git
 
 sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf
-sudo sed -i 's/base udev/base systemd plymouth/g' /etc/mkinitcpio.conf
+sudo sed -i 's/base udev/base udev plymouth/g' /etc/mkinitcpio.conf
 
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
 sudo sed -i 's/loglevel=3/quiet splash loglevel=3 vga=current pci=noaer vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_priority=3 fbcon=nodefer i915.enable_guc=2 i915.enable_fbc=1/g' /etc/default/grub
@@ -135,7 +134,11 @@ sudo locale-gen ;
 # Logs
 sudo mkdir -p /etc/systemd/coredump.conf.d ; 
 echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf ; 
-echo 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf ; 
+echo -e 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf ; 
+
+# Sysctl
+echo -e 'vm.swappiness=10' | sudo tee /etc/sysctl.d/99-swappiness.conf
+echo -e 'kernel.printk = 3 3 3 3' | sudo tee /etc/sysctl.d/20-quiet-printk.conf
 
 # Services
 sudo systemctl enable cups acpid
@@ -149,8 +152,8 @@ mkdir -p ~/.config/autostart/
 echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > ~/.config/autostart/transmission-gtk.desktop
 
 # Custom folders
-mkdir ~/Code ; gio set ~/Code metadata::custom-icon-name "folder-script"
-mkdir ~/VirtualBox\ VMs ; gio set ~/VirtualBox\ VMs metadata::custom-icon-name "folder-linux"
+mkdir ~/Code ; gio set ~/Code metadata::custom-icon-name 'folder-script'
+mkdir ~/VirtualBox\ VMs ; gio set ~/VirtualBox\ VMs metadata::custom-icon-name 'folder-linux'
 
 # Background images
 sudo rm -R /usr/share/backgrounds/anarchy
@@ -163,8 +166,8 @@ sudo mv /usr/share/backgrounds/gnome/ghib/ghib-dynamic.xml /usr/share/gnome-back
 # ===========================================================================
 
 # Theme
-gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
-gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
+gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
 
 # Mouse & Touchpad
 gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing false
