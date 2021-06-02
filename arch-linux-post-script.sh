@@ -56,10 +56,10 @@ yay -S smartgit visual-studio-code-bin ankama-launcher
 # BLUETOOTH
 # ===========================================================================
 
-sudo sed -i 's/#FastConnectable = false/FastConnectable = true/g' /etc/bluetooth/main.conf ; 
-sudo sed -i 's/#ReconnectAttempts/ReconnectAttempts/g' /etc/bluetooth/main.conf ; 
-sudo sed -i 's/#ReconnectIntervals/ReconnectIntervals/g' /etc/bluetooth/main.conf ; 
-sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf ; 
+sudo sed -i 's/#FastConnectable = false/FastConnectable = true/g' /etc/bluetooth/main.conf ;
+sudo sed -i 's/#ReconnectAttempts/ReconnectAttempts/g' /etc/bluetooth/main.conf ;
+sudo sed -i 's/#ReconnectIntervals/ReconnectIntervals/g' /etc/bluetooth/main.conf ;
+sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf ;
 
 # ===========================================================================
 # SWAP
@@ -127,18 +127,17 @@ sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
 # ===============================================================================
 
 # Language
-echo -e 'FONT=lat2-16\nFONT_MAP=8859-2' | sudo tee --append /etc/vconsole.conf  ; 
-echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen ; 
-sudo locale-gen ; 
+echo -e 'FONT=lat2-16' | sudo tee --append /etc/vconsole.conf ;
+echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen ;
+sudo locale-gen ;
 
 # Logs
-sudo mkdir -p /etc/systemd/coredump.conf.d ; 
-echo -e '[Coredump]\nStorage=none' | sudo tee --append /etc/systemd/coredump.conf.d/custom.conf ; 
-echo -e 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf ; 
+echo -e 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf ;
 
 # Sysctl
-echo -e 'vm.swappiness=10' | sudo tee /etc/sysctl.d/99-swappiness.conf
-echo -e 'kernel.printk = 3 3 3 3' | sudo tee /etc/sysctl.d/20-quiet-printk.conf
+echo -e 'kernel.printk = 3 3 3 3' | sudo tee /etc/sysctl.d/20-quiet-printk.conf ;
+echo -e 'kernel.core_pattern=|/bin/false' | sudo tee /etc/sysctl.d/50-coredump.conf ;
+echo -e 'vm.swappiness=10' | sudo tee /etc/sysctl.d/99-swappiness.conf ;
 
 # Services
 sudo systemctl enable cups acpid
