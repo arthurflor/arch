@@ -40,7 +40,8 @@ yay -Qttdq | yay -Rns - ; yay -c && yay -Scc
 # INSTALL PACKAGES
 # ===============================================================================
 
-yay -S pacman-contrib base-devel fakeroot nano intel-ucode
+yay -S pacman-contrib base-devel fakeroot nano
+yay -S intel-ucode intel-media-driver intel-media-sdk
 yay -S neofetch openssh zip unrar p7zip ventoy-bin jre-openjdk
 
 yay -S system-config-printer cups-{filters,pdf} hplip-minimal pdfarranger img2pdf
@@ -113,7 +114,8 @@ echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen ;
 sudo locale-gen ;
 
 # Logs
-echo -e 'SystemMaxUse=50M' | sudo tee --append /etc/systemd/journald.conf ;
+echo -e 'Storage=none' | sudo tee --append /etc/systemd/journald.conf ; 
+sudo rm -R /var/log/journal ; 
 
 # Sysctl
 echo -e 'kernel.printk = 3 3 3 3' | sudo tee /etc/sysctl.d/20-quiet-printk.conf ;
@@ -122,6 +124,10 @@ echo -e 'vm.swappiness=10' | sudo tee /etc/sysctl.d/99-swappiness.conf ;
 
 # Services
 sudo systemctl enable cups acpid
+
+sudo systemctl mask lvm2-monitor
+sudo systemctl mask systemd-random-seed
+echo -e '[main]\nsystemd-resolved=false' | sudo tee --append /etc/NetworkManager/NetworkManager.conf
 
 # ===========================================================================
 # BOOT AND PLYMOUTH
@@ -134,10 +140,10 @@ sudo sed -i 's/base udev/base systemd sd-plymouth/g' /etc/mkinitcpio.conf
 
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
 
-sudo sed -i 's/loglevel=3/quiet splash loglevel=3 vga=current pci=noaer vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_priority=3 fbcon=nodefer i915.fastboot=1/g' /etc/default/grub
+sudo sed -i 's/loglevel=3/quiet splash loglevel=3 vga=current pci=noaer vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_priority=3 fbcon=nodefer nowatchdog/g' /etc/default/grub
 
-sudo cp -R ./plymouth/** /usr/share/plymouth/themes/
-sudo plymouth-set-default-theme minimal
+sudo cp -R ./plymouth/** /usr/share/plymouth/themes
+sudo plymouth-set-default-theme mono-glow
 
 sudo mkinitcpio -p linux ;
 sudo grub-mkconfig -o /boot/grub/grub.cfg ;
