@@ -54,13 +54,18 @@ yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
 yay -S smartgit visual-studio-code-bin ankama-launcher
 
 # ===========================================================================
-# BLUETOOTH
+# MAKEPKG AND KERNEL
 # ===========================================================================
 
-sudo sed -i 's/#FastConnectable = false/FastConnectable = true/g' /etc/bluetooth/main.conf ;
-sudo sed -i 's/#ReconnectAttempts/ReconnectAttempts/g' /etc/bluetooth/main.conf ;
-sudo sed -i 's/#ReconnectIntervals/ReconnectIntervals/g' /etc/bluetooth/main.conf ;
-sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf ;
+sudo sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j$(nproc)"/g' /etc/makepkg.conf ; 
+sudo sed -i 's/-march=x86-64 -mtune=generic -O2/-march=native -mtune=native -O3/g' /etc/makepkg.conf ; 
+
+yay -S linux-xanmod linux-xanmod-headers
+yay -Rcc linux linux-headers
+
+sudo mkinitcpio -p linux-xanmod ;
+sudo grub-mkconfig -o /boot/grub/grub.cfg ;
+sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
 
 # ===========================================================================
 # SWAP
@@ -83,8 +88,8 @@ echo -e '# swap\n/swapfile none swap defaults 0 0' | sudo tee --append /etc/fsta
 
 yay -S acpid
 
-echo -e 'HandleLidSwitch=ignore\nHandleLidSwitchDocked=ignore' | sudo tee --append /etc/systemd/logind.conf
-echo -e 'event=button/lid.*\naction=/etc/acpi/lid.sh' | sudo tee --append /etc/acpi/events/lm_lid
+echo -e 'HandleLidSwitch=ignore\nHandleLidSwitchDocked=ignore' | sudo tee --append /etc/systemd/logind.conf ; 
+echo -e 'event=button/lid.*\naction=/etc/acpi/lid.sh' | sudo tee --append /etc/acpi/events/lm_lid ; 
 
 echo -e '#!/bin/bash
 user=$(ps -o uname= -p $(pgrep "^gnome-shell$"))
@@ -135,12 +140,11 @@ echo -e '[main]\nsystemd-resolved=false' | sudo tee --append /etc/NetworkManager
 
 yay -S plymouth-git
 
-sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf
-sudo sed -i 's/base udev/base systemd sd-plymouth/g' /etc/mkinitcpio.conf
+sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf ; 
+sudo sed -i 's/base udev/base systemd sd-plymouth/g' /etc/mkinitcpio.conf ; 
 
-sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub
-
-sudo sed -i 's/loglevel=3/quiet splash loglevel=3 vga=current pci=noaer vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_priority=3 fbcon=nodefer nowatchdog/g' /etc/default/grub
+sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub ; 
+sudo sed -i 's/loglevel=3/quiet splash loglevel=3 vga=current pci=noaer vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_priority=3 fbcon=nodefer nowatchdog/g' /etc/default/grub ; 
 
 sudo cp -R ./plymouth/** /usr/share/plymouth/themes
 sudo plymouth-set-default-theme mono-glow
@@ -148,6 +152,15 @@ sudo plymouth-set-default-theme mono-glow
 sudo mkinitcpio -p linux ;
 sudo grub-mkconfig -o /boot/grub/grub.cfg ;
 sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
+
+# ===========================================================================
+# BLUETOOTH
+# ===========================================================================
+
+sudo sed -i 's/#FastConnectable = false/FastConnectable = true/g' /etc/bluetooth/main.conf ;
+sudo sed -i 's/#ReconnectAttempts/ReconnectAttempts/g' /etc/bluetooth/main.conf ;
+sudo sed -i 's/#ReconnectIntervals/ReconnectIntervals/g' /etc/bluetooth/main.conf ;
+sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf ;
 
 # ===========================================================================
 # GNOME - ENVIRONMENT
@@ -205,6 +218,9 @@ gsettings set org.gnome.gedit.preferences.editor ensure-trailing-newline false
 
 # Screencast unlimited
 gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0
+
+# Show day of week in top panel
+gsettings set org.gnome.desktop.interface clock-show-weekday true
 
 # ===========================================================================
 # USER ENVIRONMENT
