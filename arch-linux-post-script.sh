@@ -36,6 +36,59 @@ yay -Rcc base luit dialog sushi orca man-{pages,db} mousetweaks dleyna-server
 
 yay -Qttdq | yay -Rns - ; yay -c && yay -Scc
 
+# ===========================================================================
+# KERNEL
+# ===========================================================================
+
+sudo sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j$(nproc)"/g' /etc/makepkg.conf ; 
+sudo sed -i 's/-march=x86-64 -mtune=generic -O2/-march=native -mtune=native -O3/g' /etc/makepkg.conf ; 
+
+yay -S linux-xanmod linux-xanmod-headers && yay -Rcc linux linux-headers
+
+# ===========================================================================
+# SWAP
+# ===========================================================================
+
+sudo swapoff /swapfile ;
+sudo rm -f /swapfile ;
+
+sudo fallocate -l 15905M /swapfile ;
+
+sudo chmod 600 /swapfile ;
+sudo mkswap /swapfile ;
+sudo swapon /swapfile ;
+
+echo -e '# swap\n/swapfile none swap defaults 0 0' | sudo tee --append /etc/fstab
+
+# ===============================================================================
+# SYSTEM
+# ===============================================================================
+
+# Language
+echo -e 'FONT=lat2-16\nFONT_MAP=8859-2' | sudo tee --append /etc/vconsole.conf ;
+echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen ;
+sudo locale-gen ;
+
+# Logs
+echo -e 'Storage=none' | sudo tee --append /etc/systemd/journald.conf ; 
+sudo rm -R /var/log/journal ; 
+
+# Sysctl
+echo -e 'kernel.printk = 3 3 3 3' | sudo tee /etc/sysctl.d/20-quiet-printk.conf ;
+echo -e 'kernel.core_pattern=|/bin/false' | sudo tee /etc/sysctl.d/50-coredump.conf ;
+echo -e 'vm.swappiness=10' | sudo tee /etc/sysctl.d/99-swappiness.conf ;
+
+# Services
+sudo systemctl mask lvm2-monitor
+sudo systemctl mask systemd-random-seed
+echo -e '[main]\nsystemd-resolved=false' | sudo tee --append /etc/NetworkManager/NetworkManager.conf
+
+# Bluetooth
+sudo sed -i 's/#FastConnectable = false/FastConnectable = true/g' /etc/bluetooth/main.conf ;
+sudo sed -i 's/#ReconnectAttempts/ReconnectAttempts/g' /etc/bluetooth/main.conf ;
+sudo sed -i 's/#ReconnectIntervals/ReconnectIntervals/g' /etc/bluetooth/main.conf ;
+sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf ;
+
 # ===============================================================================
 # INSTALL PACKAGES
 # ===============================================================================
@@ -52,35 +105,6 @@ yay -S hunspell hunspell-{en_US,pt-br} libreoffice-{fresh,extension-languagetool
 
 yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle
 yay -S smartgit visual-studio-code-bin ankama-launcher
-
-# ===========================================================================
-# MAKEPKG AND KERNEL
-# ===========================================================================
-
-sudo sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j$(nproc)"/g' /etc/makepkg.conf ; 
-sudo sed -i 's/-march=x86-64 -mtune=generic -O2/-march=native -mtune=native -O3/g' /etc/makepkg.conf ; 
-
-yay -S linux-xanmod linux-xanmod-headers
-yay -Rcc linux linux-headers
-
-sudo mkinitcpio -p linux-xanmod ;
-sudo grub-mkconfig -o /boot/grub/grub.cfg ;
-sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
-
-# ===========================================================================
-# SWAP
-# ===========================================================================
-
-sudo swapoff /swapfile ;
-sudo rm -f /swapfile ;
-
-sudo fallocate -l 15905M /swapfile ;
-
-sudo chmod 600 /swapfile ;
-sudo mkswap /swapfile ;
-sudo swapon /swapfile ;
-
-echo -e '# swap\n/swapfile none swap defaults 0 0' | sudo tee --append /etc/fstab
 
 # ===========================================================================
 # ACPID LID CLOSE/OPEN EVENT
@@ -109,31 +133,6 @@ fi' > /etc/acpi/lid.sh
 
 chmod +x /etc/acpi/lid.sh
 
-# ===============================================================================
-# SYSTEM
-# ===============================================================================
-
-# Language
-echo -e 'FONT=lat2-16\nFONT_MAP=8859-2' | sudo tee --append /etc/vconsole.conf ;
-echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen ;
-sudo locale-gen ;
-
-# Logs
-echo -e 'Storage=none' | sudo tee --append /etc/systemd/journald.conf ; 
-sudo rm -R /var/log/journal ; 
-
-# Sysctl
-echo -e 'kernel.printk = 3 3 3 3' | sudo tee /etc/sysctl.d/20-quiet-printk.conf ;
-echo -e 'kernel.core_pattern=|/bin/false' | sudo tee /etc/sysctl.d/50-coredump.conf ;
-echo -e 'vm.swappiness=10' | sudo tee /etc/sysctl.d/99-swappiness.conf ;
-
-# Services
-sudo systemctl enable cups acpid
-
-sudo systemctl mask lvm2-monitor
-sudo systemctl mask systemd-random-seed
-echo -e '[main]\nsystemd-resolved=false' | sudo tee --append /etc/NetworkManager/NetworkManager.conf
-
 # ===========================================================================
 # BOOT AND PLYMOUTH
 # ===========================================================================
@@ -144,41 +143,15 @@ sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf ;
 sudo sed -i 's/base udev/base systemd sd-plymouth/g' /etc/mkinitcpio.conf ; 
 
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub ; 
+
 sudo sed -i 's/loglevel=3/quiet splash loglevel=3 vga=current pci=noaer vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_priority=3 fbcon=nodefer nowatchdog/g' /etc/default/grub ; 
 
 sudo cp -R ./plymouth/** /usr/share/plymouth/themes
 sudo plymouth-set-default-theme mono-glow
 
-sudo mkinitcpio -p linux ;
+sudo mkinitcpio -p linux-xanmod ;
 sudo grub-mkconfig -o /boot/grub/grub.cfg ;
 sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
-
-# ===========================================================================
-# BLUETOOTH
-# ===========================================================================
-
-sudo sed -i 's/#FastConnectable = false/FastConnectable = true/g' /etc/bluetooth/main.conf ;
-sudo sed -i 's/#ReconnectAttempts/ReconnectAttempts/g' /etc/bluetooth/main.conf ;
-sudo sed -i 's/#ReconnectIntervals/ReconnectIntervals/g' /etc/bluetooth/main.conf ;
-sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf ;
-
-# ===========================================================================
-# GNOME - ENVIRONMENT
-# ===========================================================================
-
-# Autostart packages
-mkdir -p ~/.config/autostart/
-echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > ~/.config/autostart/transmission-gtk.desktop
-
-# Custom folders
-mkdir ~/Code ; gio set ~/Code metadata::custom-icon-name 'folder-script'
-mkdir ~/VirtualBox\ VMs ; gio set ~/VirtualBox\ VMs metadata::custom-icon-name 'folder-linux'
-
-# Background images
-sudo rm -R /usr/share/backgrounds/anarchy
-
-sudo cp -R ./dynamic-wallpaper/** /usr/share/backgrounds/gnome/
-sudo mv /usr/share/backgrounds/gnome/ghib/ghib-dynamic.xml /usr/share/gnome-background-properties/
 
 # ===========================================================================
 # GNOME - GSETTINGS
@@ -223,11 +196,31 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length
 gsettings set org.gnome.desktop.interface clock-show-weekday true
 
 # ===========================================================================
-# USER ENVIRONMENT
+# ENVIRONMENT
 # ===========================================================================
+
+# Services
+sudo systemctl enable cups acpid
+
+# Groups
 sudo gpasswd -a $(whoami) games
 sudo gpasswd -a $(whoami) vboxusers
 
+# Autostart packages
+mkdir -p ~/.config/autostart/
+echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > ~/.config/autostart/transmission-gtk.desktop
+
+# Custom folders
+mkdir ~/Code ; gio set ~/Code metadata::custom-icon-name 'folder-script'
+mkdir ~/VirtualBox\ VMs ; gio set ~/VirtualBox\ VMs metadata::custom-icon-name 'folder-linux'
+
+# Background images
+sudo rm -R /usr/share/backgrounds/anarchy
+
+sudo cp -R ./dynamic-wallpaper/** /usr/share/backgrounds/gnome/
+sudo mv /usr/share/backgrounds/gnome/ghib/ghib-dynamic.xml /usr/share/gnome-background-properties/
+
+# Shell script
 echo -e '
 activate () {
   python -m venv .venv && source .venv/bin/activate
