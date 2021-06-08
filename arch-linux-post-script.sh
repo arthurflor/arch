@@ -37,15 +37,6 @@ yay -Rcc base luit dialog sushi orca man-{pages,db} mousetweaks dleyna-server
 yay -Qttdq | yay -Rns - ; yay -c && yay -Scc
 
 # ===========================================================================
-# KERNEL
-# ===========================================================================
-
-sudo sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j$(nproc)"/g' /etc/makepkg.conf ; 
-sudo sed -i 's/-march=x86-64 -mtune=generic -O2/-march=native -mtune=native -O3/g' /etc/makepkg.conf ; 
-
-yay -S linux-xanmod linux-xanmod-headers && yay -Rcc linux linux-headers
-
-# ===========================================================================
 # SWAP
 # ===========================================================================
 
@@ -88,6 +79,17 @@ sudo sed -i 's/#FastConnectable = false/FastConnectable = true/g' /etc/bluetooth
 sudo sed -i 's/#ReconnectAttempts/ReconnectAttempts/g' /etc/bluetooth/main.conf ;
 sudo sed -i 's/#ReconnectIntervals/ReconnectIntervals/g' /etc/bluetooth/main.conf ;
 sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf ;
+
+# Make package (makepkg)
+sudo sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j$(nproc)"/g' /etc/makepkg.conf ; 
+sudo sed -i 's/-march=x86-64 -mtune=generic -O2/-march=native -mtune=native -O3/g' /etc/makepkg.conf ; 
+
+# IO Scheduler
+## SSD
+echo -e 'ACTION=="add|change", KERNEL=="sd[a-z]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="mq-deadline"' | sudo tee /etc/udev/rules.d/60-ssd.rules
+
+## NVME
+echo -e 'ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/scheduler}="none"' | sudo tee /etc/udev/rules.d/60-nvme.rules
 
 # ===============================================================================
 # INSTALL PACKAGES
@@ -139,17 +141,17 @@ chmod +x /etc/acpi/lid.sh
 
 yay -S plymouth-git
 
-sudo sed -i 's/MODULES=()/MODULES=(intel_agp i915)/g' /etc/mkinitcpio.conf ; 
+sudo sed -i 's/MODULES=()/MODULES=(i915 intel_agp)/g' /etc/mkinitcpio.conf ; 
 sudo sed -i 's/base udev/base systemd sd-plymouth/g' /etc/mkinitcpio.conf ; 
 
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub ; 
 
-sudo sed -i 's/loglevel=3/quiet splash loglevel=3 vga=current pci=noaer vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_priority=3 fbcon=nodefer nowatchdog/g' /etc/default/grub ; 
+sudo sed -i 's/loglevel=3/quiet splash nowatchdog loglevel=3 vga=current pci=noaer vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_priority=3 fbcon=nodefer intel_pstate=disable cpufreq.default_governor=conservative fsck.mode=skip/g' /etc/default/grub ; 
 
 sudo cp -R ./plymouth/** /usr/share/plymouth/themes
 sudo plymouth-set-default-theme mono-glow
 
-sudo mkinitcpio -p linux-xanmod ;
+sudo mkinitcpio -p linux-zen ;
 sudo grub-mkconfig -o /boot/grub/grub.cfg ;
 sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
 
@@ -206,9 +208,18 @@ sudo systemctl enable cups acpid
 sudo gpasswd -a $(whoami) games
 sudo gpasswd -a $(whoami) vboxusers
 
+# Disable vertical synchronization
+echoh -e '
+<device screen="0" driver="dri2">
+	<application name="Default">
+		<option name="vblank_mode" value="0"/>
+	</application>
+</device>
+' > ~/.drirc
+
 # Autostart packages
 mkdir -p ~/.config/autostart/
-echo -e "[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m" > ~/.config/autostart/transmission-gtk.desktop
+echo -e '[Desktop Entry]\nType=Application\nName=transmission-gtk\nExec=transmission-gtk -m' > ~/.config/autostart/transmission-gtk.desktop
 
 # Custom folders
 mkdir ~/Code ; gio set ~/Code metadata::custom-icon-name 'folder-script'
