@@ -18,8 +18,11 @@
 # ===========================================================================
 
 ## Arch Linux Updates Indicator
+## Bluetooth quick connect
 ## Color Picker
+## Disconnect Wifi
 ## GSConnect
+## Hibernate Status Button
 ## Sound Input & Output Device Chooser
 ## Top Panel Workspace Scroll
 
@@ -259,8 +262,8 @@ sudo mv /usr/share/backgrounds/gnome/ghib/ghib-dynamic.xml /usr/share/gnome-back
 echo -e '
 activate () {
   python -m venv .venv && source .venv/bin/activate
-  if [ "$1" == "--init" ]; then
-    pip install -U pip wheel setuptools autopep8 flake8
+  if [ "$1" == "-u" ]; then
+    pip install -U pip autopep8 flake8
   fi
 }
 
