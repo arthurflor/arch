@@ -37,7 +37,7 @@ yay -Rcc epiphany evolution totem rygel tracker tracker-miners vino xdg-user-dir
 yay -Rcc xf86-video-intel network-manager-applet wireless_tools vim xterm pavucontrol ;
 yay -Rcc base luit dialog sushi orca man-{pages,db} mousetweaks dleyna-server ;
 
-yay -Qttdq | yay -Rns - ; yay -c && yay -Scc
+yay -Qttdq | yay -Rns - ; yay -c && yay -Scc ;
 
 # ===============================================================================
 # INSTALL PACKAGES
@@ -64,13 +64,12 @@ sudo swapoff /swapfile ;
 sudo rm -f /swapfile ;
 
 memory_size=$(sudo free -m | awk '{ if($1=="Mem:") print substr($2, 0) + 1 }') ;
-sudo fallocate -l $memory_size\M /swapfile ;
 
-sudo chmod 600 /swapfile ;
-sudo mkswap /swapfile ;
-sudo swapon /swapfile ;
+sudo fallocate -l $memory_size\M /swapfile ;
+sudo chmod 600 /swapfile ; sudo mkswap /swapfile ; sudo swapon /swapfile ;
 
 echo -e '# swap\n/swapfile none swap defaults 0 0' | sudo tee --append /etc/fstab;
+echo -e 'vm.swappiness=1' | sudo tee /etc/sysctl.d/99-swappiness.conf ;
 
 swap_device=$(sudo findmnt -no UUID -T /swapfile) && 
 swap_offset=$(sudo filefrag -v /swapfile | awk '{ if($1=="0:"){print substr($4, 1, length($4)-2)} }') && 
@@ -78,7 +77,7 @@ swap_offset=$(sudo filefrag -v /swapfile | awk '{ if($1=="0:"){print substr($4, 
 sudo sed -i 's/loglevel=3/loglevel=3 resume=UUID='$swap_device' resume_offset='$swap_offset'/g' /etc/default/grub ;
 sudo sed -i 's/filesystems fsck/filesystems resume fsck/g' /etc/mkinitcpio.conf ;
 
-sudo mkinitcpio -p linux-zen ;
+sudo mkinitcpio -p linux-xanmod ;
 sudo grub-mkconfig -o /boot/grub/grub.cfg ;
 sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
 
@@ -92,13 +91,10 @@ echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen ;
 sudo locale-gen ;
 
 # Logs
+echo -e 'kernel.printk = 2 2 1 2' | sudo tee /etc/sysctl.d/20-quiet-printk.conf ;
+echo -e 'Storage=none' | sudo tee --append /etc/systemd/coredump.conf ;
 echo -e 'Storage=none' | sudo tee --append /etc/systemd/journald.conf ;
 sudo rm -R /var/log/journal ;
-
-# Sysctl
-echo -e 'kernel.printk = 3 3 3 3' | sudo tee /etc/sysctl.d/20-quiet-printk.conf ;
-echo -e 'kernel.core_pattern=|/bin/false' | sudo tee /etc/sysctl.d/50-coredump.conf ;
-echo -e 'vm.swappiness=10' | sudo tee /etc/sysctl.d/99-swappiness.conf ;
 
 # Services
 sudo systemctl mask lvm2-monitor;
@@ -150,24 +146,14 @@ fi' > /etc/acpi/lid.sh
 chmod +x /etc/acpi/lid.sh
 
 # ===========================================================================
-# BOOT
+# BOOT AND PLYMOUTH
 # ===========================================================================
 
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub ;
-
-sudo sed -i 's/loglevel=3/quiet nowatchdog loglevel=3 vga=current pci=noaer vt.global_cursor_default=0 rd.systemd.show_status=false rd.udev.log_priority=3 fbcon=nodefer intel_pstate=disable cpufreq.default_governor=conservative fsck.mode=skip/g' /etc/default/grub ;
+sudo sed -i 's/loglevel=3/quiet nowatchdog loglevel=3 vga=current pci=noaer fbcon=nodefer vt.global_cursor_default=0 intel_pstate=disable cpufreq.default_governor=conservative i915.enable_fbc=1 i915.enable_guc=2 fsck.mode=skip/g' /etc/default/grub ;
 
 cd /boot/EFI/boot && cp grubx64.efi grubx64.efi.bak && 
-
 echo -n -e \\x00 | sudo tee patch && cat grubx64.efi | strings -t d | grep "Welcome to GRUB!" | awk '{print $1;}' | sudo xargs -I{} dd if=patch of=grubx64.efi obs=1 conv=notrunc seek={} && cd -
-
-sudo mkinitcpio -p linux-zen ;
-sudo grub-mkconfig -o /boot/grub/grub.cfg ;
-sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
-
-# ===========================================================================
-# PLYMOUTH
-# ===========================================================================
 
 yay -S plymouth-git
 
@@ -178,7 +164,7 @@ sudo sed -i 's/loglevel=3/splash loglevel=3/g' /etc/default/grub ;
 sudo cp -R ./plymouth/** /usr/share/plymouth/themes;
 sudo plymouth-set-default-theme mono-glow;
 
-sudo mkinitcpio -p linux-zen ;
+sudo mkinitcpio -p linux-xanmod ;
 sudo grub-mkconfig -o /boot/grub/grub.cfg ;
 sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
 
@@ -262,13 +248,13 @@ sudo mv /usr/share/backgrounds/gnome/ghib/ghib-dynamic.xml /usr/share/gnome-back
 echo -e '
 activate () {
   python -m venv .venv && source .venv/bin/activate
-  if [ "$1" == "-u" ]; then
-    pip install -U pip autopep8 flake8
+  if [ "$1" == "-i" ]; then
+    pip install -U pip setuptools autopep8 flake8
   fi
 }
 
+export PYTHONDONTWRITEBYTECODE=1
+
 PATH="$HOME/.node_modules/bin:$PATH"
 export npm_config_prefix=~/.node_modules
-
-export PYTHONDONTWRITEBYTECODE=1
 ' >> ~/.bashrc
