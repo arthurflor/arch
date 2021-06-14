@@ -71,15 +71,65 @@ sudo chmod 600 /swapfile ; sudo mkswap /swapfile ; sudo swapon /swapfile ;
 echo -e '# swap\n/swapfile none swap defaults 0 0' | sudo tee --append /etc/fstab;
 echo -e 'vm.swappiness=1' | sudo tee /etc/sysctl.d/99-swappiness.conf ;
 
-swap_device=$(sudo findmnt -no UUID -T /swapfile) && 
-swap_offset=$(sudo filefrag -v /swapfile | awk '{ if($1=="0:"){print substr($4, 1, length($4)-2)} }') && 
+swap_device=$(sudo findmnt -no UUID -T /swapfile) ;
+swap_offset=$(sudo filefrag -v /swapfile | awk '{ if($1=="0:"){print substr($4, 1, length($4)-2)} }') ;
 
 sudo sed -i 's/loglevel=3/loglevel=3 resume=UUID='$swap_device' resume_offset='$swap_offset'/g' /etc/default/grub ;
 sudo sed -i 's/filesystems fsck/filesystems resume fsck/g' /etc/mkinitcpio.conf ;
 
-sudo mkinitcpio -p linux-xanmod ;
+sudo mkinitcpio -p linux ;
 sudo grub-mkconfig -o /boot/grub/grub.cfg ;
 sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
+
+# ===========================================================================
+# BOOT AND PLYMOUTH
+# ===========================================================================
+
+yay -S plymouth-git
+
+sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub ;
+sudo sed -i 's/loglevel=3/quiet splash loglevel=3 vga=current pci=noaer fbcon=nodefer rd.udev.log_level=3 vt.global_cursor_default=0/g' /etc/default/grub ;
+
+sudo sed -i 's/MODULES=()/MODULES=(i915 intel_agp)/g' /etc/mkinitcpio.conf ;
+sudo sed -i 's/base udev/base systemd sd-plymouth/g' /etc/mkinitcpio.conf ;
+
+sudo cp -R ./plymouth/** /usr/share/plymouth/themes;
+sudo plymouth-set-default-theme mono-glow;
+
+sudo mkinitcpio -p linux ;
+sudo grub-mkconfig -o /boot/grub/grub.cfg ;
+sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
+
+cd /boot/EFI/boot && cp grubx64.efi grubx64.efi.bak && 
+echo -n -e \\x00 | sudo tee patch && cat grubx64.efi | strings -t d | grep "Welcome to GRUB!" | awk '{print $1;}' | sudo xargs -I{} dd if=patch of=grubx64.efi obs=1 conv=notrunc seek={} && cd -
+
+# ===========================================================================
+# ACPID LID CLOSE/OPEN EVENT
+# ===========================================================================
+
+yay -S acpid
+
+echo -e '#!/bin/bash
+\ncase "$1" in
+    button/lid)
+        user=$(getent passwd $(awk "/^Uid:/{print \$2}" /proc/$(pgrep "^gnome-shell$")/status) | awk -F: "{print \$1}")
+
+        case "$3" in
+            close)
+                if [ $(cat /sys/class/drm/card0/*HDMI*/status | grep "^connected" | wc -l) -eq 0 ]; then
+                    runuser -l $user -c "busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 1"
+                fi
+                ;;
+            open)
+                runuser -l $user -c "busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 0"
+                ;;
+        esac
+        ;;
+esac' | sudo tee /etc/acpi/handler.sh ;
+
+echo -e 'HandleLidSwitch=ignore\nHandleLidSwitchDocked=ignore' | sudo tee --append /etc/systemd/logind.conf ;
+
+sudo systemctl enable acpid ;
 
 # ===============================================================================
 # SYSTEM
@@ -91,7 +141,6 @@ echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen ;
 sudo locale-gen ;
 
 # Logs
-echo -e 'kernel.printk = 2 2 1 2' | sudo tee /etc/sysctl.d/20-quiet-printk.conf ;
 echo -e 'Storage=none' | sudo tee --append /etc/systemd/coredump.conf ;
 echo -e 'Storage=none' | sudo tee --append /etc/systemd/journald.conf ;
 sudo rm -R /var/log/journal ;
@@ -111,63 +160,6 @@ sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf ;
 sudo sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j$(nproc)"/g' /etc/makepkg.conf ;
 sudo sed -i 's/-march=x86-64 -mtune=generic -O2/-march=native -mtune=native -O3/g' /etc/makepkg.conf ;
 
-# IO Scheduler
-## SSD
-echo -e 'ACTION=="add|change", KERNEL=="sd[a-z]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="mq-deadline"' | sudo tee /etc/udev/rules.d/60-ssd.rules ;
-
-## NVME
-echo -e 'ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/scheduler}="none"' | sudo tee /etc/udev/rules.d/60-nvme.rules ;
-
-# ===========================================================================
-# ACPID LID CLOSE/OPEN EVENT
-# ===========================================================================
-
-yay -S acpid
-
-echo -e 'HandleLidSwitch=ignore\nHandleLidSwitchDocked=ignore' | sudo tee --append /etc/systemd/logind.conf ;
-echo -e 'event=button/lid.*\naction=/etc/acpi/lid.sh' | sudo tee --append /etc/acpi/events/lm_lid ;
-
-echo -e '#!/bin/bash
-user=$(ps -o uname= -p $(pgrep "^gnome-shell$"))
-screen=$(cat /sys/class/drm/card0/*HDMI*/status | grep "^connected" | wc -l)
-
-grep -q close /proc/acpi/button/lid/*/state
-
-if [ $? = 0 ] && [ $screen -eq 0 ]; then
-    runuser -l $user -c "busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 1"
-fi
-
-grep -q open /proc/acpi/button/lid/*/state
-
-if [ $? = 0 ]; then
-    runuser -l $user -c "busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 0"
-fi' > /etc/acpi/lid.sh
-
-chmod +x /etc/acpi/lid.sh
-
-# ===========================================================================
-# BOOT AND PLYMOUTH
-# ===========================================================================
-
-sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub ;
-sudo sed -i 's/loglevel=3/quiet nowatchdog loglevel=3 vga=current pci=noaer fbcon=nodefer vt.global_cursor_default=0 intel_pstate=disable cpufreq.default_governor=conservative i915.enable_fbc=1 i915.enable_guc=2 fsck.mode=skip/g' /etc/default/grub ;
-
-cd /boot/EFI/boot && cp grubx64.efi grubx64.efi.bak && 
-echo -n -e \\x00 | sudo tee patch && cat grubx64.efi | strings -t d | grep "Welcome to GRUB!" | awk '{print $1;}' | sudo xargs -I{} dd if=patch of=grubx64.efi obs=1 conv=notrunc seek={} && cd -
-
-yay -S plymouth-git
-
-sudo sed -i 's/MODULES=()/MODULES=(i915 intel_agp)/g' /etc/mkinitcpio.conf ;
-sudo sed -i 's/base udev/base systemd sd-plymouth/g' /etc/mkinitcpio.conf ;
-sudo sed -i 's/loglevel=3/splash loglevel=3/g' /etc/default/grub ;
-
-sudo cp -R ./plymouth/** /usr/share/plymouth/themes;
-sudo plymouth-set-default-theme mono-glow;
-
-sudo mkinitcpio -p linux-xanmod ;
-sudo grub-mkconfig -o /boot/grub/grub.cfg ;
-sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
-
 # ===========================================================================
 # GNOME - GSETTINGS
 # ===========================================================================
@@ -175,6 +167,10 @@ sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
 # Theme
 gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark' ;
 gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark' ;
+
+# Session manager autosave
+gsettings set org.gnome.SessionManager auto-save-session true ;
+gsettings set org.gnome.SessionManager auto-save-session-one-shot true ;
 
 # Mouse & Touchpad
 gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing false ;
@@ -207,28 +203,15 @@ gsettings set org.gnome.gedit.preferences.editor ensure-trailing-newline false ;
 # Screencast unlimited
 gsettings set org.gnome.settings-daemon.plugins.media-keys max-screencast-length 0 ;
 
-# Show day of week in top panel
-gsettings set org.gnome.desktop.interface clock-show-weekday true ;
-
 # ===========================================================================
 # ENVIRONMENT
 # ===========================================================================
 
-# Services
-sudo systemctl enable cups acpid
+# Services and Groups
+sudo systemctl enable cups ;
 
-# Groups
 sudo gpasswd -a $(whoami) games ;
 sudo gpasswd -a $(whoami) vboxusers ;
-
-# Disable vertical synchronization
-echoh -e '
-<device screen="0" driver="dri2">
-	<application name="Default">
-		<option name="vblank_mode" value="0"/>
-	</application>
-</device>
-' > ~/.drirc
 
 # Autostart packages
 mkdir -p ~/.config/autostart ;
