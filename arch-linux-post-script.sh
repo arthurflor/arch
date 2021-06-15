@@ -18,11 +18,8 @@
 # ===========================================================================
 
 ## Arch Linux Updates Indicator
-## Bluetooth quick connect
 ## Color Picker
-## Disconnect Wifi
 ## GSConnect
-## Hibernate Status Button
 ## Sound Input & Output Device Chooser
 ## Top Panel Workspace Scroll
 
@@ -56,6 +53,39 @@ yay -S hunspell hunspell-{en_US,pt-br} libreoffice-{fresh,extension-languagetool
 yay -S virtualbox virtualbox-guest-iso virtualbox-ext-oracle ;
 yay -S smartgit visual-studio-code-bin ankama-launcher ;
 
+# ===============================================================================
+# SYSTEM
+# ===============================================================================
+
+# Make package (makepkg)
+sudo sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j$(nproc)"/g' /etc/makepkg.conf ;
+sudo sed -i 's/-march=x86-64 -mtune=generic -O2/-march=native -mtune=native -O3/g' /etc/makepkg.conf ;
+
+# Services
+sudo systemctl mask lvm2-monitor;
+sudo systemctl mask systemd-random-seed;
+echo -e '[main]\nsystemd-resolved=false' | sudo tee --append /etc/NetworkManager/NetworkManager.conf;
+
+# Modprobe
+echo -e 'blacklist nouveau\nblacklist input_polldev\ninstall input_polldev /bin/false' | sudo tee /etc/modprobe.d/blacklist.conf ;
+echo -e 'options i915 fastboot=1\noptions i915 enable_guc=2\noptions i915 enable_fbc=1' | sudo tee /etc/modprobe.d/i915.conf ;
+
+# Logs
+echo -e 'Storage=none' | sudo tee --append /etc/systemd/coredump.conf ;
+echo -e 'Storage=none' | sudo tee --append /etc/systemd/journald.conf ;
+sudo rm -R /var/log/journal ;
+
+# Bluetooth
+sudo sed -i 's/#FastConnectable = false/FastConnectable = true/g' /etc/bluetooth/main.conf ;
+sudo sed -i 's/#ReconnectAttempts/ReconnectAttempts/g' /etc/bluetooth/main.conf ;
+sudo sed -i 's/#ReconnectIntervals/ReconnectIntervals/g' /etc/bluetooth/main.conf ;
+sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf ;
+
+# Language
+echo -e 'FONT=lat2-16\nFONT_MAP=8859-2' | sudo tee --append /etc/vconsole.conf ;
+echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen ;
+sudo locale-gen ;
+
 # ===========================================================================
 # SWAP
 # ===========================================================================
@@ -74,7 +104,7 @@ echo -e 'vm.swappiness=1' | sudo tee /etc/sysctl.d/99-swappiness.conf ;
 swap_device=$(sudo findmnt -no UUID -T /swapfile) ;
 swap_offset=$(sudo filefrag -v /swapfile | awk '{ if($1=="0:"){print substr($4, 1, length($4)-2)} }') ;
 
-sudo sed -i 's/loglevel=3/loglevel=3 resume=UUID='$swap_device' resume_offset='$swap_offset'/g' /etc/default/grub ;
+sudo sed -i 's/quiet/quiet resume=UUID='$swap_device' resume_offset='$swap_offset'/g' /etc/default/grub ;
 sudo sed -i 's/filesystems fsck/filesystems resume fsck/g' /etc/mkinitcpio.conf ;
 
 sudo mkinitcpio -p linux ;
@@ -88,10 +118,11 @@ sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
 yay -S plymouth-git
 
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub ;
-sudo sed -i 's/loglevel=3/quiet splash loglevel=3 vga=current pci=noaer fbcon=nodefer rd.udev.log_level=3 vt.global_cursor_default=0/g' /etc/default/grub ;
+sudo sed -i '/GRUB_DISTRIBUTOR="Arch"/a GRUB_DISABLE_OS_PROBER=false' /etc/default/grub ;
+sudo sed -i 's/loglevel=3 quiet/loglevel=3 quiet splash nowatchdog vga=current pci=noaer fbcon=nodefer rd.udev.log_level=3 vt.global_cursor_default=0/g' /etc/default/grub ;
 
 sudo sed -i 's/MODULES=()/MODULES=(i915 intel_agp)/g' /etc/mkinitcpio.conf ;
-sudo sed -i 's/base udev/base systemd sd-plymouth/g' /etc/mkinitcpio.conf ;
+sudo sed -i 's/base udev/base udev plymouth/g' /etc/mkinitcpio.conf ;
 
 sudo cp -R ./plymouth/** /usr/share/plymouth/themes;
 sudo plymouth-set-default-theme mono-glow;
@@ -130,35 +161,6 @@ esac' | sudo tee /etc/acpi/handler.sh ;
 echo -e 'HandleLidSwitch=ignore\nHandleLidSwitchDocked=ignore' | sudo tee --append /etc/systemd/logind.conf ;
 
 sudo systemctl enable acpid ;
-
-# ===============================================================================
-# SYSTEM
-# ===============================================================================
-
-# Language
-echo -e 'FONT=lat2-16\nFONT_MAP=8859-2' | sudo tee --append /etc/vconsole.conf ;
-echo -e 'en_US.UTF-8 UTF-8' | sudo tee --append /etc/locale.gen ;
-sudo locale-gen ;
-
-# Logs
-echo -e 'Storage=none' | sudo tee --append /etc/systemd/coredump.conf ;
-echo -e 'Storage=none' | sudo tee --append /etc/systemd/journald.conf ;
-sudo rm -R /var/log/journal ;
-
-# Services
-sudo systemctl mask lvm2-monitor;
-sudo systemctl mask systemd-random-seed;
-echo -e '[main]\nsystemd-resolved=false' | sudo tee --append /etc/NetworkManager/NetworkManager.conf;
-
-# Bluetooth
-sudo sed -i 's/#FastConnectable = false/FastConnectable = true/g' /etc/bluetooth/main.conf ;
-sudo sed -i 's/#ReconnectAttempts/ReconnectAttempts/g' /etc/bluetooth/main.conf ;
-sudo sed -i 's/#ReconnectIntervals/ReconnectIntervals/g' /etc/bluetooth/main.conf ;
-sudo sed -i 's/#AutoEnable=false/AutoEnable=true/g' /etc/bluetooth/main.conf ;
-
-# Make package (makepkg)
-sudo sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j$(nproc)"/g' /etc/makepkg.conf ;
-sudo sed -i 's/-march=x86-64 -mtune=generic -O2/-march=native -mtune=native -O3/g' /etc/makepkg.conf ;
 
 # ===========================================================================
 # GNOME - GSETTINGS
