@@ -45,7 +45,7 @@ yay -S intel-ucode intel-media-driver intel-media-sdk ;
 yay -S neofetch openssh zip unrar p7zip ventoy-bin jre-openjdk ;
 
 yay -S system-config-printer cups-{filters,pdf} hplip-minimal pdfarranger img2pdf ;
-yay -S geary google-chrome chrome-gnome-shell transmission-gtk gimp mpv mpv-mpris ;
+yay -S geary google-chrome chrome-gnome-shell transmission-gtk gimp vlc ;
 
 yay -S ttf-ms-fonts adobe-source-han-sans-otc-fonts papirus-icon-theme ;
 yay -S hunspell hunspell-{en_US,pt-br} libreoffice-{fresh,extension-languagetool} ;
@@ -57,6 +57,11 @@ yay -S smartgit visual-studio-code-bin ankama-launcher ;
 # SYSTEM
 # ===============================================================================
 
+# Logs
+echo -e 'Storage=none' | sudo tee --append /etc/systemd/coredump.conf ;
+echo -e 'Storage=none' | sudo tee --append /etc/systemd/journald.conf ;
+sudo rm -R /var/log/journal ;
+
 # Make package (makepkg)
 sudo sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j$(nproc)"/g' /etc/makepkg.conf ;
 sudo sed -i 's/-march=x86-64 -mtune=generic -O2/-march=native -mtune=native -O3/g' /etc/makepkg.conf ;
@@ -67,13 +72,13 @@ sudo systemctl mask systemd-random-seed;
 echo -e '[main]\nsystemd-resolved=false' | sudo tee --append /etc/NetworkManager/NetworkManager.conf;
 
 # Modprobe
-echo -e 'blacklist nouveau\nblacklist input_polldev\ninstall input_polldev /bin/false' | sudo tee /etc/modprobe.d/blacklist.conf ;
 echo -e 'options i915 fastboot=1\noptions i915 enable_guc=2\noptions i915 enable_fbc=1' | sudo tee /etc/modprobe.d/i915.conf ;
 
-# Logs
-echo -e 'Storage=none' | sudo tee --append /etc/systemd/coredump.conf ;
-echo -e 'Storage=none' | sudo tee --append /etc/systemd/journald.conf ;
-sudo rm -R /var/log/journal ;
+echo -e '
+blacklist nouveau
+blacklist iTCO_wdt
+blacklist input_polldev
+install input_polldev /bin/false' | sed '1{/^$/d}' | sudo tee /etc/modprobe.d/blacklist.conf ;
 
 # Bluetooth
 sudo sed -i 's/#FastConnectable = false/FastConnectable = true/g' /etc/bluetooth/main.conf ;
@@ -101,16 +106,6 @@ sudo chmod 600 /swapfile ; sudo mkswap /swapfile ; sudo swapon /swapfile ;
 echo -e '# swap\n/swapfile none swap defaults 0 0' | sudo tee --append /etc/fstab;
 echo -e 'vm.swappiness=1' | sudo tee /etc/sysctl.d/99-swappiness.conf ;
 
-swap_device=$(sudo findmnt -no UUID -T /swapfile) ;
-swap_offset=$(sudo filefrag -v /swapfile | awk '{ if($1=="0:"){print substr($4, 1, length($4)-2)} }') ;
-
-sudo sed -i 's/quiet/quiet resume=UUID='$swap_device' resume_offset='$swap_offset'/g' /etc/default/grub ;
-sudo sed -i 's/filesystems fsck/filesystems resume fsck/g' /etc/mkinitcpio.conf ;
-
-sudo mkinitcpio -p linux ;
-sudo grub-mkconfig -o /boot/grub/grub.cfg ;
-sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
-
 # ===========================================================================
 # BOOT AND PLYMOUTH
 # ===========================================================================
@@ -119,20 +114,20 @@ yay -S plymouth-git
 
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub ;
 sudo sed -i '/GRUB_DISTRIBUTOR="Arch"/a GRUB_DISABLE_OS_PROBER=false' /etc/default/grub ;
-sudo sed -i 's/loglevel=3 quiet/loglevel=3 quiet splash nowatchdog vga=current pci=noaer fbcon=nodefer rd.udev.log_level=3 vt.global_cursor_default=0/g' /etc/default/grub ;
+sudo sed -i 's/loglevel=3 quiet/loglevel=3 quiet splash vga=current pci=noaer fbcon=nodefer rd.udev.log_level=3 vt.global_cursor_default=0/g' /etc/default/grub ;
 
 sudo sed -i 's/MODULES=()/MODULES=(i915 intel_agp)/g' /etc/mkinitcpio.conf ;
 sudo sed -i 's/base udev/base udev plymouth/g' /etc/mkinitcpio.conf ;
 
-sudo cp -R ./plymouth/** /usr/share/plymouth/themes;
-sudo plymouth-set-default-theme mono-glow;
+sudo cp -R ./plymouth/** /usr/share/plymouth/themes ;
+sudo plymouth-set-default-theme mono-glow ;
 
 sudo mkinitcpio -p linux ;
 sudo grub-mkconfig -o /boot/grub/grub.cfg ;
 sudo sed -i 's/echo/#echo/g' /boot/grub/grub.cfg ;
 
-cd /boot/EFI/boot && cp grubx64.efi grubx64.efi.bak && 
-echo -n -e \\x00 | sudo tee patch && cat grubx64.efi | strings -t d | grep "Welcome to GRUB!" | awk '{print $1;}' | sudo xargs -I{} dd if=patch of=grubx64.efi obs=1 conv=notrunc seek={} && cd -
+cd /boot/EFI/boot && cp grubx64.efi grubx64.efi.bak && echo -n -e \\x00 | sudo tee patch && 
+cat grubx64.efi | strings -t d | grep "Welcome to GRUB!" | awk '{print $1;}' | sudo xargs -I{} dd if=patch of=grubx64.efi obs=1 conv=notrunc seek={} && cd - ;
 
 # ===========================================================================
 # ACPID LID CLOSE/OPEN EVENT
@@ -140,8 +135,10 @@ echo -n -e \\x00 | sudo tee patch && cat grubx64.efi | strings -t d | grep "Welc
 
 yay -S acpid
 
-echo -e '#!/bin/bash
-\ncase "$1" in
+echo -e '
+#!/bin/bash
+
+case "$1" in
     button/lid)
         user=$(getent passwd $(awk "/^Uid:/{print \$2}" /proc/$(pgrep "^gnome-shell$")/status) | awk -F: "{print \$1}")
 
@@ -156,7 +153,8 @@ echo -e '#!/bin/bash
                 ;;
         esac
         ;;
-esac' | sudo tee /etc/acpi/handler.sh ;
+esac
+;;' | sed '1{/^$/d}' | sudo tee /etc/acpi/handler.sh ;
 
 echo -e 'HandleLidSwitch=ignore\nHandleLidSwitchDocked=ignore' | sudo tee --append /etc/systemd/logind.conf ;
 
@@ -241,5 +239,4 @@ activate () {
 export PYTHONDONTWRITEBYTECODE=1
 
 PATH="$HOME/.node_modules/bin:$PATH"
-export npm_config_prefix=~/.node_modules
-' >> ~/.bashrc
+export npm_config_prefix=~/.node_modules' >> ~/.bashrc
