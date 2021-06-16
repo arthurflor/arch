@@ -110,7 +110,7 @@ echo -e 'vm.swappiness=1' | sudo tee /etc/sysctl.d/99-swappiness.conf ;
 # BOOT AND PLYMOUTH
 # ===========================================================================
 
-yay -S plymouth-git
+yay -S plymouth
 
 sudo sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub ;
 sudo sed -i '/GRUB_DISTRIBUTOR="Arch"/a GRUB_DISABLE_OS_PROBER=false' /etc/default/grub ;
