@@ -72,13 +72,25 @@ sudo systemctl mask systemd-random-seed;
 echo -e '[main]\nsystemd-resolved=false' | sudo tee --append /etc/NetworkManager/NetworkManager.conf;
 
 # Modprobe
-echo -e 'options i915 fastboot=1\noptions i915 enable_guc=2\noptions i915 enable_fbc=1' | sudo tee /etc/modprobe.d/i915.conf ;
+echo -e '
+options i915 fastboot=1
+options i915 enable_guc=2
+options i915 enable_fbc=1
+' | sed '1{/^$/d}' | sudo tee /etc/modprobe.d/i915.conf ;
 
 echo -e '
-blacklist nouveau
-blacklist iTCO_wdt
-blacklist input_polldev
-install input_polldev /bin/false' | sed '1{/^$/d}' | sudo tee /etc/modprobe.d/blacklist.conf ;
+blacklist nouveau\ninstall nouveau /bin/false
+blacklist iTCO_wdt\ninstall iTCO_wdt /bin/false
+blacklist input_polldev\ninstall input_polldev /bin/false
+' | sed '1{/^$/d}' | sudo tee /etc/modprobe.d/blacklist.conf ;
+
+echo -e '
+<device screen="0" driver="dri2">
+	<application name="Default">
+		<option name="vblank_mode" value="0"/>
+	</application>
+</device>
+' | sed '1{/^$/d}' | tee .drirc ;
 
 # Bluetooth
 sudo sed -i 's/#FastConnectable = false/FastConnectable = true/g' /etc/bluetooth/main.conf ;
@@ -117,7 +129,7 @@ sudo sed -i '/GRUB_DISTRIBUTOR="Arch"/a GRUB_DISABLE_OS_PROBER=false' /etc/defau
 sudo sed -i 's/loglevel=3 quiet/loglevel=3 quiet splash vga=current pci=noaer fbcon=nodefer rd.udev.log_level=3 vt.global_cursor_default=0/g' /etc/default/grub ;
 
 sudo sed -i 's/MODULES=()/MODULES=(i915 intel_agp)/g' /etc/mkinitcpio.conf ;
-sudo sed -i 's/base udev/base udev plymouth/g' /etc/mkinitcpio.conf ;
+sudo sed -i 's/base udev/base systemd sd-plymouth/g' /etc/mkinitcpio.conf ;
 
 sudo cp -R ./plymouth/** /usr/share/plymouth/themes ;
 sudo plymouth-set-default-theme mono-glow ;
